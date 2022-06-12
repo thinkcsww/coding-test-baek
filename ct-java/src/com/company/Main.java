@@ -8,22 +8,27 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((System.in)));
+        p1546();
+    }
 
-        int[] dividendsCount = new int[42];
-        int result = 0;
+    public static void p1546() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        for (int i = 0; i < 10; i++) {
-            dividendsCount[Integer.parseInt(bufferedReader.readLine()) % 42]++;
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int max = 0;
+        int totalScore = 0;
+
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
+
+        for (int i = 0; i < N; i++) {
+            int n = Integer.parseInt(stringTokenizer.nextToken());
+            totalScore += n;
+            max = Math.max(max, n);
         }
 
-        for (int i = 0; i< 42; i++) {
-            if (dividendsCount[i] > 0) {
-                result++;
-            }
-        }
+        System.out.println(100.0 * totalScore / max / N);
 
-        System.out.println(result);
+
     }
 
     public static void p3052() throws IOException {
