@@ -9,11 +9,67 @@ import (
 )
 
 func main() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var resultArray [42]int
+	var count = 0
+
+	for i := 0; i < 10; i++ {
+		num, _ := reader.ReadString('\n')
+		num = strings.TrimSuffix(num, "\n")
+		intNum, err := strconv.Atoi(num)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		resultArray[intNum%42]++
+	}
+
+	for _, num := range resultArray {
+		if num > 0 {
+			count++
+		}
+	}
+
+	fmt.Fprintln(writer, count)
+}
+
+func p3052() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var resultArray [42]int
+	var count = 0
+
+	for i := 0; i < 10; i++ {
+		num, _ := reader.ReadString('\n')
+		num = strings.TrimSuffix(num, "\n")
+		intNum, err := strconv.Atoi(num)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		resultArray[intNum%42]++
+	}
+
+	for _, num := range resultArray {
+		if num > 0 {
+			count++
+		}
+	}
+
+	fmt.Fprintln(writer, count)
+
 }
 
 func p2577() {
-	var reader *bufio.Reader = bufio.NewReader(os.Stdin)
-	var writer *bufio.Writer = bufio.NewWriter(os.Stdout)
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
 
 	defer writer.Flush()
 
@@ -39,8 +95,8 @@ func p2577() {
 }
 
 func p10818() {
-	var reader *bufio.Reader = bufio.NewReader(os.Stdin)
-	var writer *bufio.Writer = bufio.NewWriter(os.Stdout)
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
 
 	defer writer.Flush()
 
