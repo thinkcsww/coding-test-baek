@@ -5,13 +5,37 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
 }
 
 func p2577() {
-	
+	var reader *bufio.Reader = bufio.NewReader(os.Stdin)
+	var writer *bufio.Writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var a, b, c int
+	var resultArray [10]int
+
+	fmt.Fscan(reader, &a, &b, &c)
+
+	var sum = a * b * c
+
+	sumString := strconv.Itoa(sum)
+
+	splitSum := strings.Split(sumString, "")
+
+	for _, s := range splitSum {
+		num, _ := strconv.Atoi(s)
+		resultArray[num]++
+	}
+
+	for _, i := range resultArray {
+		fmt.Fprintln(writer, i)
+	}
 }
 
 func p10818() {
