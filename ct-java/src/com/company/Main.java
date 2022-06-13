@@ -8,7 +8,33 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1546();
+        p8958();
+    }
+
+    public static void p8958() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        for (int i = 0; i < N; i++) {
+            int score = 0;
+            int streak = 0;
+
+            String[] split = bufferedReader.readLine().split("");
+
+            for (String s: split) {
+                if ("O".equals(s)) {
+                    streak++;
+                } else {
+                    streak = 0;
+                }
+
+                score += streak;
+            }
+
+            System.out.println(score);
+        }
+
     }
 
     public static void p1546() throws IOException {
