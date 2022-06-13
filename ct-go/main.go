@@ -10,7 +10,54 @@ import (
 )
 
 func main() {
-	p8958()
+	p4344()
+}
+
+func p4344() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	for i := 0; i < N; i++ {
+
+		//var strs string
+		//fmt.Fscanln(reader, &strs)
+
+		strs, _ := reader.ReadString('\n')
+		strs = strings.TrimSuffix(strs, "\n")
+
+		split := strings.Split(strs, " ")
+
+		N2, _ := strconv.Atoi(split[0])
+
+		var totalScore float64 = 0.0
+		var avg float64
+		var betterThanAvgStudentCount = 0.0
+
+		for i := 1; i <= N2; i++ {
+			score, _ := strconv.Atoi(split[i])
+
+			totalScore += float64(score)
+		}
+
+		avg = totalScore / float64(N2)
+
+		for i := 1; i <= N2; i++ {
+			score, _ := strconv.Atoi(split[i])
+			if float64(score) > avg {
+				betterThanAvgStudentCount++
+			}
+		}
+
+		fmt.Fprintf(writer, "%.3f%%\n", betterThanAvgStudentCount/float64(N2)*100.0)
+
+	}
+
 }
 
 func p8958() {
