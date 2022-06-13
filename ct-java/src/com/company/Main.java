@@ -8,7 +8,40 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p8958();
+        p4344();
+    }
+
+    public static void p4344() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        for (int i = 0; i < N; i++) {
+            String[] strings = bufferedReader.readLine().split(" ");
+
+            int N2 = Integer.parseInt(strings[0]);
+
+            double totalScore = 0;
+            double betterThanAvgStudentCount = 0;
+            double avg;
+
+            for (int j = 1; j <= N2; j++) {
+                totalScore += Double.parseDouble(strings[j]);
+            }
+
+            avg = totalScore / N2;
+
+            for (int j = 1; j <= N2; j++) {
+                int score = Integer.parseInt(strings[j]);
+                if (score > avg) {
+                    betterThanAvgStudentCount++;
+                }
+            }
+
+            System.out.println(String.format("%.3f", betterThanAvgStudentCount / N2 * 100) + "%");
+
+        }
+
     }
 
     public static void p8958() throws IOException {
