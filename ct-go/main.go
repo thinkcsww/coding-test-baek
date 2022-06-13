@@ -10,7 +10,41 @@ import (
 )
 
 func main() {
-	p1546()
+	p8958()
+}
+
+func p8958() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	for i := 0; i < N; i++ {
+		var str string
+		fmt.Fscanln(reader, &str)
+
+		score := 0
+		streak := 0
+
+		split := strings.Split(str, "")
+
+		for _, s := range split {
+			if s == "O" {
+				streak++
+			} else {
+				streak = 0
+			}
+
+			score += streak
+		}
+
+		fmt.Fprintln(writer, score)
+
+	}
 }
 
 func p1546() {
