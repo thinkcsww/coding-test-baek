@@ -8,7 +8,29 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1065();
+        p4673();
+    }
+
+    public static void p4673() {
+
+        int[] arr = new int[10001];
+
+        for (int i = 1; i <= 10000; i++) {
+            String num = String.valueOf(i);
+            int result = i;
+            for (int j = 0; j < num.length(); j++) {
+                result += num.charAt(j) - '0';
+            }
+
+            if (result <= 10000) {
+                arr[result] = 1;
+            }
+
+
+            if (arr[i] == 0) {
+                System.out.println(i);
+            }
+        }
     }
 
     public static void p1065() throws IOException {
