@@ -8,8 +8,30 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p4344();
+        p1065();
     }
+
+    public static void p1065() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int count = 0;
+
+        for (int i = 1; i <= N; i++) {
+            if (i < 100) {
+                count++;
+            } else {
+                String s = String.valueOf(i);
+                if ((((int)s.charAt(0) - (int)s.charAt(1)) == (((int)s.charAt(1) - (int)s.charAt(2))))) {
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count);
+    }
+
 
     public static void p4344() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
