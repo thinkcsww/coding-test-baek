@@ -10,7 +10,33 @@ import (
 )
 
 func main() {
-	p1065()
+	p4673()
+}
+
+func p4673() {
+
+	var arr [10001]int
+
+	for i := 1; i <= 10000; i++ {
+
+		result := i
+
+		num := strconv.Itoa(i)
+
+		for j := 0; j < len(num); j++ {
+			result += int(num[j]) - '0'
+		}
+
+		if result <= 10000 {
+			arr[result] = 1
+		}
+
+		if arr[i] != 1 {
+			fmt.Println(i)
+		}
+
+	}
+
 }
 
 func p1065() {
