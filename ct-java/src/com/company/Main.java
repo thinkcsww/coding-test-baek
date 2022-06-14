@@ -8,7 +8,11 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p4673();
+        p15596();
+    }
+
+    public static void p15596() {
+
     }
 
     public static void p4673() {
