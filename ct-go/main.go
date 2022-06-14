@@ -10,7 +10,46 @@ import (
 )
 
 func main() {
-	p4344()
+	p1065()
+}
+
+func p1065() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+	var count = 0
+
+	fmt.Fscanln(reader, &N)
+
+	for i := 1; i <= N; i++ {
+		if i < 100 {
+			count++
+		} else {
+			str := strconv.Itoa(i)
+			num0, err := strconv.Atoi(string(str[0]))
+			if err != nil {
+				return
+			}
+
+			num1, err := strconv.Atoi(string(str[1]))
+			if err != nil {
+				return
+			}
+
+			num2, err := strconv.Atoi(string(str[2]))
+			if err != nil {
+				return
+			}
+
+			if (num0 - num1) == (num1 - num2) {
+				count++
+			}
+		}
+	}
+	fmt.Print(count)
 }
 
 func p4344() {
