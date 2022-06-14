@@ -13,6 +13,16 @@ func main() {
 	p4673()
 }
 
+func p15596(a []int) int {
+	var sum int
+
+	for i := 0; i < len(a); i++ {
+		sum += a[i]
+	}
+
+	return sum
+}
+
 func p4673() {
 
 	var arr [10001]int
