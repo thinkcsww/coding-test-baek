@@ -10,7 +10,29 @@ import (
 )
 
 func main() {
-	p11654()
+	p11720()
+}
+
+func p11720() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+	fmt.Fscanln(reader, &N)
+
+	var s string
+	fmt.Fscanln(reader, &s)
+
+	var sum = 0
+
+	for i := 0; i < N; i++ {
+		sum += int(s[i]) - int('0')
+	}
+
+	fmt.Fprint(writer, sum)
+
 }
 
 func p11654() {

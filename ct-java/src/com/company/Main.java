@@ -8,7 +8,23 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p11654();
+        p11720();
+    }
+
+    public static void p11720() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int sum = 0;
+
+        String s = bufferedReader.readLine();
+
+        for (int i = 0; i < N; i++) {
+            sum += s.charAt(i) - '0';
+        }
+
+        System.out.println(sum);
     }
 
     public static void p11654() throws IOException {
