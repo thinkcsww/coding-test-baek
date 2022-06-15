@@ -10,7 +10,34 @@ import (
 )
 
 func main() {
-	p11720()
+	p10809()
+}
+
+func p10809() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+	var word string
+	var resultArray [26]int
+
+	fmt.Fscanln(reader, &word)
+
+	for i := 0; i < 26; i++ {
+		resultArray[i] = -1
+	}
+
+	for i := 0; i < len(word); i++ {
+		var index = int(word[i] - 'a')
+
+		if resultArray[index] == -1 {
+			resultArray[index] = i
+		}
+	}
+
+	for i := 0; i < 26; i++ {
+		fmt.Fprintf(writer, "%d ", resultArray[i])
+	}
 }
 
 func p11720() {
