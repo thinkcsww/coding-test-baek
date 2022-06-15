@@ -10,7 +10,33 @@ import (
 )
 
 func main() {
-	p10809()
+	p2675()
+}
+
+func p2675() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	for i := 0; i < N; i++ {
+		var rep int
+		var word string
+
+		fmt.Fscan(reader, &rep)
+		fmt.Fscan(reader, &word)
+
+		var resultStr = ""
+		for _, c := range word {
+			resultStr += strings.Repeat(string(c), rep)
+		}
+
+		fmt.Fprintln(writer, resultStr)
+	}
 }
 
 func p10809() {
