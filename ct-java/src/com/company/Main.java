@@ -8,7 +8,32 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p10809();
+        p2675();
+    }
+
+    public static void p2675() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        for (int i = 0; i < N; i++) {
+            StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int rep = Integer.parseInt(stringTokenizer.nextToken());
+
+            String word = stringTokenizer.nextToken();
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int j = 0; j < word.length(); j++) {
+                for (int k = 0; k < rep; k++) {
+                    stringBuilder.append(word.charAt(j));
+                }
+            }
+
+            System.out.println(stringBuilder.toString());
+
+        }
     }
 
     public static void p10809() throws IOException {
