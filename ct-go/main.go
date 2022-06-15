@@ -10,7 +10,20 @@ import (
 )
 
 func main() {
-	p4673()
+	p11654()
+}
+
+func p11654() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N string
+
+	fmt.Fscanln(reader, &N)
+
+	fmt.Fprintln(writer, int(N[0]))
 }
 
 func p15596(a []int) int {
