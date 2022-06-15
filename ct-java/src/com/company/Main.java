@@ -8,7 +8,13 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p15596();
+        p11654();
+    }
+
+    public static void p11654() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println((int)bufferedReader.readLine().charAt(0));
     }
 
     public static void p15596() {
