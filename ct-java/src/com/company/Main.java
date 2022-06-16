@@ -3,14 +3,36 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1152();
+        p2908();
     }
 
+    public static void p2908() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        int result = 0;
+        String num1 = scanner.next();
+        String num2 = scanner.next();
+
+        String reverseNum1 = "";
+        String reverseNum2 = "";
+        for (int i = 2; i >= 0; i--) {
+            reverseNum1 += num1.charAt(i);
+            reverseNum2 += num2.charAt(i);
+        }
+
+        if (Integer.parseInt(reverseNum1) > Integer.parseInt(reverseNum2)) {
+            System.out.println(reverseNum1);
+        } else {
+            System.out.println(reverseNum2);
+        }
+
+    }
     public static void p1152() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
