@@ -10,7 +10,44 @@ import (
 )
 
 func main() {
-	p1152()
+	p2908()
+}
+
+func p2908() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var num1 string
+	var num2 string
+	var rNum1 string
+	var rNum2 string
+
+	fmt.Fscan(reader, &num1)
+	fmt.Fscan(reader, &num2)
+
+	for i := 2; i >= 0; i-- {
+		rNum1 += string(num1[i])
+		rNum2 += string(num2[i])
+	}
+
+	r1, err := strconv.Atoi(rNum1)
+	if err != nil {
+		return
+	}
+
+	r2, err := strconv.Atoi(rNum2)
+	if err != nil {
+		return
+	}
+
+	if r1 > r2 {
+		fmt.Fprintln(writer, strconv.Itoa(r1))
+	} else {
+		fmt.Fprintln(writer, strconv.Itoa(r2))
+	}
+
 }
 
 func p1152() {
