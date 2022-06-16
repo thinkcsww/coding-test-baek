@@ -10,7 +10,74 @@ import (
 )
 
 func main() {
-	p2675()
+	p1152()
+}
+
+func p1152() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	strs, _ := reader.ReadString('\n')
+	strs = strings.TrimSuffix(strs, "\n")
+
+	splitCount := len(strings.Split(strs, " "))
+
+	if strings.HasPrefix(strs, " ") {
+		splitCount--
+	}
+
+	if strings.HasSuffix(strs, " ") {
+		splitCount--
+	}
+
+	if strs == " " {
+		splitCount = 0
+	}
+
+	fmt.Print(splitCount)
+}
+
+func p1157() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var word string
+	var resultArray [26]int
+	var currTopValue int = 0
+	var currTopIndex int = 0
+	var maxCount = 0
+
+	fmt.Fscan(reader, &word)
+
+	word = strings.ToUpper(word)
+	for _, c := range word {
+		var index = int(c - 'A')
+
+		resultArray[index]++
+
+		if currTopValue < resultArray[index] {
+			currTopIndex = index
+			currTopValue = resultArray[index]
+		}
+
+	}
+
+	for _, value := range resultArray {
+		if currTopValue == value {
+			maxCount++
+		}
+	}
+
+	if maxCount > 1 {
+		fmt.Println("?")
+	} else {
+		fmt.Println(string(rune(currTopIndex + 'A')))
+	}
+
 }
 
 func p2675() {
