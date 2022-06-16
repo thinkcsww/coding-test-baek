@@ -9,7 +9,28 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2908();
+        p5622();
+    }
+
+    public static void p5622() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String word = bufferedReader.readLine();
+        int time = 0;
+        for (int i = 0; i < word.length(); i++) {
+            int val = word.charAt(i) - 'A';
+            if (val >= 23) {
+                time += 10;
+            } else if (val >= 15 && val <= 18) {
+                time += 8;
+            } else if (val == 21) {
+                time += 9;
+            } else {
+                time += val / 3 + 3;
+            }
+        }
+
+        System.out.println(time);
     }
 
     public static void p2908() throws IOException {
