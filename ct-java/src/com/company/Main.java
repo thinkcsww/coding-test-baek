@@ -8,7 +8,57 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2675();
+        p1152();
+    }
+
+    public static void p1152() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String sentence = bufferedReader.readLine().toUpperCase();
+
+
+        if (sentence.length() > 0) {
+            int wordCount = sentence.split(" ").length;
+            if (sentence.startsWith(" ") && sentence.trim().length() > 0) {
+                wordCount--;
+            }
+            System.out.println(wordCount);
+        } else {
+            System.out.println("0");
+        }
+    }
+
+    public static void p1157() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String word = bufferedReader.readLine().toUpperCase();
+        int[] resultArray = new int[26];
+        int currTopValue = 0;
+        int currTopIndex = 0;
+        int maxCount = 0;
+
+        for (int i = 0; i < word.length(); i++) {
+            int index = word.charAt(i) - 'A';
+
+            resultArray[index] += 1;
+
+            if (currTopValue < resultArray[index]) {
+                currTopValue = resultArray[index];
+                currTopIndex = index;
+            }
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (currTopValue == resultArray[i]) {
+                maxCount++;
+            }
+        }
+
+        if (maxCount == 1) {
+            System.out.println(Character.toChars(currTopIndex + 'A'));
+        } else {
+            System.out.println("?");
+        }
     }
 
     public static void p2675() throws IOException {
