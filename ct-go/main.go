@@ -10,7 +10,55 @@ import (
 )
 
 func main() {
-	p2941()
+	p1316()
+}
+
+func p1316() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+	var count int
+	fmt.Fscanln(reader, &N)
+
+	for i := 0; i < N; i++ {
+		var word string
+		fmt.Fscanln(reader, &word)
+
+		var flag = false
+		var curChar = ""
+		var doneCharArr = []string{}
+
+		for _, c := range word {
+			if curChar != string(c) {
+				if !contains(doneCharArr, string(c)) {
+					doneCharArr = append(doneCharArr, string(c))
+					curChar = string(c)
+					flag = true
+				} else {
+					flag = false
+					break
+				}
+			}
+		}
+
+		if flag {
+			count++
+		}
+	}
+
+	fmt.Fprintln(writer, count)
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }
 
 func p2941() {
