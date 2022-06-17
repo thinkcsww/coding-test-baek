@@ -10,7 +10,82 @@ import (
 )
 
 func main() {
-	p2908()
+	p2941()
+}
+
+func p2941() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var word string
+	fmt.Fscanln(reader, &word)
+	var count = 0
+
+	for i := 0; i < len(word); i++ {
+		if word[i] == 'c' {
+			if i < len(word)-1 {
+				if word[i+1] == '=' || word[i+1] == '-' {
+					i++
+				}
+			}
+		} else if word[i] == 'd' {
+			if i < len(word)-2 {
+				if word[i+1] == 'z' && word[i+2] == '=' {
+					i += 2
+				}
+			}
+
+			if i < len(word)-1 {
+				if word[i+1] == '-' {
+					i++
+				}
+			}
+		} else if word[i] == 'l' || word[i] == 'n' {
+			if i < len(word)-1 {
+				if word[i+1] == 'j' {
+					i++
+				}
+			}
+		} else if word[i] == 's' || word[i] == 'z' {
+			if i < len(word)-1 {
+				if word[i+1] == '=' {
+					i++
+				}
+			}
+		}
+
+		count++
+	}
+
+	fmt.Fprintln(writer, count)
+}
+
+func p5622() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+	var word string
+	var time = 0
+	fmt.Fscan(reader, &word)
+
+	for _, alphabet := range word {
+		var val = int(alphabet - 'A')
+
+		if val >= 22 {
+			time += 10
+		} else if val >= 15 && val <= 18 {
+			time += 8
+		} else if val == 21 {
+			time += 9
+		} else {
+			time += val/3 + 3
+		}
+	}
+
+	fmt.Print(time)
 }
 
 func p2908() {
