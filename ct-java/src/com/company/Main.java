@@ -3,13 +3,100 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p5622();
+        p1316();
+    }
+
+    public static void p1316() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int count = 0;
+        ArrayList<String> done = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            done.clear();
+            boolean incFlag = true;
+            String currChar = "";
+
+            String word = bufferedReader.readLine();
+
+            for (int j = 0; j < word.length(); j++) {
+                String c = String.valueOf(word.charAt(j));
+
+                if (!currChar.equals(c)) {
+                    if (!done.contains(c)) {
+                        done.add(c);
+                        currChar = c;
+                    } else {
+                        incFlag = false;
+                        break;
+                    }
+                }
+
+            }
+
+            if (incFlag) {
+                count++;
+            }
+        }
+
+        System.out.println(count);
+    }
+
+    public static void p2941() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String word = bufferedReader.readLine();
+        int count = 0;
+
+        for (int i = 0; i < word.length(); i++) {
+            char character = word.charAt(i);
+
+            if (character == 'c') {
+                if (i < word.length() - 1) {
+                    if (word.charAt(i + 1) == '=' || word.charAt(i + 1) == '-') {
+                        i++;
+                    }
+                }
+            } else if (character == 'd') {
+                if (i < word.length() - 2) {
+                    if (word.charAt(i + 1) == 'z' && word.charAt(i + 2) == '=') {
+                        i += 2;
+                    }
+                }
+
+                if (i < word.length() - 1) {
+                    if (word.charAt(i + 1) == '-') {
+                        i++;
+                    }
+                }
+            } else if (character == 'l' || character == 'n') {
+                if (i < word.length() - 1) {
+                    if (word.charAt(i + 1) == 'j') {
+                        i++;
+                    }
+                }
+            } else if (character == 's' || character == 'z') {
+                if (i < word.length() - 1) {
+                    if (word.charAt(i + 1) == '=') {
+                        i++;
+                    }
+                }
+            }
+
+            count++;
+
+        }
+
+
+        System.out.println(count);
     }
 
     public static void p5622() throws IOException {
@@ -19,7 +106,7 @@ public class Main {
         int time = 0;
         for (int i = 0; i < word.length(); i++) {
             int val = word.charAt(i) - 'A';
-            if (val >= 23) {
+            if (val >= 22) {
                 time += 10;
             } else if (val >= 15 && val <= 18) {
                 time += 8;
