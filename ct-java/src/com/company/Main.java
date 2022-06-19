@@ -10,7 +10,29 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p문자열압축("xababcdcdababcdcd");
+        p2292();
+    }
+
+    public static void p2292() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int limit = 1;
+        int adder = 6;
+        int count = 1;
+        while (true) {
+            if (limit < N) {
+                limit += adder;
+                adder += 6;
+                count ++;
+            } else {
+                break;
+            }
+        }
+
+        System.out.println(count);
+
     }
 
     public static void p문자열압축(String s) {
