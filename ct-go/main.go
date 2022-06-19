@@ -10,7 +10,34 @@ import (
 )
 
 func main() {
-	p1316()
+	p2292()
+}
+
+func p2292() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+	var limit = 1
+	var count = 1
+	var adder = 6
+
+	fmt.Fscanln(reader, &N)
+
+	for {
+		if N > limit {
+			limit += adder
+			adder += 6
+			count++
+		} else {
+			break
+		}
+	}
+
+	fmt.Fprintln(writer, count)
+
 }
 
 func p1316() {
