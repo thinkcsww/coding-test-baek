@@ -10,7 +10,50 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1316();
+        p문자열압축("xababcdcdababcdcd");
+    }
+
+    public static void p문자열압축(String s) {
+        int min = s.length();
+        for (int i = 1; i <= s.length() / 2; i++) {
+
+            String prevString = "";
+            StringBuilder stringBuilder = new StringBuilder();
+            int matchCount = 1;
+
+            for (int j = 0; j < s.length(); j += i) {
+                String substring = s.substring(j, Math.min(j + i, s.length()));
+
+                if (prevString.equals(substring)) {
+                    matchCount++;
+                } else {
+                    if (matchCount <= 1) {
+                        stringBuilder.append(prevString);
+                    } else {
+                        stringBuilder.append(matchCount).append(prevString);
+                        matchCount = 1;
+                    }
+                }
+
+                prevString = substring;
+            }
+
+            if (matchCount <= 1) {
+                stringBuilder.append(prevString);
+            } else {
+                stringBuilder.append(matchCount).append(prevString);
+                matchCount = 1;
+            }
+
+            int r = stringBuilder.toString().length();
+            if (min > r) {
+                min = r;
+            }
+
+
+        }
+
+        System.out.println(min);
     }
 
     public static void p1316() throws IOException {
