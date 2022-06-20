@@ -10,7 +10,49 @@ import (
 )
 
 func main() {
-	p2292()
+	p1193()
+}
+
+func p1193() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+	var limit = 4
+	var i = 2
+	var adder = 2
+
+	fmt.Fscanln(reader, &N)
+
+	if N == 1 {
+		fmt.Fprintln(writer, "1/1")
+		return
+	}
+
+	for {
+		var prevLimit = limit - adder
+
+		if limit > N {
+			var x int
+			var y int
+			if i%2 == 0 {
+				x = i - (N - prevLimit)
+				y = 1 + (N - prevLimit)
+			} else {
+				x = 1 + (N - prevLimit)
+				y = i - (N - prevLimit)
+			}
+
+			fmt.Fprintf(writer, "%d/%d", y, x)
+			break
+		} else {
+			i++
+			adder++
+			limit += adder
+		}
+	}
 }
 
 func p2292() {
