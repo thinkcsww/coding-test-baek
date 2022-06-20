@@ -10,7 +10,46 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2292();
+        p1193();
+    }
+
+    public static void p1193() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int limit = 4;
+        int adder = 2;
+        int i = 2;
+
+        if (N == 1) {
+            System.out.println("1/1");
+            return;
+        }
+
+        while (true) {
+            if (limit > N) {
+                int prevLimit = limit - adder;
+                int x;
+                int y;
+
+                if (i % 2 == 0) {
+                    y = i - (N - prevLimit);
+                    x = 1 + (N - prevLimit);
+                } else {
+                    y = 1 + (N - prevLimit);
+                    x = i - (N - prevLimit);
+                }
+
+                System.out.println(x + "/" + y);
+                break;
+            } else {
+                i++;
+                adder++;
+                limit += adder;
+            }
+        }
+
     }
 
     public static void p2292() throws IOException {
