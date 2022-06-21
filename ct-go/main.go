@@ -10,7 +10,33 @@ import (
 )
 
 func main() {
-	p2775()
+	p2839()
+}
+
+func p2839() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+	fmt.Fscanln(reader, &N)
+	var quotient = N / 5
+
+	for {
+		var remainder = N - 5*quotient
+		if quotient == 0 && remainder%3 != 0 {
+			fmt.Fprintln(writer, "-1")
+			break
+		} else {
+			if remainder%3 == 0 {
+				fmt.Fprintln(writer, quotient+remainder/3)
+				break
+			} else {
+				quotient--
+			}
+		}
+	}
 }
 
 func p2775() {
