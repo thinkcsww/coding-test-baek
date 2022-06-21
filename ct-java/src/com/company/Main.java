@@ -10,7 +10,30 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2775();
+        p2839();
+    }
+
+    public static void p2839() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int quotient = N / 5;
+
+        while (quotient >= 0) {
+            int remainder = N - (quotient * 5);
+            if (quotient == 0 && remainder % 3 != 0) {
+                System.out.println("-1");
+                break;
+            } else {
+                if (remainder % 3 == 0) {
+                    System.out.println(quotient + remainder / 3);
+                    break;
+                } else {
+                    quotient--;
+                }
+            }
+        }
     }
 
     public static void p2775() throws IOException {
