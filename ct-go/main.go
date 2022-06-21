@@ -10,7 +10,37 @@ import (
 )
 
 func main() {
-	p1193()
+	p2775()
+}
+
+func p2775() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	for i := 0; i < N; i++ {
+		var k int
+		var n int
+
+		var floor []int = []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
+
+		fmt.Fscanln(reader, &k)
+		fmt.Fscanln(reader, &n)
+
+		for j := 0; j < k; j++ {
+			for l := 1; l < n; l++ {
+				floor[l+1] = floor[l] + floor[l+1]
+			}
+		}
+
+		fmt.Fprintln(writer, floor[n])
+
+	}
 }
 
 func p1193() {
