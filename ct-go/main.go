@@ -4,13 +4,117 @@ import (
 	"bufio"
 	"fmt"
 	"math"
+	"math/big"
 	"os"
 	"strconv"
 	"strings"
 )
 
 func main() {
-	p2839()
+	p10250()
+}
+
+func p10250() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var n int
+	fmt.Fscanln(reader, &n)
+
+	for i := 0; i < n; i++ {
+		var H int
+		var W int
+		var N int
+
+		fmt.Fscan(reader, &H, &W, &N)
+
+		var x int
+		var y int
+
+		if N > H {
+			if N%H == 0 {
+				x = N / H
+				y = H
+			} else {
+				x = N/H + 1
+				y = N % H
+			}
+		} else {
+			x = 1
+			y = N
+		}
+
+		if x < 10 {
+			fmt.Fprintf(writer, "%v0%v\n", y, x)
+		} else {
+			fmt.Fprintf(writer, "%v%v\n", y, x)
+		}
+
+	}
+
+}
+
+func p10757() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var A big.Int
+	var B big.Int
+
+	fmt.Fscan(reader, &A, &B)
+
+	add := new(big.Int)
+	add = add.Add(&A, &B)
+
+	fmt.Fprintln(writer, add)
+
+}
+
+func p1712() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var A int
+	var B int
+	var C int
+
+	fmt.Fscan(reader, &A)
+	fmt.Fscan(reader, &B)
+	fmt.Fscan(reader, &C)
+
+	var result int
+
+	if B >= C {
+		result = -1
+	} else {
+		result = (A / (C - B)) + 1
+	}
+
+	fmt.Fprintln(writer, result)
+}
+
+func p2869() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var A float64
+	var B float64
+	var V float64
+
+	fmt.Fscan(reader, &A)
+	fmt.Fscan(reader, &B)
+	fmt.Fscan(reader, &V)
+
+	var result = int(math.Ceil((V - A) / (A - B)))
+	fmt.Fprintln(writer, result+1)
 }
 
 func p2839() {
