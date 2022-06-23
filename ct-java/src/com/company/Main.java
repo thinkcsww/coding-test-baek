@@ -3,6 +3,7 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -10,7 +11,75 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2839();
+        p10250();
+    }
+
+    public static void p10250() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.next());
+
+        for (int i = 0; i < n; i++) {
+            int H = Integer.parseInt(scanner.next());
+            int W = Integer.parseInt(scanner.next());
+            int N = Integer.parseInt(scanner.next());
+
+            int y;
+            int x;
+            if (N > H) {
+                y = N % H == 0 ? H : N % H;
+                x = N % H == 0 ? N / H : N / H + 1;
+            } else {
+                y = N;
+                x = 1;
+            }
+
+            if (x < 10) {
+                System.out.println(y + "0" + x);
+            } else {
+                System.out.println(y + "" + x);
+            }
+
+        }
+    }
+
+
+    public static void p10757() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        BigInteger A = new BigInteger(scanner.next());
+        BigInteger B = new BigInteger(scanner.next());
+        System.out.println(A.add(B));
+    }
+
+    public static void p1712() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int A = Integer.parseInt(scanner.next());
+        int B = Integer.parseInt(scanner.next());
+        int C = Integer.parseInt(scanner.next());
+
+        int result;
+
+        if (B >= C) {
+            result = -1;
+        } else {
+            result = (A / (C - B)) + 1;
+        }
+
+
+        System.out.println(result);
+
+
+    }
+
+    public static void p2869() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int A = Integer.parseInt(scanner.next());
+        int B = Integer.parseInt(scanner.next());
+        int V = Integer.parseInt(scanner.next());
+
+        int r = (int)Math.ceil((V - A) / (A - B * 1.0));
+
+        System.out.println(r + 1);
+
     }
 
     public static void p2839() throws IOException {
