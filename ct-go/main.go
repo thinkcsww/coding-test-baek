@@ -11,7 +11,47 @@ import (
 )
 
 func main() {
-	p10250()
+	p1978()
+}
+
+func p1978() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var isPrimeNum bool
+	var count = 0
+
+	var N int
+	fmt.Fscanln(reader, &N)
+
+	for i := 0; i < N; i++ {
+		var num int
+		fmt.Fscan(reader, &num)
+
+		isPrimeNum = true
+
+		if num == 1 {
+			continue
+		}
+
+		if num > 2 {
+			for j := 2; j < num; j++ {
+				if num%j == 0 {
+					isPrimeNum = false
+					break
+				}
+			}
+		}
+
+		if isPrimeNum {
+			count++
+		}
+	}
+
+	fmt.Println(count)
+
 }
 
 func p10250() {
