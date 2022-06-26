@@ -3,7 +3,41 @@ import java.io.InputStreamReader
 import java.util.Scanner
 
 fun main(args: Array<String>) {
-    p10250()
+    p1978()
+}
+
+fun p1978() {
+    val scanner = Scanner(System.`in`)
+
+    val N: Int = scanner.next().toInt()
+
+    var isPrimeNumber: Boolean
+    var count = 0
+
+    for (i in 0 until N) {
+        val num: Int = scanner.next().toInt()
+
+        if (num == 1) {
+            continue
+        }
+
+        isPrimeNumber = true
+        if (num > 2) {
+            for (j in 2 until num) {
+                if (num % j == 0) {
+                    isPrimeNumber = false
+                    break
+                }
+            }
+        }
+
+        if (isPrimeNumber) {
+            count++
+        }
+    }
+
+    print(count)
+
 }
 
 fun p10250() {
