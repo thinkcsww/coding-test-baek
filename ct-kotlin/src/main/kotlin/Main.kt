@@ -3,7 +3,54 @@ import java.io.InputStreamReader
 import java.util.Scanner
 
 fun main(args: Array<String>) {
-    p1978()
+    p2581()
+}
+
+fun p2581() {
+    val scanner = Scanner(System.`in`)
+
+    val M = scanner.next().toInt()
+    val N = scanner.next().toInt()
+
+    var min = 100000
+    var sum = 0
+    var isPrimeNumber: Boolean
+
+    for (i in M..N) {
+        if (i == 1) {
+            continue
+        }
+
+        isPrimeNumber = true
+
+        if (i > 2) {
+            for (j in 2 until i) {
+                if (i % j == 0) {
+                    isPrimeNumber = false
+                    break
+                }
+            }
+        }
+
+        if (isPrimeNumber) {
+            sum += i
+
+            if (min == 100000) {
+                min = i
+            }
+        }
+    }
+
+
+
+    if (sum == 0) {
+        println(-1)
+    } else {
+        println(sum)
+        println(min)
+    }
+
+
 }
 
 fun p1978() {
