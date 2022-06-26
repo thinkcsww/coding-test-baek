@@ -11,7 +11,55 @@ import (
 )
 
 func main() {
-	p1978()
+	p2581()
+}
+
+func p2581() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var isPrimeNum bool
+
+	var M int
+	var N int
+	var sum int = 0
+	var min int = 100000
+
+	fmt.Fscan(reader, &M, &N)
+
+	for i := M; i <= N; i++ {
+		isPrimeNum = true
+
+		if i == 1 {
+			continue
+		}
+
+		if i > 2 {
+			for j := 2; j < i; j++ {
+				if i%j == 0 {
+					isPrimeNum = false
+					break
+				}
+			}
+		}
+
+		if isPrimeNum {
+			sum += i
+
+			if min == 100000 {
+				min = i
+			}
+		}
+	}
+
+	if sum == 0 {
+		fmt.Fprintln(writer, "-1")
+	} else {
+		fmt.Fprintln(writer, sum)
+		fmt.Fprintln(writer, min)
+	}
 }
 
 func p1978() {
