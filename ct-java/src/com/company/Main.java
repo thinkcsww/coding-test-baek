@@ -11,8 +11,54 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1978();
+        p2581();
     }
+
+    public static void p2581() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        int M = Integer.parseInt(scanner.next());
+        int N = Integer.parseInt(scanner.next());
+
+        boolean isPrimeNumber;
+        int min = 100000;
+        int sum = 0;
+
+        for (int i = M; i <= N ; i++) {
+
+            if (i == 1) {
+                continue;
+            }
+
+            isPrimeNumber = true;
+
+            if (i > 2) {
+                for (int j = 2; j < i; j++) {
+                    if (i % j == 0) {
+                        isPrimeNumber = false;
+                        break;
+                    }
+                }
+            }
+
+            if (isPrimeNumber) {
+                sum += i;
+
+                if (min == 100000) {
+                    min = i;
+                }
+            }
+        }
+
+        if (sum == 0) {
+            System.out.println(-1);
+        } else {
+            System.out.println(sum);
+            System.out.println(min);
+        }
+
+    }
+
 
     public static void p1978() throws IOException {
         Scanner scanner = new Scanner(System.in);
