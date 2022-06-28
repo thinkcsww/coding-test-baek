@@ -11,7 +11,39 @@ import (
 )
 
 func main() {
-	p2581()
+	p11653()
+}
+
+func p11653() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+	var N int
+
+	fmt.Fscan(reader, &N)
+
+	if N != 1 {
+		getPrimeFactors(N, writer)
+	}
+}
+
+func getPrimeFactors(n int, writer *bufio.Writer) {
+	var flag = false
+
+	for i := 2; i <= n/2; i++ {
+		if n%i == 0 {
+			flag = true
+			fmt.Fprintln(writer, i)
+			getPrimeFactors(n/i, writer)
+			break
+		}
+	}
+
+	if !flag {
+		fmt.Fprintln(writer, n)
+	}
+
 }
 
 func p2581() {
