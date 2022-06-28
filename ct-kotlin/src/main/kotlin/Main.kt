@@ -3,7 +3,34 @@ import java.io.InputStreamReader
 import java.util.Scanner
 
 fun main(args: Array<String>) {
-    p2581()
+    p11653()
+}
+
+fun p11653() {
+    val scanner = Scanner(System.`in`)
+
+    val N = scanner.next().toInt()
+
+    if (N != 1) {
+        getPrimeFactors(N)
+    }
+}
+
+fun getPrimeFactors(n: Int) {
+    var flag = false
+
+    for (i in 2..(n / 2)) {
+        if (n % i == 0) {
+            println(i)
+            getPrimeFactors(n / i)
+            flag = true
+            break
+        }
+    }
+
+    if (!flag) {
+        println(n)
+    }
 }
 
 fun p2581() {
