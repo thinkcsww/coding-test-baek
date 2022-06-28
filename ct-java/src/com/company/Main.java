@@ -11,7 +11,36 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2581();
+        p11653();
+    }
+
+
+    public static void p11653() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = Integer.parseInt(scanner.next());
+
+        if (N != 1) {
+            getMember(N);
+        }
+    }
+
+    public static void getMember(int n) {
+        boolean flag = false;
+
+        for (int i = 2; i <= (n / 2); i++) {
+            if (n % i == 0) {
+                System.out.println(i);
+                flag = true;
+                getMember(n / i);
+                break;
+            }
+        }
+
+        if (!flag) {
+            System.out.println(n);
+        }
+
     }
 
     public static void p2581() throws IOException {
