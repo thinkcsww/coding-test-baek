@@ -11,7 +11,42 @@ import (
 )
 
 func main() {
-	p11653()
+	p1929()
+}
+
+func p1929() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var M int64
+	var N int64
+
+	fmt.Fscan(reader, &M)
+	fmt.Fscan(reader, &N)
+
+	var imNotPrime = new([1000001]bool)
+
+	imNotPrime[0] = true
+	imNotPrime[1] = true
+
+	for i := 2; i <= int(math.Sqrt(float64(N))); i++ {
+		if imNotPrime[i] {
+			continue
+		}
+
+		for j := i * i; j <= int(N); j = j + i {
+			imNotPrime[j] = true
+		}
+	}
+
+	for i := M; i <= N; i++ {
+		if !imNotPrime[i] {
+			fmt.Fprintln(writer, i)
+		}
+	}
+
 }
 
 func p11653() {
