@@ -1,9 +1,39 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.Scanner
+import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p11653()
+    p1929()
+}
+
+fun p1929() {
+    val scanner = Scanner(System.`in`)
+
+    val M = scanner.next().toInt()
+    val N = scanner.next().toInt()
+
+    val notPrime = BooleanArray(N + 1)
+
+    notPrime[0] = true
+    notPrime[1] = true
+
+    for (i in 2..sqrt(N.toDouble()).toInt()) {
+        if (notPrime[i]) {
+            continue
+        }
+
+        for (j in i * i..N step i  ) {
+            notPrime[j] = true
+        }
+    }
+
+    for ((index, value) in notPrime.withIndex()) {
+        if (index >= M && !value) {
+            println(index)
+        }
+    }
+
 }
 
 fun p11653() {
