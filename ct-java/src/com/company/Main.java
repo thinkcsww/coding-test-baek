@@ -11,9 +11,37 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p11653();
+        p1929();
     }
 
+    public static void p1929() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        int M = Integer.parseInt(scanner.next());
+        int N = Integer.parseInt(scanner.next());
+
+        boolean[] prime = new boolean[N + 1];
+
+        prime[0] = true;
+        prime[1] = true;
+
+        for (int i = 2; i <= Math.sqrt(N); i++) {
+            if (prime[i]) {
+                continue;
+            }
+
+            for (int j = i * i; j < prime.length; j = j + i) {
+                prime[j] = true;
+            }
+        }
+
+        for (int i = M; i <= N; i++) {
+            if (!prime[i]) {
+                System.out.println(i);
+            }
+        }
+
+    }
 
     public static void p11653() throws IOException {
         Scanner scanner = new Scanner(System.in);
