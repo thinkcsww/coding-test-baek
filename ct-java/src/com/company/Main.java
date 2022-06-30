@@ -11,8 +11,46 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1929();
+        p4948();
     }
+
+    public static void p4948() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            int n = Integer.parseInt(scanner.next());
+
+            if (n == 0) {
+                break;
+            }
+
+            boolean[] iAmNotPrime = new boolean[2 * n + 1];
+
+            iAmNotPrime[0] = true;
+            iAmNotPrime[1] = true;
+
+            for (int i = 2; i <= Math.sqrt(2 * n) ; i++) {
+                if (iAmNotPrime[i]) {
+                    continue;
+                }
+
+                for (int j = i * i; j <= 2 * n; j += i) {
+                    iAmNotPrime[j] = true;
+                }
+            }
+
+            int count = 0;
+            for (int i = n + 1; i <= 2 * n; i++) {
+                if (!iAmNotPrime[i]) {
+                    count++;
+                }
+            }
+
+            System.out.println(count);
+        }
+
+    }
+
 
     public static void p1929() throws IOException {
         Scanner scanner = new Scanner(System.in);
