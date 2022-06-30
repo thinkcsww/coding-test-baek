@@ -4,7 +4,46 @@ import java.util.Scanner
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1929()
+    p4948()
+}
+
+fun p4948() {
+    val scanner = Scanner(System.`in`)
+
+    while (true) {
+        val n = scanner.next().toInt()
+
+        if (n == 0) {
+            break
+        }
+
+        val iAmNotPrime = BooleanArray(2 * n + 1)
+
+        iAmNotPrime[0] = true
+        iAmNotPrime[1] = true
+
+        for (i in 2..sqrt((2 * n).toDouble()).toInt()) {
+            if (iAmNotPrime[i]) {
+                continue
+            }
+
+            for (j in i * i..2 * n step i) {
+                iAmNotPrime[j] = true
+            }
+        }
+
+        var count = 0
+
+        for (i in n + 1.. 2 * n) {
+            if (!iAmNotPrime[i]) {
+                count++
+            }
+        }
+
+        println(count)
+
+
+    }
 }
 
 fun p1929() {
