@@ -11,7 +11,50 @@ import (
 )
 
 func main() {
-	p1929()
+	p4948()
+}
+
+func p4948() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+	var n int
+
+	for {
+		fmt.Fscan(reader, &n)
+
+		if n == 0 {
+			break
+		}
+
+		var iAmNotPrime = make([]bool, 2*n+1)
+
+		iAmNotPrime[0] = true
+		iAmNotPrime[1] = true
+
+		for i := 2; i <= int(math.Sqrt(float64(2*n))); i++ {
+			if iAmNotPrime[i] {
+				continue
+			}
+
+			for j := i * i; j <= 2*n; j += i {
+				iAmNotPrime[j] = true
+			}
+		}
+
+		var count = 0
+
+		for i := n + 1; i <= 2*n; i++ {
+			if !iAmNotPrime[i] {
+				count++
+			}
+		}
+
+		fmt.Fprintln(writer, count)
+
+	}
+
 }
 
 func p1929() {
@@ -26,7 +69,7 @@ func p1929() {
 	fmt.Fscan(reader, &M)
 	fmt.Fscan(reader, &N)
 
-	var imNotPrime = new([1000001]bool)
+	var imNotPrime = make([]bool, M+1)
 
 	imNotPrime[0] = true
 	imNotPrime[1] = true
