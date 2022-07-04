@@ -11,7 +11,68 @@ import (
 )
 
 func main() {
-	p4948()
+	p9020()
+}
+
+func p9020() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	for i := 0; i < N; i++ {
+		var n int
+		fmt.Fscanln(reader, &n)
+
+		var primes []int
+
+		var iAmNotPrime = make([]bool, n+1)
+		iAmNotPrime[0] = true
+		iAmNotPrime[1] = true
+
+		for j := 2; j <= int(math.Sqrt(float64(n))); j++ {
+			if iAmNotPrime[j] {
+				continue
+			}
+
+			for k := j * j; k <= n; k += j {
+				iAmNotPrime[k] = true
+			}
+		}
+
+		for j := 0; j < len(iAmNotPrime); j++ {
+			if !iAmNotPrime[j] {
+				primes = append(primes, j)
+			}
+		}
+
+		var a int
+		var b int
+		var sub = 10000
+
+		for j := 0; j < len(primes); j++ {
+			n1 := primes[j]
+			for k := j; k < len(primes); k++ {
+				n2 := primes[k]
+
+				if n2-n1 > sub {
+					break
+				}
+
+				if n1+n2 == n {
+					a = n1
+					b = n2
+					sub = n2 - n1
+				}
+			}
+		}
+
+		fmt.Fprintf(writer, "%v %v\n", a, b)
+	}
 }
 
 func p4948() {
