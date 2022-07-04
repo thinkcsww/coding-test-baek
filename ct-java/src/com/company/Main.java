@@ -11,8 +11,66 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p4948();
+        p9020();
     }
+
+    public static void p9020() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = Integer.parseInt(scanner.next());
+
+        for (int i = 0; i < N; i++) {
+            int n = Integer.parseInt(scanner.next());
+
+            boolean[] iAmNotPrime = new boolean[n + 1];
+            ArrayList<Integer> primes = new ArrayList<>();
+
+            iAmNotPrime[0] = true;
+            iAmNotPrime[1] = true;
+
+            for (int j = 2; j <= Math.sqrt(n); j++) {
+                if (iAmNotPrime[j]) {
+                    continue;
+                }
+
+                for (int k = j * j; k <= n; k += j) {
+                    iAmNotPrime[k] = true;
+                }
+            }
+
+            for (int j = 0; j < n + 1; j++) {
+                if (!iAmNotPrime[j]) {
+                    primes.add(j);
+                }
+            }
+
+            int a = 0;
+            int b = 0;
+            int sub = 10000;
+
+            for (int j = 0; j < primes.size(); j++) {
+                int n1 = primes.get(j);
+                for (int k = j; k < primes.size(); k++) {
+                    int n2 = primes.get(k);
+
+                    if (n2 - n1 > sub) {
+                        break;
+                    }
+
+                    if (n1 + n2 == n) {
+                        a = n1;
+                        b = n2;
+                        sub = b - a;
+                    }
+                }
+            }
+
+            System.out.println(a + " " + b);
+        }
+
+
+    }
+
 
     public static void p4948() throws IOException {
         Scanner scanner = new Scanner(System.in);
