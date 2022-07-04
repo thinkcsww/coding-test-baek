@@ -4,7 +4,66 @@ import java.util.Scanner
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p4948()
+    p9020()
+}
+
+fun p9020() {
+    val scanner = Scanner(System.`in`)
+
+    val N = scanner.next().toInt()
+
+    for (i in 0 until N) {
+        val n = scanner.next().toInt()
+
+        val primes = ArrayList<Int>()
+
+        val iAmNotPrime = BooleanArray(n + 1)
+        iAmNotPrime[0] = true
+        iAmNotPrime[1] = true
+
+        for (j in 2..sqrt(n.toDouble()).toInt()) {
+            if (iAmNotPrime[j]) {
+                continue
+            }
+
+            for (k in j * j..n step j) {
+                iAmNotPrime[k] = true
+            }
+        }
+
+
+        for (j in 0..n) {
+            if (!iAmNotPrime[j]) {
+                primes.add(j)
+            }
+        }
+
+        var a = 0
+        var b = 0
+        var sub = 10000
+
+        for (j in 0 until primes.size) {
+            val n1 = primes[j]
+
+            for (k in j until primes.size) {
+                val n2 = primes[k]
+
+                if (b - a > sub) {
+                    break
+                }
+
+                if (n1 + n2 == n) {
+                    a = n1
+                    b = n2
+                    sub = n2 - n1
+                }
+            }
+        }
+
+        println("$a $b")
+
+
+    }
 }
 
 fun p4948() {
