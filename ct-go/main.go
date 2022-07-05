@@ -11,7 +11,86 @@ import (
 )
 
 func main() {
-	p9020()
+	p17478()
+}
+
+func p17478() {
+	var reader = bufio.NewReader(os.Stdin)
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	fmt.Printf("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.\n")
+
+	p17478Recursive(N, 0)
+}
+
+func p17478Recursive(N int, curr int) {
+	// prefix
+	var prefix = ""
+	for i := 0; i < curr; i++ {
+		prefix += "____"
+	}
+
+	// recursive
+	if curr < N {
+		fmt.Printf(prefix + "\"재귀함수가 뭔가요?\"\n")
+		fmt.Printf(prefix + "\"잘 들어보게. 옛날옛날 한 산 꼭대기에 이세상 모든 지식을 통달한 선인이 있었어.\n")
+		fmt.Printf(prefix + "마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.\n")
+		fmt.Printf(prefix + "그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"\n")
+		p17478Recursive(N, curr+1)
+	} else {
+		fmt.Printf(prefix + "\"재귀함수가 뭔가요?\"\n")
+		fmt.Printf(prefix + "\"재귀함수는 자기 자신을 호출하는 함수라네\"\n")
+	}
+
+	fmt.Printf(prefix + "라고 답변하였지.\n")
+
+}
+
+func p10870() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	fmt.Fprintln(writer, fibo(N))
+}
+
+func fibo(N int) int {
+	if N == 0 {
+		return 0
+	} else if N == 1 {
+		return 1
+	} else {
+		return fibo(N-1) + fibo(N-2)
+	}
+}
+
+func p10872() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	defer writer.Flush()
+
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	fmt.Fprintln(writer, factorial(N, 1))
+
+}
+
+func factorial(N int, prev int) int {
+	if prev > N {
+		return 1
+	}
+
+	return prev * factorial(N, prev+1)
 }
 
 func p9020() {
@@ -50,28 +129,15 @@ func p9020() {
 			}
 		}
 
-		var a int
-		var b int
-		var sub = 10000
+		var mid = n / 2
 
-		for j := 0; j < len(primes); j++ {
-			n1 := primes[j]
-			for k := j; k < len(primes); k++ {
-				n2 := primes[k]
-
-				if n2-n1 > sub {
-					break
-				}
-
-				if n1+n2 == n {
-					a = n1
-					b = n2
-					sub = n2 - n1
-				}
+		for {
+			if !iAmNotPrime[mid] && !iAmNotPrime[n-mid] {
+				fmt.Fprintf(writer, "%v %v\n", mid, n-mid)
+				break
 			}
+			mid--
 		}
-
-		fmt.Fprintf(writer, "%v %v\n", a, b)
 	}
 }
 
