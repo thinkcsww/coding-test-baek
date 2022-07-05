@@ -4,7 +4,74 @@ import java.util.Scanner
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p9020()
+    p17478()
+}
+
+fun p17478() {
+    val scanner = Scanner(System.`in`)
+
+    val N = scanner.next().toInt()
+
+    println("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.")
+
+    p17478Recursive(N, 0)
+}
+
+fun p17478Recursive(N: Int, curr: Int) {
+    // create prefix
+    var stringBuilder = StringBuilder()
+    for (i in 0 until curr) {
+        stringBuilder.append("____")
+    }
+    var prefix = stringBuilder.toString()
+
+    // 재귀
+    if (curr < N) {
+        println(prefix + "\"재귀함수가 뭔가요?\"")
+        println(prefix + "\"잘 들어보게. 옛날옛날 한 산 꼭대기에 이세상 모든 지식을 통달한 선인이 있었어.")
+        println(prefix + "마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.")
+        println(prefix + "그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"")
+        p17478Recursive(N, curr + 1)
+    } else {
+        println(prefix + "\"재귀함수가 뭔가요?\"")
+        println(prefix + "\"재귀함수는 자기 자신을 호출하는 함수라네\"")
+    }
+
+    println(prefix + "라고 답변하였지.")
+}
+
+fun p10870() {
+    val scanner = Scanner(System.`in`)
+
+    val N = scanner.next().toInt()
+
+    println(fibo(N))
+}
+
+fun fibo(N: Int): Int {
+    if (N == 0) {
+        return 0
+    } else if (N == 1) {
+        return 1
+    } else {
+        return fibo(N - 1) + fibo(N - 2)
+    }
+}
+
+fun p10872() {
+    val scanner = Scanner(System.`in`)
+
+    val N = scanner.next().toInt()
+
+    println(factorial(N, 1))
+}
+
+fun factorial(N: Int, prev: Int): Int {
+    if (prev > N) {
+        return 1
+    }
+
+    return prev * factorial(N, prev + 1)
 }
 
 fun p9020() {
@@ -14,8 +81,6 @@ fun p9020() {
 
     for (i in 0 until N) {
         val n = scanner.next().toInt()
-
-        val primes = ArrayList<Int>()
 
         val iAmNotPrime = BooleanArray(n + 1)
         iAmNotPrime[0] = true
@@ -31,36 +96,16 @@ fun p9020() {
             }
         }
 
-
-        for (j in 0..n) {
-            if (!iAmNotPrime[j]) {
-                primes.add(j)
+        var mid = n / 2;
+        while (true) {
+            if (!iAmNotPrime[mid] && !iAmNotPrime[n - mid]) {
+                println("$mid ${n - mid}")
+                break
             }
+            mid--
         }
 
-        var a = 0
-        var b = 0
-        var sub = 10000
 
-        for (j in 0 until primes.size) {
-            val n1 = primes[j]
-
-            for (k in j until primes.size) {
-                val n2 = primes[k]
-
-                if (b - a > sub) {
-                    break
-                }
-
-                if (n1 + n2 == n) {
-                    a = n1
-                    b = n2
-                    sub = n2 - n1
-                }
-            }
-        }
-
-        println("$a $b")
 
 
     }
