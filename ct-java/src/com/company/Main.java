@@ -11,7 +11,70 @@ import java.util.StringTokenizer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p9020();
+        p17478();
+    }
+
+    private static void p17478() {
+        Scanner scanner = new Scanner(System.in);
+        int N = Integer.parseInt(scanner.next());
+
+        System.out.println("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.");
+        p17484Recursive(0, N);
+    }
+
+    private static void p17484Recursive(int curr, int N) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < curr; i++) {
+            stringBuilder.append("____");
+        }
+        String prefix = stringBuilder.toString();
+
+        if (curr < N) {
+            System.out.println(prefix + "\"재귀함수가 뭔가요?\"");
+            System.out.println(prefix + "\"잘 들어보게. 옛날옛날 한 산 꼭대기에 이세상 모든 지식을 통달한 선인이 있었어.");
+            System.out.println(prefix + "마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.");
+            System.out.println(prefix + "그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"");
+
+            p17484Recursive(curr + 1, N);
+        } else {
+            System.out.println(prefix + "\"재귀함수가 뭔가요?\"");
+            System.out.println(prefix + "\"재귀함수는 자기 자신을 호출하는 함수라네\"");
+        }
+
+        System.out.println(prefix + "라고 답변하였지.");
+    }
+
+    private static void p10870() {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = Integer.parseInt(scanner.next());
+
+        System.out.println(fibo(N));
+    }
+
+    private static int fibo(int N) {
+        if (N == 0) {
+            return 0;
+        } else if (N == 1) {
+            return 1;
+        } else {
+            return fibo(N - 1) + fibo(N - 2);
+        }
+    }
+
+    private static void p10872() {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = Integer.parseInt(scanner.next());
+
+        System.out.println(factorial(N, 1));
+    }
+
+    private static int factorial(int N, int prev) {
+        if (prev > N) {
+            return 1;
+        }
+        return prev * factorial(N, prev + 1);
     }
 
     public static void p9020() throws IOException {
@@ -23,7 +86,6 @@ public class Main {
             int n = Integer.parseInt(scanner.next());
 
             boolean[] iAmNotPrime = new boolean[n + 1];
-            ArrayList<Integer> primes = new ArrayList<>();
 
             iAmNotPrime[0] = true;
             iAmNotPrime[1] = true;
@@ -38,34 +100,16 @@ public class Main {
                 }
             }
 
-            for (int j = 0; j < n + 1; j++) {
-                if (!iAmNotPrime[j]) {
-                    primes.add(j);
+            int mid = n / 2;
+
+            while (true) {
+                if (!iAmNotPrime[mid] && !iAmNotPrime[n - mid]) {
+                    System.out.println(mid + " " + (n - mid));
+                    break;
                 }
+                mid--;
             }
 
-            int a = 0;
-            int b = 0;
-            int sub = 10000;
-
-            for (int j = 0; j < primes.size(); j++) {
-                int n1 = primes.get(j);
-                for (int k = j; k < primes.size(); k++) {
-                    int n2 = primes.get(k);
-
-                    if (n2 - n1 > sub) {
-                        break;
-                    }
-
-                    if (n1 + n2 == n) {
-                        a = n1;
-                        b = n2;
-                        sub = b - a;
-                    }
-                }
-            }
-
-            System.out.println(a + " " + b);
         }
 
 
