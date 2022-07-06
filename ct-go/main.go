@@ -11,7 +11,119 @@ import (
 )
 
 func main() {
-	p17478()
+	p2798()
+}
+
+func p2798() {
+	var reader = bufio.NewReader(os.Stdin)
+	var N int
+	var M int
+	fmt.Fscan(reader, &N)
+	fmt.Fscan(reader, &M)
+
+	reader.ReadString('\n')
+	strs, _ := reader.ReadString('\n')
+	strs = strings.TrimSuffix(strs, "\n")
+	cards := strings.Split(strs, " ")
+
+	max := -1
+
+	for i := 0; i < N; i++ {
+		n1, _ := strconv.Atoi(cards[i])
+		for j := i + 1; j < N; j++ {
+			n2, _ := strconv.Atoi(cards[j])
+			for k := j + 1; k < N; k++ {
+				n3, _ := strconv.Atoi(cards[k])
+				sum := n1 + n2 + n3
+
+				if sum > max && sum <= M {
+					max = sum
+				}
+			}
+		}
+	}
+
+	fmt.Println(max)
+
+}
+
+func p11729() {
+	var reader = bufio.NewReader(os.Stdin)
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	fmt.Println(int(math.Pow(float64(2), float64(N))) - 1)
+
+	var stringBuilder = strings.Builder{}
+
+	p11729Recursive(N, 1, 2, 3, &stringBuilder)
+
+	fmt.Println(stringBuilder.String())
+}
+
+func p11729Recursive(N int, from int, aux int, to int, stringBuilder *strings.Builder) {
+	if N == 1 {
+		stringBuilder.WriteString(strconv.Itoa(from) + " " + strconv.Itoa(to) + "\n")
+		return
+	}
+
+	p11729Recursive(N-1, from, to, aux, stringBuilder)
+	stringBuilder.WriteString(strconv.Itoa(from) + " " + strconv.Itoa(to) + "\n")
+	p11729Recursive(N-1, aux, from, to, stringBuilder)
+}
+
+func p2447() {
+	var reader = bufio.NewReader(os.Stdin)
+	var N int
+
+	fmt.Fscanln(reader, &N)
+
+	var arr = make([][]bool, N)
+	for i := 0; i < N; i++ {
+		arr[i] = make([]bool, N)
+	}
+
+	p2447Recursive(arr, 0, 0, N, false)
+
+	var stringBuilder strings.Builder
+
+	for i := 0; i < N; i++ {
+		for j := 0; j < N; j++ {
+			if arr[i][j] {
+				stringBuilder.WriteString(" ")
+			} else {
+				stringBuilder.WriteString("*")
+			}
+		}
+		stringBuilder.WriteString("\n")
+	}
+
+	fmt.Println(stringBuilder.String())
+}
+
+func p2447Recursive(arr [][]bool, x int, y int, N int, isBlank bool) {
+	if isBlank {
+		for i := x; i < x+N; i++ {
+			for j := y; j < y+N; j++ {
+				arr[i][j] = true
+			}
+		}
+		return
+	}
+
+	var size = N / 3
+	if size >= 1 {
+		for i := 0; i < 3; i++ {
+			for j := 0; j < 3; j++ {
+				if i == 1 && j == 1 {
+					p2447Recursive(arr, x+i*size, y+j*size, size, true)
+				} else {
+					p2447Recursive(arr, x+i*size, y+j*size, size, false)
+				}
+			}
+		}
+	}
 }
 
 func p17478() {
