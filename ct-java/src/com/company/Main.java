@@ -4,14 +4,117 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p17478();
+        p2798();
+    }
+
+    private static void p2798() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String[] s = bufferedReader.readLine().split(" ");
+        int N = Integer.parseInt(s[0]);
+        int M = Integer.parseInt(s[1]);
+
+        List<Integer> cards = Arrays.stream(bufferedReader.readLine().split(" ")).map(Integer::parseInt).collect(Collectors.toList());
+
+        int max = -1;
+        for (int i = 0; i < N; i++) {
+            int n1 = cards.get(i);
+            for (int j = i + 1; j < N; j++) {
+                int n2 = cards.get(j);
+                for (int k = j + 1; k < N; k++) {
+                    int n3 = cards.get(k);
+                    int sum = n1 + n2 + n3;
+
+                    if (sum <= M && sum > max) {
+                        max = sum;
+                    }
+                }
+            }
+        }
+
+        System.out.println(max);
+    }
+
+    private static void p11729() {
+        Scanner scanner = new Scanner(System.in);
+        int N = Integer.parseInt(scanner.next());
+
+        System.out.println((int)Math.pow(2, N) - 1);
+        StringBuilder stringBuilder = new StringBuilder();
+        p11729Recursive(N, 1, 2, 3, stringBuilder);
+        System.out.println(stringBuilder.toString());
+    }
+
+    private static void p11729Recursive(int N, int from, int aux, int to, StringBuilder stringBuilder) {
+        if (N == 1) {
+            stringBuilder.append(from + " " + to + "\n");
+            return;
+        }
+
+        p11729Recursive(N - 1, from, to, aux, stringBuilder);
+        stringBuilder.append(from + " " + to + "\n");
+        p11729Recursive(N - 1, aux, from, to, stringBuilder);
+
+
+    }
+
+    private static void p2447() {
+        Scanner scanner = new Scanner(System.in);
+        int N = Integer.parseInt(scanner.next());
+
+        char[][] arr = new char[N][N];
+
+        p2447Recursive(arr, N, false, 0, 0);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (arr[i][j] == '\u0000') {
+                    stringBuilder.append('*');
+                } else {
+                    stringBuilder.append(' ');
+                }
+
+
+            }
+            stringBuilder.append('\n');
+        }
+
+        System.out.println(stringBuilder.toString());
+    }
+
+    private static void p2447Recursive(char[][] arr, int N, boolean isBlank, int x, int y) {
+
+
+
+        if (isBlank) {
+            for (int i = x; i < x + N; i++) {
+                for (int j = y; j < y + N; j++) {
+                    arr[i][j] = ' ';
+                }
+            }
+            return;
+        }
+
+
+        int size = N / 3;
+        if (size >= 1) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (i == 1 && j == 1) {
+                        p2447Recursive(arr, size, true, x + i * size, y + j * size);
+                    } else {
+                        p2447Recursive(arr, size, false, x + i * size, y + j * size);
+                    }
+                }
+            }
+        }
     }
 
     private static void p17478() {
