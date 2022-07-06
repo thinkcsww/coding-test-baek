@@ -1,10 +1,110 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.Scanner
+import java.util.*
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p17478()
+    p2798()
+}
+
+fun p2798() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+
+    val split = bufferedReader.readLine().split(" ")
+    val N = split[0].toInt()
+    val M = split[1].toInt()
+
+    val cards = bufferedReader.readLine().split(" ").map { s -> s.toInt() }
+
+
+    var max = -1
+    for (i in 0 until N) {
+        val n1 = cards[i]
+        for (j in i + 1 until N) {
+            val n2 = cards[j]
+            for (k in j + 1 until N) {
+                val n3 = cards[k]
+                val sum = n1 + n2 + n3
+                if (sum <= M && sum > max) {
+                    max = sum
+                }
+            }
+        }
+    }
+
+    println(max)
+
+}
+
+fun p11729() {
+    val scanner = Scanner(System.`in`)
+    val N = scanner.next().toInt()
+
+    val stringBuilder = StringBuilder()
+    stringBuilder.append("${Math.pow(2.0, N.toDouble()).toInt() - 1}\n")
+    p11729Recursive(N, 1, 2, 3, stringBuilder)
+    println(stringBuilder.toString())
+}
+
+fun p11729Recursive(N: Int, from: Int, aux: Int, to: Int, stringBuilder: StringBuilder) {
+    if (N == 1) {
+        stringBuilder.append("$from $to\n")
+        return
+    }
+
+    p11729Recursive(N - 1, from, to, aux, stringBuilder)
+    stringBuilder.append("$from $to\n")
+    p11729Recursive(N - 1, aux, from, to, stringBuilder)
+}
+
+
+fun p2447() {
+    val scanner = Scanner(System.`in`)
+
+    val N = scanner.next().toInt()
+
+    val arr = Array(N){CharArray(N)}
+
+    p2447Recursive(arr, N, 0, 0, false)
+
+    val stringBuilder = StringBuilder()
+    for (i in 0 until N) {
+        for (j in 0 until N) {
+            if (arr[i][j] == '\u0000') {
+                stringBuilder.append('*')
+            } else {
+                stringBuilder.append(' ');
+            }
+        }
+        stringBuilder.append('\n')
+    }
+
+    println(stringBuilder.toString())
+}
+
+fun p2447Recursive(arr: Array<CharArray>, N: Int, x: Int, y: Int, isBlank: Boolean) {
+
+    if (isBlank) {
+        for (i in x until x + N) {
+            for (j in y until y + N) {
+                arr[i][j] = ' '
+            }
+        }
+        return
+    }
+
+    val size = N / 3
+    if (size >= 1) {
+        for (i in 0 until 3) {
+            for (j in 0 until 3) {
+                if (i == 1 && j == 1) {
+                    p2447Recursive(arr, size, x + i * size, y + j * size, true)
+                } else {
+                    p2447Recursive(arr, size, x + i * size, y + j * size, false)
+                }
+            }
+        }
+    }
 }
 
 fun p17478() {
