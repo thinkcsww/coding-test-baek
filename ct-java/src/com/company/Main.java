@@ -10,7 +10,28 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2798();
+        p1436();
+    }
+
+    private static void p1436() {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = Integer.parseInt(scanner.next());
+        int count = 0;
+        int num = 665;
+        while (true) {
+            num++;
+            if ((num + "").contains("666")) {
+                count++;
+
+                if (count == N) {
+                    break;
+                }
+            }
+        }
+
+        System.out.println(num);
+
     }
 
     private static void p2798() throws IOException {
