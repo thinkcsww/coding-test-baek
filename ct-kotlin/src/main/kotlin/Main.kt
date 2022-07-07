@@ -4,7 +4,26 @@ import java.util.*
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p2798()
+    p1436()
+}
+
+fun p1436() {
+    val scanner = Scanner(System.`in`)
+    val N = scanner.next().toInt()
+    var count = 0
+    var num = 665
+    while (true) {
+        num++
+
+        if ("$num".contains("666")) {
+            count++
+
+            if (count == N) {
+                println(num)
+                break
+            }
+        }
+    }
 }
 
 fun p2798() {
