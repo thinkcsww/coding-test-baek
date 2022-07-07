@@ -11,7 +11,28 @@ import (
 )
 
 func main() {
-	p2798()
+	p1436()
+}
+
+func p1436() {
+	var reader = bufio.NewReader(os.Stdin)
+	var N int
+	var num = 665
+	var count = 0
+	fmt.Fscan(reader, &N)
+
+	for {
+		num++
+
+		if strings.Contains(strconv.Itoa(num), "666") {
+			count++
+
+			if count == N {
+				fmt.Println(num)
+				break
+			}
+		}
+	}
 }
 
 func p2798() {
