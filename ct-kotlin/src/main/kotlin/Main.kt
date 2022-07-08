@@ -4,7 +4,140 @@ import java.util.*
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1436()
+    p1018()
+}
+
+fun p1018() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val split = bufferedReader.readLine().split(" ")
+    val N = split[0].toInt()
+    val M = split[1].toInt()
+
+    val blocks = arrayOfNulls<String>(N)
+
+    for (i in 0 until N) {
+        blocks[i] = bufferedReader.readLine()
+    }
+
+    var min = 1000
+
+    var selectedBlocks = arrayOfNulls<String>(8)
+
+    var countWhiteStart = 0
+    var countBlackStart = 0
+
+    for (i in 0 .. N - 8) {
+        for (j in 0 .. M - 8) {
+            countBlackStart = 0
+            countWhiteStart = 0
+
+            for (k in 0 until  8) {
+                selectedBlocks[k] = blocks[i + k]!!.substring(j, j + 8)
+            }
+
+            //  black 시작
+
+            //  black 시작
+            for (k in 0..7) {
+                for (l in 0..7) {
+                    if (k % 2 == 0) {
+                        if (l % 2 == 0 && selectedBlocks[k]!![l] == 'W') {
+                            countBlackStart++
+                        } else if (l % 2 == 1 && selectedBlocks[k]!![l] == 'B') {
+                            countBlackStart++
+                        }
+                    } else {
+                        if (l % 2 == 0 && selectedBlocks[k]!![l] == 'B') {
+                            countBlackStart++
+                        } else if (l % 2 == 1 && selectedBlocks[k]!![l] == 'W') {
+                            countBlackStart++
+                        }
+                    }
+                }
+            }
+
+
+            // white 시작
+            for (k in 0..7) {
+                for (l in 0..7) {
+                    if (k % 2 == 0) {
+                        if (l % 2 == 0 && selectedBlocks[k]!![l] == 'B') {
+                            countWhiteStart++
+                        } else if (l % 2 == 1 && selectedBlocks[k]!![l] == 'W') {
+                            countWhiteStart++
+                        }
+                    } else {
+                        if (l % 2 == 0 && selectedBlocks[k]!![l] == 'W') {
+                            countWhiteStart++
+                        } else if (l % 2 == 1 && selectedBlocks[k]!![l] == 'B') {
+                            countWhiteStart++
+                        }
+                    }
+                }
+            }
+
+            if (countWhiteStart < min) {
+                min = countWhiteStart
+            }
+
+            if (countBlackStart < min) {
+                min = countBlackStart
+            }
+        }
+    }
+
+    println(min)
+
+}
+
+fun p2231() {
+    val scanner = Scanner(System.`in`)
+    val N = scanner.next().toInt()
+
+    var i = 1
+
+    while (true) {
+        val sum = i.toString().split("").sumOf { if ("" != it) it.toInt() else 0 }
+
+        if (i > N) {
+            println(0)
+            break
+        }
+        if (sum + i == N) {
+            println(i)
+            break
+        }
+        i++
+    }
+}
+
+fun p7568() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val N = bufferedReader.readLine().toInt()
+    val heightArr = IntArray(N)
+    val weightArr = IntArray(N)
+    val rankArr = IntArray(N)
+
+    for (i in 0 until  N) {
+        val split = bufferedReader.readLine().split(" ")
+        heightArr[i] = split[0].toInt()
+        weightArr[i] = split[1].toInt()
+    }
+
+    for (i in 0 until N - 1) {
+        for (j in i until N) {
+            if (heightArr[i] > heightArr[j] && weightArr[i] > weightArr[j]) {
+                rankArr[j] = rankArr[j] + 1
+            } else if (heightArr[i] < heightArr[j] && weightArr[i] < weightArr[j]) {
+                rankArr[i] = rankArr[i] + 1
+            }
+        }
+
+    }
+
+    for (i in 0 until N) {
+        println(rankArr[i] + 1)
+    }
 }
 
 fun p1436() {
