@@ -11,7 +11,156 @@ import (
 )
 
 func main() {
-	p1436()
+	p1018()
+}
+
+func p1018() {
+	var reader = bufio.NewReader(os.Stdin)
+	readString, _ := reader.ReadString('\n')
+	readString = strings.TrimSuffix(readString, "\n")
+
+	split := strings.Split(readString, " ")
+
+	var N, _ = strconv.Atoi(split[0])
+	var M, _ = strconv.Atoi(split[1])
+
+	var blocks = make([]string, N)
+
+	for i := 0; i < N; i++ {
+		s, _ := reader.ReadString('\n')
+		s = strings.TrimSuffix(s, "\n")
+		blocks[i] = s
+	}
+
+	var min = 1000
+	var selectedBlocks = make([]string, 8)
+	var countWhiteStart = 0
+	var countBlackStart = 0
+
+	for i := 0; i <= N-8; i++ {
+		for j := 0; j <= M-8; j++ {
+
+			countWhiteStart = 0
+			countBlackStart = 0
+
+			for k := 0; k < 8; k++ {
+				selectedBlocks[k] = blocks[i+k][j : j+8]
+			}
+
+			//  black 시작
+			for k := 0; k < 8; k++ {
+				for l := 0; l < 8; l++ {
+					if k%2 == 0 {
+						if l%2 == 0 && selectedBlocks[k][l] == 'W' {
+							countBlackStart++
+						} else if l%2 == 1 && selectedBlocks[k][l] == 'B' {
+							countBlackStart++
+						}
+					} else {
+						if l%2 == 0 && selectedBlocks[k][l] == 'B' {
+							countBlackStart++
+						} else if l%2 == 1 && selectedBlocks[k][l] == 'W' {
+							countBlackStart++
+						}
+					}
+				}
+			}
+
+			// white 시작
+			for k := 0; k < 8; k++ {
+				for l := 0; l < 8; l++ {
+					if k%2 == 0 {
+						if l%2 == 0 && selectedBlocks[k][l] == 'B' {
+							countWhiteStart++
+						} else if l%2 == 1 && selectedBlocks[k][l] == 'W' {
+							countWhiteStart++
+						}
+					} else {
+						if l%2 == 0 && selectedBlocks[k][l] == 'W' {
+							countWhiteStart++
+						} else if l%2 == 1 && selectedBlocks[k][l] == 'B' {
+							countWhiteStart++
+						}
+					}
+
+				}
+			}
+
+			if countWhiteStart < min {
+				min = countWhiteStart
+			}
+
+			if countBlackStart < min {
+				min = countBlackStart
+			}
+		}
+	}
+
+	fmt.Println(min)
+}
+
+func p2231() {
+	var reader = bufio.NewReader(os.Stdin)
+	var N int
+	fmt.Fscanln(reader, &N)
+
+	i := 1
+	for {
+		if i > N {
+			fmt.Println(0)
+			break
+		}
+
+		var sum = 0
+		nums := strings.Split(strconv.Itoa(i), "")
+
+		for _, num := range nums {
+			intNum, _ := strconv.Atoi(num)
+			sum += intNum
+		}
+
+		if sum+i == N {
+			fmt.Println(i)
+			break
+		}
+		i++
+	}
+
+}
+
+func p7568() {
+	var reader = bufio.NewReader(os.Stdin)
+	var N int
+	fmt.Fscanln(reader, &N)
+
+	var weightArr = make([]int, N)
+	var heightArr = make([]int, N)
+	var rankArr = make([]int, N)
+
+	for i := 0; i < N; i++ {
+		temp, _ := reader.ReadString('\n')
+		temp = strings.TrimSuffix(temp, "\n")
+
+		split := strings.Split(temp, " ")
+
+		weightArr[i], _ = strconv.Atoi(split[0])
+		heightArr[i], _ = strconv.Atoi(split[1])
+	}
+
+	for i := 0; i < N-1; i++ {
+		for j := i; j < N; j++ {
+			if weightArr[i] > weightArr[j] && heightArr[i] > heightArr[j] {
+				rankArr[j]++
+			} else if weightArr[i] < weightArr[j] && heightArr[i] < heightArr[j] {
+				rankArr[i]++
+			}
+		}
+	}
+
+	for i := 0; i < N; i++ {
+		fmt.Printf("%v ", rankArr[i]+1)
+	}
+
 }
 
 func p1436() {
