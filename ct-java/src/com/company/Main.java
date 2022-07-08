@@ -10,7 +10,141 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1436();
+        p1018();
+    }
+
+    private static void p1018() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String[] split = bufferedReader.readLine().split(" ");
+        int N = Integer.parseInt(split[0]);
+        int M = Integer.parseInt(split[1]);
+
+        String[] blocks = new String[N];
+
+        for (int i = 0; i < N; i++) {
+            blocks[i] = bufferedReader.readLine();
+        }
+
+        int min = 1000;
+
+        String[] selectedBlocks = new String[8];
+        int countWhiteStart;
+        int countBlackStart;
+
+        for (int i = 0; i <= N - 8; i++) {
+            for (int j = 0; j <= M - 8; j++) {
+
+                countWhiteStart = 0;
+                countBlackStart = 0;
+
+                // 8줄 뽑아오기
+                for (int k = 0; k < 8; k++) {
+                    selectedBlocks[k] = blocks[i + k].substring(j, j + 8);
+                }
+
+                //  black 시작
+                for (int k = 0; k < 8; k++) {
+                    for (int l = 0; l < 8; l++) {
+                        if (k % 2 == 0 ) {
+                            if (l % 2 == 0 && selectedBlocks[k].charAt(l) == 'W') {
+                                countBlackStart++;
+                            } else if (l % 2 == 1 && selectedBlocks[k].charAt(l) == 'B') {
+                                countBlackStart++;
+                            }
+                        } else {
+                            if (l % 2 == 0 && selectedBlocks[k].charAt(l) == 'B') {
+                                countBlackStart++;
+                            } else if (l % 2 == 1 && selectedBlocks[k].charAt(l) == 'W') {
+                                countBlackStart++;
+                            }
+                        }
+                    }
+                }
+
+                // white 시작
+                for (int k = 0; k < 8; k++) {
+                    for (int l = 0; l < 8; l++) {
+                        if (k % 2 == 0 ) {
+                            if (l % 2 == 0 && selectedBlocks[k].charAt(l) == 'B') {
+                                countWhiteStart++;
+                            } else if (l % 2 == 1 && selectedBlocks[k].charAt(l) == 'W') {
+                                countWhiteStart++;
+                            }
+                        } else {
+                            if (l % 2 == 0 && selectedBlocks[k].charAt(l) == 'W') {
+                                countWhiteStart++;
+                            } else if (l % 2 == 1 && selectedBlocks[k].charAt(l) == 'B') {
+                                countWhiteStart++;
+                            }
+                        }
+
+                    }
+                }
+
+                if (countWhiteStart < min) {
+                    min = countWhiteStart;
+                }
+
+                if (countBlackStart < min) {
+                    min = countBlackStart;
+                }
+            }
+        }
+
+        System.out.println(min);
+    }
+
+    private static void p2231() {
+        Scanner scanner = new Scanner(System.in);
+        int N = Integer.parseInt(scanner.next());
+
+        int i = 1;
+        while (true) {
+
+            if (i > N) {
+                System.out.println(0);
+                break;
+            }
+
+            int sum = Arrays.stream(String.valueOf(i).split("")).mapToInt(Integer::parseInt).sum();
+
+            if (sum + i == N) {
+                System.out.println(i);
+                break;
+            }
+
+            i++;
+        }
+    }
+
+    private static void p7568() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int[] weight = new int[N];
+        int[] height = new int[N];
+        int[] rank = new int[N];
+
+
+        for (int i = 0; i < N; i++) {
+            String[] split = bufferedReader.readLine().split(" ");
+            weight[i] = Integer.parseInt(split[0]);
+            height[i] = Integer.parseInt(split[1]);
+        }
+
+        for (int i = 0; i < N - 1; i++) {
+            for (int j = i; j < N; j++) {
+                if (weight[i] > weight[j] && height[i] > height[j]) {
+                    rank[j]++;
+                } else if (weight[i] < weight[j] && height[i] < height[j]) {
+                    rank[i]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            System.out.println(rank[i] + 1);
+        }
+
     }
 
     private static void p1436() {
@@ -65,7 +199,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int N = Integer.parseInt(scanner.next());
 
-        System.out.println((int)Math.pow(2, N) - 1);
+        System.out.println((int) Math.pow(2, N) - 1);
         StringBuilder stringBuilder = new StringBuilder();
         p11729Recursive(N, 1, 2, 3, stringBuilder);
         System.out.println(stringBuilder.toString());
@@ -111,7 +245,6 @@ public class Main {
     }
 
     private static void p2447Recursive(char[][] arr, int N, boolean isBlank, int x, int y) {
-
 
 
         if (isBlank) {
@@ -255,7 +388,7 @@ public class Main {
             iAmNotPrime[0] = true;
             iAmNotPrime[1] = true;
 
-            for (int i = 2; i <= Math.sqrt(2 * n) ; i++) {
+            for (int i = 2; i <= Math.sqrt(2 * n); i++) {
                 if (iAmNotPrime[i]) {
                     continue;
                 }
@@ -345,7 +478,7 @@ public class Main {
         int min = 100000;
         int sum = 0;
 
-        for (int i = M; i <= N ; i++) {
+        for (int i = M; i <= N; i++) {
 
             if (i == 1) {
                 continue;
@@ -477,7 +610,7 @@ public class Main {
         int B = Integer.parseInt(scanner.next());
         int V = Integer.parseInt(scanner.next());
 
-        int r = (int)Math.ceil((V - A) / (A - B * 1.0));
+        int r = (int) Math.ceil((V - A) / (A - B * 1.0));
 
         System.out.println(r + 1);
 
@@ -515,7 +648,7 @@ public class Main {
             int k = Integer.parseInt(bufferedReader.readLine());
             int n = Integer.parseInt(bufferedReader.readLine());
 
-            int[] floor = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ,14};
+            int[] floor = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
             for (int j = 0; j < k; j++) {
                 for (int l = 1; l < n; l++) {
@@ -577,7 +710,7 @@ public class Main {
             if (limit < N) {
                 limit += adder;
                 adder += 6;
-                count ++;
+                count++;
             } else {
                 break;
             }
@@ -758,6 +891,7 @@ public class Main {
         }
 
     }
+
     public static void p1152() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -876,7 +1010,7 @@ public class Main {
     public static void p11654() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println((int)bufferedReader.readLine().charAt(0));
+        System.out.println((int) bufferedReader.readLine().charAt(0));
     }
 
     public static void p15596() {
@@ -917,7 +1051,7 @@ public class Main {
                 count++;
             } else {
                 String s = String.valueOf(i);
-                if ((((int)s.charAt(0) - (int)s.charAt(1)) == (((int)s.charAt(1) - (int)s.charAt(2))))) {
+                if ((((int) s.charAt(0) - (int) s.charAt(1)) == (((int) s.charAt(1) - (int) s.charAt(2))))) {
                     count++;
                 }
             }
@@ -971,7 +1105,7 @@ public class Main {
 
             String[] split = bufferedReader.readLine().split("");
 
-            for (String s: split) {
+            for (String s : split) {
                 if ("O".equals(s)) {
                     streak++;
                 } else {
@@ -1016,7 +1150,7 @@ public class Main {
             dividendsCount[Integer.parseInt(bufferedReader.readLine()) % 42]++;
         }
 
-        for (int i = 0; i< 42; i++) {
+        for (int i = 0; i < 42; i++) {
             if (dividendsCount[i] > 0) {
                 result++;
             }
@@ -1030,7 +1164,7 @@ public class Main {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((System.in)));
         int result = 1;
 
-        for (int i = 0; i < 3; i ++) {
+        for (int i = 0; i < 3; i++) {
             result *= Integer.parseInt(bufferedReader.readLine());
         }
 
@@ -1040,7 +1174,7 @@ public class Main {
 
         String[] splitResult = stringResult.split("");
 
-        for (String s: splitResult) {
+        for (String s : splitResult) {
             numberCount[Integer.parseInt(s)]++;
         }
 
@@ -1049,7 +1183,6 @@ public class Main {
         }
 
     }
-
 
 
     public static void p2562() throws IOException {
