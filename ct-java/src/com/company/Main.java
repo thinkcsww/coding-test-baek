@@ -1,16 +1,104 @@
 package com.company;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.util.*;
 import java.util.stream.Collectors;
+import java.util.*;
+import java.io.*;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1018();
+        p1427();
+    }
+
+    private static void p1427() {
+        Scanner scanner = new Scanner(System.in);
+        String[] split = scanner.next().split("");
+        Arrays.sort(split, (o1, o2) -> o1.compareTo(o2) * -1);
+
+        System.out.println(String.join("", split));
+
+    }
+
+    private static void p11650() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        List<Map<String, String>> arr = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            String[] s = bufferedReader.readLine().split(" ");
+
+            Map<String, String> map = new HashMap<>();
+            map.put("x", s[0]);
+            map.put("y", s[1]);
+
+            arr.add(map);
+        }
+
+        Collections.sort(arr, (o1, o2) -> {
+            int x1 = Integer.parseInt(o1.get("x"));
+            int x2 = Integer.parseInt(o2.get("x"));
+            int y1 = Integer.parseInt(o1.get("y"));
+            int y2 = Integer.parseInt(o2.get("y"));
+
+            if (x1 > x2) {
+                return 1;
+            } else if (x1 < x2) {
+                return -1;
+            } else {
+                if (y1 > y2) {
+                    return 1;
+                } else if (y1 < y2) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+            stringBuilder.append(arr.get(i).get("x") + " ");
+            stringBuilder.append(arr.get(i).get("y") + "\n");
+        }
+
+        System.out.println(stringBuilder.toString());
+    }
+
+    private static void p2751() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+
+        List<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            arr.add(scanner.nextInt());
+        }
+
+        Collections.sort(arr);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+            stringBuilder.append(arr.get(i) + "\n");
+        }
+
+        System.out.println(stringBuilder.toString());
+    }
+
+    private static void p2750() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = scanner.nextInt();
+        }
+
+        Arrays.sort(arr);
+
+        for (int i = 0; i < N; i++) {
+            System.out.println(arr[i]);
+        }
     }
 
     private static void p1018() throws IOException {
@@ -45,7 +133,7 @@ public class Main {
                 //  black 시작
                 for (int k = 0; k < 8; k++) {
                     for (int l = 0; l < 8; l++) {
-                        if (k % 2 == 0 ) {
+                        if (k % 2 == 0) {
                             if (l % 2 == 0 && selectedBlocks[k].charAt(l) == 'W') {
                                 countBlackStart++;
                             } else if (l % 2 == 1 && selectedBlocks[k].charAt(l) == 'B') {
@@ -64,7 +152,7 @@ public class Main {
                 // white 시작
                 for (int k = 0; k < 8; k++) {
                     for (int l = 0; l < 8; l++) {
-                        if (k % 2 == 0 ) {
+                        if (k % 2 == 0) {
                             if (l % 2 == 0 && selectedBlocks[k].charAt(l) == 'B') {
                                 countWhiteStart++;
                             } else if (l % 2 == 1 && selectedBlocks[k].charAt(l) == 'W') {
