@@ -4,7 +4,38 @@ import java.util.*
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1427()
+    p11651()
+}
+
+fun p11651() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val N = bufferedReader.readLine().toInt()
+
+    val list = ArrayList<Map<String, String>>()
+
+    for (i in 0 until N) {
+        val split = bufferedReader.readLine().split(" ")
+
+        val map = HashMap<String, String>()
+        map["x"] = split[0]
+        map["y"] = split[1]
+
+
+        list.add(map)
+    }
+
+    list.sortWith(compareBy<Map<String, String>> { it["y"] }.thenBy { it["x"] })
+
+    val stringBuilder = java.lang.StringBuilder()
+
+    for (map in list) {
+        stringBuilder.append(map["x"])
+        stringBuilder.append(" ")
+        stringBuilder.append(map["y"])
+        stringBuilder.append("\n")
+    }
+
+    println(stringBuilder.toString())
 }
 
 fun p1427() {
