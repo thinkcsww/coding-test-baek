@@ -6,12 +6,28 @@ import (
 	"math"
 	"math/big"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
 
 func main() {
-	p1018()
+	p1427()
+}
+
+func p1427() {
+	var reader = bufio.NewReader(os.Stdin)
+
+	var N string
+	fmt.Fscanln(reader, &N)
+
+	split := strings.Split(N, "")
+
+	sort.Slice(split, func(i, j int) bool {
+		return split[i] > split[j]
+	})
+
+	fmt.Println(strings.Join(split, ""))
 }
 
 func p1018() {
