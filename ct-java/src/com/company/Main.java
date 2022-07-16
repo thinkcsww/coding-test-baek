@@ -8,7 +8,55 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1427();
+        p11651();
+    }
+
+    private static void p11651() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+        List<Map<String, String>> arr = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            String[] s = bufferedReader.readLine().split(" ");
+
+            Map<String, String> map = new HashMap<>();
+            map.put("x", s[0]);
+            map.put("y", s[1]);
+
+            arr.add(map);
+        }
+
+        Collections.sort(arr, (o1, o2) -> {
+            int x1 = Integer.parseInt(o1.get("x"));
+            int x2 = Integer.parseInt(o2.get("x"));
+            int y1 = Integer.parseInt(o1.get("y"));
+            int y2 = Integer.parseInt(o2.get("y"));
+
+            if (y1 > y2) {
+                return 1;
+            } else if (y1 == y2) {
+                if (x1 > x2) {
+                    return 1;
+                } else if (x1 == x2) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            } else {
+                return -1;
+            }
+        });
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(Map<String, String> map: arr) {
+            stringBuilder.append(map.get("x"));
+            stringBuilder.append(" ");
+            stringBuilder.append(map.get("y"));
+            stringBuilder.append("\n");
+        }
+
+        System.out.println(stringBuilder.toString());
     }
 
     private static void p1427() {
