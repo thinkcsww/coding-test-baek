@@ -11,8 +11,41 @@ import (
 	"strings"
 )
 
+type Coord struct {
+	x int
+	y int
+}
+
 func main() {
-	p1427()
+	p11651()
+}
+
+func p11651() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	var N int
+	fmt.Fscanln(reader, &N)
+
+	var list = make([]Coord, N)
+
+	for i := 0; i < N; i++ {
+		fmt.Fscan(reader, &list[i].x, &list[i].y)
+	}
+
+	sort.Slice(list, func(i, j int) bool {
+		if list[i].y == list[j].y {
+			return list[i].x < list[j].x
+		} else {
+			return list[i].y < list[j].y
+		}
+	})
+
+	for _, m := range list {
+		fmt.Fprintln(writer, m.x, m.y)
+	}
+
+	writer.Flush()
 }
 
 func p1427() {
