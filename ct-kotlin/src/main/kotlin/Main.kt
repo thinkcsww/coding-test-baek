@@ -4,7 +4,16 @@ import java.util.*
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1018()
+    p1427()
+}
+
+fun p1427() {
+    val scanner = Scanner(System.`in`)
+    val split = scanner.next().split("")
+
+    Collections.sort(split) { o1, o2 -> o1.compareTo(o2) * -1 }
+
+    System.out.println(split.joinToString(""))
 }
 
 fun p1018() {
