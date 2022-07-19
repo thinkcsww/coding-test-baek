@@ -8,7 +8,40 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p11651();
+        p1181();
+    }
+
+    private static void p1181() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        ArrayList<String> arr = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            arr.add(bufferedReader.readLine());
+        }
+
+        Collections.sort(arr, (o1, o2) -> {
+            if (o1.length() > o2.length()) {
+                return 1;
+            } else if (o1.length() == o2.length()) {
+                return o1.compareTo(o2);
+            } else {
+                return -1;
+            }
+        });
+
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        Set<String> set = new LinkedHashSet<>(arr);
+        for (String s: set) {
+            bufferedWriter.write(s);
+            bufferedWriter.write("\n");
+        }
+
+        bufferedWriter.flush();
+
     }
 
     private static void p11651() throws IOException {
