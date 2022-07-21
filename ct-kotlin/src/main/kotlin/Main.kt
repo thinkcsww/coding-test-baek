@@ -1,11 +1,46 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.LinkedHashSet
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p11651()
+    p1181()
 }
+
+fun p1181() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val N = bufferedReader.readLine().toInt();
+
+    val list = ArrayList<String>()
+
+    for (i in 0 until N) {
+        list.add(bufferedReader.readLine());
+    }
+
+    Collections.sort(list) { o1: String, o2: String ->
+        if (o1.length > o2.length) {
+            return@sort 1
+        } else if (o1.length < o2.length) {
+            return@sort -1
+        } else {
+            return@sort o1.compareTo(o2)
+        }
+    }
+
+
+    val stringBuilder = StringBuilder()
+    val set = LinkedHashSet(list)
+
+    for (s in set) {
+        stringBuilder.append(s)
+        stringBuilder.append("\n")
+    }
+
+    println(stringBuilder.toString())
+}
+
 
 fun p11651() {
     val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
