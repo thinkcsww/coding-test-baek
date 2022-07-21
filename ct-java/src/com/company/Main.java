@@ -8,7 +8,50 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1181();
+        p10814();
+    }
+
+    private static void p10814() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            String[] s = bufferedReader.readLine().split(" ");
+
+            Map<String, String> map  = new HashMap<>();
+            map.put("age", s[0]);
+            map.put("name", s[1]);
+
+            list.add(map);
+        }
+
+        Collections.sort(list, (o1, o2) -> {
+            int o1Age = Integer.parseInt(o1.get("age"));
+            int o2Age = Integer.parseInt(o2.get("age"));
+
+
+            if (o1Age > o2Age) {
+                return 1;
+            } else if (o1Age < o2Age) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map<String, String> m: list) {
+            stringBuilder.append(m.get("age"));
+            stringBuilder.append(" ");
+            stringBuilder.append(m.get("name"));
+            stringBuilder.append("\n");
+        }
+
+        System.out.println(stringBuilder.toString());
+
     }
 
     private static void p1181() throws IOException {
