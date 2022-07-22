@@ -1,14 +1,63 @@
 package com.company;
 
-import java.math.BigInteger;
-import java.util.stream.Collectors;
-import java.util.*;
 import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p10814();
+        p18870();
+    }
+
+    private static void p18870() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        String[] s = bufferedReader.readLine().split(" ");
+
+        Set<Integer> set = new HashSet<>();
+
+        for (String s1: s) {
+            set.add(Integer.parseInt(s1));
+        }
+
+        List<Integer> list = new ArrayList(set);
+
+        Collections.sort(list);
+        Collections.reverse(list);
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            int n1 = list.get(i);
+            boolean flag = false;
+            for (int j = i; j < list.size(); j++) {
+                int n2 = list.get(j);
+
+                if (n1 > n2) {
+                    map.put(n1, list.size() - j);
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                map.put(n1, 0);
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (String s1: s) {
+            stringBuilder.append(map.get(Integer.parseInt(s1)));
+            stringBuilder.append(" ");
+        }
+
+        System.out.println(stringBuilder);
+
     }
 
     private static void p10814() throws IOException {
