@@ -17,7 +17,68 @@ type Coord struct {
 }
 
 func main() {
-	p1181()
+	p18870()
+}
+
+func p18870() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	var N int
+	fmt.Fscanln(reader, &N)
+
+	originalList := make([]int, 0)
+
+	set := make(map[int]bool)
+
+	for i := 0; i < N; i++ {
+		var n int
+		fmt.Fscan(reader, &n)
+		set[n] = true
+		originalList = append(originalList, n)
+	}
+
+	var list = make([]int, 0)
+
+	for k, _ := range set {
+		list = append(list, k)
+	}
+
+	myMap := make(map[int]int)
+
+	sort.Slice(list, func(i, j int) bool {
+		if list[i] > list[j] {
+			return true
+		} else {
+			return false
+		}
+	})
+
+	for i := 0; i < len(list); i++ {
+		n1 := list[i]
+		var flag = false
+		for j := i; j < len(list); j++ {
+			n2 := list[j]
+
+			if n1 > n2 {
+				myMap[n1] = len(list) - j
+				flag = true
+				break
+			}
+		}
+
+		if !flag {
+			myMap[n1] = 0
+		}
+	}
+
+	for _, v := range originalList {
+		fmt.Fprint(writer, myMap[v])
+		fmt.Fprint(writer, " ")
+	}
+
+	writer.Flush()
+
 }
 
 func p1181() {
