@@ -2,11 +2,62 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 import kotlin.collections.LinkedHashSet
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1181()
+    p18870()
+}
+
+fun p18870() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val N = bufferedReader.readLine().toInt()
+
+
+    val split = bufferedReader.readLine().split(" ")
+
+    val set = HashSet<Int>()
+
+    for (s in split) {
+        set.add(s.toInt())
+    }
+
+    val list = ArrayList<Int>(set)
+
+    list.sort()
+    list.reverse()
+
+    val map = HashMap<Int, Int>()
+
+    for (i in 0 until list.size) {
+        val n1 = list[i]
+
+        var flag = false
+        for (j in i until list.size) {
+            val n2 = list[j]
+
+            if (n1 > n2) {
+                map[n1] = list.size - j
+                flag = true
+                break
+            }
+        }
+
+        if (!flag) {
+            map[n1] = 0
+        }
+    }
+
+    val stringBuilder = StringBuilder()
+    for (s in split) {
+        stringBuilder.append(map[s.toInt()])
+        stringBuilder.append(" ")
+    }
+
+    println(stringBuilder.toString())
+
 }
 
 fun p1181() {
