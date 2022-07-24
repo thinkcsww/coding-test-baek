@@ -8,8 +8,122 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p18870();
+        p10989();
     }
+
+    private static void p10989() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int[] list = new int[N];
+        int[] countList = new int[10000001];
+        int[] resultList = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            list[i] = Integer.parseInt(bufferedReader.readLine());
+        }
+
+        for (int i = 0; i < list.length; i++) {
+            countList[list[i]]++;
+        }
+
+        for (int i = 1; i < countList.length; i++) {
+            countList[i] = countList[i - 1] + countList[i];
+        }
+
+        for (int i = list.length - 1; i >= 0 ; i--) {
+            int value = list[i];
+            countList[value]--;
+            resultList[countList[value]] = value;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < resultList.length; i++) {
+            stringBuilder.append(resultList[i]);
+            stringBuilder.append("\n");
+        }
+
+        System.out.println(stringBuilder.toString());
+    }
+
+    private static void p2108() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            list.add(Integer.parseInt(bufferedReader.readLine()));
+        }
+
+        Collections.sort(list);
+
+        int n1 = 0;
+
+        int sum = 0;
+        for (int num: list) {
+            sum += num;
+        }
+
+        n1 = (int)Math.round(sum / (N * 1.0));
+
+        int n2 = list.get(list.size() / 2);
+
+        int n3 = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < N; i++) {
+            map.put(list.get(i), map.getOrDefault(list.get(i), 0) + 1);
+        }
+
+        List<Map<String, Integer>> mapList = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+            Map<String, Integer> map1 = new HashMap<>();
+            map1.put("key", entry.getKey());
+            map1.put("value", entry.getValue());
+            mapList.add(map1);
+        }
+
+        Collections.sort(mapList, ((o1, o2) -> {
+            if (o1.get("value") > o2.get("value")) {
+                return -1;
+            } else if (o1.get("value") < o2.get("value")) {
+                return 1;
+            } else {
+                if (o1.get("key") > o2.get("key")) {
+                    return 1;
+                } else if (o1.get("key") < o2.get("key")) {
+                    return -1;
+                }  else {
+                    return 0;
+                }
+            }
+        }));
+
+        if (list.size() == 1) {
+            n3 = mapList.get(0).get("key");
+        } else {
+            if (mapList.get(0).get("value").equals(mapList.get(1).get("value"))) {
+                n3 = mapList.get(1).get("key");
+            } else {
+                n3 = mapList.get(0).get("key");
+            }
+        }
+
+        int n4;
+        if (list.size() == 1) {
+            n4 = 0;
+        } else {
+            n4 = list.get(list.size() - 1) - list.get(0);
+        }
+
+
+        System.out.println(n1);
+        System.out.println(n2);
+        System.out.println(n3);
+        System.out.println(n4);
+    }
+
 
     private static void p18870() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
