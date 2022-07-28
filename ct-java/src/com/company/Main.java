@@ -8,7 +8,35 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p11478();
+        p1764();
+    }
+
+    private static void p1764() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String[] s = bufferedReader.readLine().split(" ");
+
+        int N = Integer.parseInt(s[0]) + Integer.parseInt(s[1]);
+
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < N; i++) {
+            String name = bufferedReader.readLine();
+            map.put(name, map.getOrDefault(name, 0) + 1);
+        }
+
+
+        int count = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<String, Integer> entry: new TreeMap<>(map).entrySet()) {
+            if (entry.getValue() == 2) {
+                count++;
+                stringBuilder.append(entry.getKey());
+                stringBuilder.append("\n");
+            }
+        }
+
+        System.out.println(count);
+        System.out.println(stringBuilder.toString());
     }
 
     private static void p11478() throws IOException {
