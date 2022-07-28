@@ -1,14 +1,28 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
-import kotlin.collections.LinkedHashSet
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p18870()
+    p11478()
+}
+
+fun p11478() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val s = bufferedReader.readLine()
+
+    val set = HashSet<String>()
+
+    for (i in 1..s.length) {
+        for (j in s.indices) {
+            if (i + j <= s.length) {
+                set.add(s.substring(j, j + i))
+            }
+        }
+    }
+
+    println(set.size)
+
 }
 
 fun p18870() {
