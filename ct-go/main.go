@@ -11,13 +11,28 @@ import (
 	"strings"
 )
 
-type Coord struct {
-	x int
-	y int
+func main() {
+	p11478()
 }
 
-func main() {
-	p18870()
+func p11478() {
+	var reader = bufio.NewReader(os.Stdin)
+
+	var s string
+
+	fmt.Fscanln(reader, &s)
+
+	var m = make(map[string]bool)
+
+	for i := 1; i <= len(s); i++ {
+		for j := 0; j < len(s); j++ {
+			if j+i <= len(s) {
+				m[s[j:j+i]] = true
+			}
+		}
+	}
+
+	fmt.Println(len(m))
 }
 
 func p18870() {
@@ -120,6 +135,11 @@ func p1181() {
 	}
 
 	writer.Flush()
+}
+
+type Coord struct {
+	x int
+	y int
 }
 
 func p11651() {
