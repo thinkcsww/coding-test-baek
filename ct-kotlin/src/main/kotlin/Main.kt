@@ -4,7 +4,35 @@ import java.util.*
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p11478()
+    p1764()
+}
+
+fun p1764() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val split = bufferedReader.readLine().split(" ")
+
+    val N = split[0].toInt() + split[1].toInt()
+
+    val map = HashMap<String, Int>()
+    for (i in 0 until N) {
+        val string = bufferedReader.readLine()
+        map[string] = map.getOrDefault(string, 0) + 1
+    }
+
+    val treeMap = TreeMap(map)
+
+    var count = 0
+    val stringBuilder = StringBuilder()
+    for (entry in treeMap.entries) {
+        if (entry.value == 2) {
+            count++
+            stringBuilder.append(entry.key)
+            stringBuilder.append("\n")
+        }
+    }
+
+    println(count)
+    println(stringBuilder.toString())
 }
 
 fun p11478() {
