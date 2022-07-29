@@ -12,7 +12,46 @@ import (
 )
 
 func main() {
-	p11478()
+	p1764()
+}
+
+func p1764() {
+	var reader = bufio.NewReader(os.Stdin)
+	//var writer = bufio.NewWriter(os.Stdout)
+
+	//defer writer.Flush()
+
+	var n int
+	var m int
+
+	fmt.Fscanln(reader, &n, &m)
+
+	var N = n + m
+
+	var myMap = make(map[string]int)
+
+	for i := 0; i < N; i++ {
+		var name string
+		fmt.Fscanln(reader, &name)
+		myMap[name] = myMap[name] + 1
+	}
+
+	var count = 0
+	var keyList = make([]string, 0)
+	for s, v := range myMap {
+		if v == 2 {
+			keyList = append(keyList, s)
+			count++
+		}
+	}
+
+	sort.Strings(keyList)
+
+	fmt.Println(count)
+	for _, s := range keyList {
+		fmt.Println(s)
+	}
+
 }
 
 func p11478() {
