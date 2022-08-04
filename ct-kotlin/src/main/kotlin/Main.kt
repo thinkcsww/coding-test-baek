@@ -1,10 +1,28 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
+import kotlin.collections.HashSet
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1764()
+    p1269()
+}
+
+fun p1269() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    bufferedReader.readLine()
+
+    val set1 = bufferedReader.readLine().split(" ")
+    val set2 = bufferedReader.readLine().split(" ")
+
+    val set = HashSet<String>()
+
+    set.addAll(set1)
+    set.addAll(set2)
+
+    val gap = set1.size + set2.size - set.size
+
+    println(set1.size + set2.size - (gap * 2))
 }
 
 fun p1764() {
