@@ -8,7 +8,26 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1764();
+        p1269();
+    }
+
+    private static void p1269() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        bufferedReader.readLine();
+        String[] set1 = bufferedReader.readLine().split(" ");
+        String[] set2 = bufferedReader.readLine().split(" ");
+
+        Set<String> set = new HashSet<>();
+
+        set.addAll(Arrays.asList(set1));
+        set.addAll(Arrays.asList(set2));
+
+        int gap = set1.length + set2.length - set.size();
+
+        System.out.println(set1.length + set2.length - (gap * 2));
+
+
+
     }
 
     private static void p1764() throws IOException {
