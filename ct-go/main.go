@@ -12,7 +12,47 @@ import (
 )
 
 func main() {
-	p1764()
+	p1269()
+}
+
+func p1269() {
+	var reader = bufio.NewReader(os.Stdin)
+
+	var N int
+	var M int
+
+	fmt.Fscan(reader, &N)
+	fmt.Fscan(reader, &M)
+
+	var set1 = make([]string, N)
+	var set2 = make([]string, M)
+
+	for i := 0; i < N; i++ {
+		var n string
+		fmt.Fscan(reader, &n)
+		set1[i] = n
+	}
+
+	for i := 0; i < M; i++ {
+		var n string
+		fmt.Fscan(reader, &n)
+		set2[i] = n
+	}
+
+	var set = make(map[string]bool, 0)
+
+	for i := 0; i < N; i++ {
+		set[set1[i]] = true
+	}
+
+	for i := 0; i < M; i++ {
+		set[set2[i]] = true
+	}
+
+	var gap = len(set1) + len(set2) - len(set)
+
+	fmt.Println(len(set1) + len(set2) - (gap * 2))
+
 }
 
 func p1764() {
