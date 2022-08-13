@@ -4,7 +4,31 @@ import java.util.*
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p10815()
+    p14425()
+}
+
+fun p14425() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+
+    val split = bufferedReader.readLine().split(" ")
+
+    val N = split[0].toInt()
+    val M = split[1].toInt()
+    var count = 0
+    var set = HashSet<String>()
+
+    for (i in 0 until N) {
+        set.add(bufferedReader.readLine())
+    }
+
+    for (i in 0 until M) {
+        if (set.contains(bufferedReader.readLine())) {
+            count++
+        }
+    }
+
+    println(count);
+
 }
 
 fun p10815() {
