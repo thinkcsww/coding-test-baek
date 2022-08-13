@@ -1,11 +1,31 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
-import kotlin.collections.HashSet
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1269()
+    p10815()
+}
+
+fun p10815() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    bufferedReader.readLine()
+
+    val list1 = bufferedReader.readLine().split(" ").toList()
+    val set = HashSet(list1)
+
+    bufferedReader.readLine()
+
+    val stringBuilder = java.lang.StringBuilder()
+    bufferedReader.readLine().split(" ").forEach {
+        if (set.contains(it)) {
+            stringBuilder.append("1 ")
+        } else {
+            stringBuilder.append("0 ")
+        }
+    }
+
+    println(stringBuilder.toString())
 }
 
 fun p1269() {
