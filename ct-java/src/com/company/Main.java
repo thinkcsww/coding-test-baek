@@ -8,7 +8,33 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p10815();
+        p14425();
+    }
+
+    private static void p14425() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String[] split = bufferedReader.readLine().split(" ");
+        int N = Integer.parseInt(split[0]);
+        int M = Integer.parseInt(split[1]);
+        int count = 0;
+
+        Set<String> set = new HashSet<>();
+
+        for (int i = 0; i < N; i++) {
+            set.add(bufferedReader.readLine());
+        }
+
+        for (int i = 0; i < M; i++) {
+            String s = bufferedReader.readLine();
+
+            if (set.contains(s)) {
+                count++;
+            }
+        }
+
+        System.out.println(count);
+
     }
 
     private static void p10815() throws IOException {
