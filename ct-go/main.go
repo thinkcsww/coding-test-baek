@@ -12,7 +12,36 @@ import (
 )
 
 func main() {
-	p10815()
+	p14425()
+}
+
+func p14425() {
+	var reader = bufio.NewReader(os.Stdin)
+
+	var N int
+	var M int
+	var count int
+
+	fmt.Fscan(reader, &N)
+	fmt.Fscan(reader, &M)
+
+	var myMap = make(map[string]bool)
+
+	for i := 0; i < N; i++ {
+		var s string
+		fmt.Fscan(reader, &s)
+		myMap[s] = true
+	}
+
+	for i := 0; i < M; i++ {
+		var s string
+		fmt.Fscan(reader, &s)
+		if myMap[s] {
+			count++
+		}
+	}
+
+	fmt.Println(count)
 }
 
 func p10815() {
