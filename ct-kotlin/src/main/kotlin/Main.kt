@@ -5,7 +5,30 @@ import kotlin.collections.HashMap
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p1620()
+    p10816()
+}
+
+fun p10816() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    bufferedReader.readLine()
+
+    val arr1 = bufferedReader.readLine().split(" ").stream().mapToInt(Integer::parseInt).toArray()
+    val map = HashMap<Int, Int>()
+
+    for (n in arr1) {
+        map[n] = map.getOrDefault(n, 0) + 1
+    }
+
+    bufferedReader.readLine()
+    val arr2 = bufferedReader.readLine().split(" ").stream().mapToInt(Integer::parseInt).toArray()
+
+    val stringBuilder = java.lang.StringBuilder()
+    for (n in arr2) {
+        stringBuilder.append(map.getOrDefault(n, 0)).append(" ")
+    }
+
+    println(stringBuilder.toString())
+
 }
 
 fun p1620() {
