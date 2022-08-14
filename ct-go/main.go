@@ -12,7 +12,37 @@ import (
 )
 
 func main() {
-	p14425()
+	p1620()
+}
+
+func p1620() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	var N int
+	var M int
+
+	fmt.Fscan(reader, &N)
+	fmt.Fscan(reader, &M)
+
+	var myMap = make(map[string]string)
+
+	for i := 1; i <= N; i++ {
+		var s string
+		fmt.Fscan(reader, &s)
+
+		myMap[s] = strconv.Itoa(i)
+		myMap[strconv.Itoa(i)] = s
+	}
+
+	for i := 0; i < M; i++ {
+		var s string
+		fmt.Fscan(reader, &s)
+
+		fmt.Fprintln(writer, myMap[s])
+	}
+
+	writer.Flush()
 }
 
 func p14425() {
