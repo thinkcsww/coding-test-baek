@@ -8,7 +8,34 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1620();
+        p10816();
+    }
+
+    private static void p10816() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        bufferedReader.readLine();
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        int[] split = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        for (int n: split) {
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+
+        bufferedReader.readLine();
+
+        int[] split2 = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int n: split2) {
+            stringBuilder.append(map.getOrDefault(n, 0)).append(" ");
+        }
+
+        System.out.println(stringBuilder);
+
+
     }
 
     private static void p1620() throws IOException {
