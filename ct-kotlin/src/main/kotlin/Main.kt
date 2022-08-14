@@ -1,10 +1,35 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p14425()
+    p1620()
+}
+
+fun p1620() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val split = bufferedReader.readLine().split(" ")
+
+    val N = split[0].toInt()
+    val M = split[1].toInt()
+
+    val map = HashMap<String,String>()
+
+    for (i in 1..N) {
+        val s = bufferedReader.readLine();
+        map.put(s, i.toString())
+        map.put(i.toString(), s)
+    }
+
+    val stringBuilder = java.lang.StringBuilder()
+    for (i in 0 until M) {
+        stringBuilder.append(map[bufferedReader.readLine()])
+        stringBuilder.append("\n")
+    }
+
+    println(stringBuilder.toString())
 }
 
 fun p14425() {
