@@ -12,7 +12,40 @@ import (
 )
 
 func main() {
-	p1620()
+	p10816()
+}
+
+func p10816() {
+	var reader = bufio.NewReader(os.Stdin)
+	var writer = bufio.NewWriter(os.Stdout)
+
+	var N int
+	var M int
+
+	fmt.Fscan(reader, &N)
+
+	var myMap = make(map[int]int)
+
+	for i := 0; i < N; i++ {
+		var n int
+		fmt.Fscan(reader, &n)
+
+		myMap[n] = myMap[n] + 1
+	}
+
+	fmt.Fscan(reader, &M)
+
+	for i := 0; i < M; i++ {
+		var n int
+		fmt.Fscan(reader, &n)
+
+		fmt.Fprint(writer, myMap[n])
+		fmt.Fprint(writer, " ")
+
+	}
+
+	writer.Flush()
+
 }
 
 func p1620() {
