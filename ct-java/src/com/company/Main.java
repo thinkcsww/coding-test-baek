@@ -8,8 +8,140 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1085();
+        p2477();
     }
+    private static void p2477() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int[] countArr = new int[5];
+        List<String> inputList = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++) {
+            String s = bufferedReader.readLine();
+            inputList.add(s);
+
+            int[] array = Arrays.stream(s.split(" ")).mapToInt(Integer::parseInt).toArray();
+            countArr[array[0]]++;
+        }
+
+        int x = 1, y = 1;
+        int smallX = 1, smallY = 1;
+
+        if (countArr[1] == 2 && countArr[3] == 2) {
+
+            for (int i = 0; i < 6; i++) {
+                String s = inputList.get(i);
+
+                if (s.startsWith("2")) {
+                    x = Integer.parseInt(s.split(" ")[1]);
+
+                    smallX = Integer.parseInt(inputList.get((i + 2) % 6).split(" ")[1]);
+                    smallY = Integer.parseInt(inputList.get((i + 3) % 6).split(" ")[1]);
+
+                } else if (s.startsWith("4")) {
+                    y = Integer.parseInt(s.split(" ")[1]);
+                }
+            }
+
+        } else if (countArr[1] == 2 && countArr[4] == 2) {
+            for (int i = 0; i < 6; i++) {
+                String s = inputList.get(i);
+
+                if (s.startsWith("2")) {
+                    x = Integer.parseInt(s.split(" ")[1]);
+
+                    smallX = Integer.parseInt(inputList.get((i + 4) % 6).split(" ")[1]);
+                    smallY = Integer.parseInt(inputList.get((i + 3) % 6).split(" ")[1]);
+
+                } else if (s.startsWith("3")) {
+                    y = Integer.parseInt(s.split(" ")[1]);
+                }
+            }
+        } else if (countArr[2] == 2 && countArr[3] == 2) {
+            for (int i = 0; i < 6; i++) {
+                String s = inputList.get(i);
+
+                if (s.startsWith("1")) {
+                    x = Integer.parseInt(s.split(" ")[1]);
+
+                    smallY = Integer.parseInt(inputList.get((i + 3) % 6).split(" ")[1]);
+                    smallX = Integer.parseInt(inputList.get((i + 4) % 6).split(" ")[1]);
+
+                } else if (s.startsWith("4")) {
+                    y = Integer.parseInt(s.split(" ")[1]);
+                }
+            }
+        } else if (countArr[2] == 2 && countArr[4] == 2) {
+            for (int i = 0; i < 6; i++) {
+                String s = inputList.get(i);
+
+                if (s.startsWith("1")) {
+                    x = Integer.parseInt(s.split(" ")[1]);
+
+                    smallX = Integer.parseInt(inputList.get((i + 2) % 6).split(" ")[1]);
+                    smallY = Integer.parseInt(inputList.get((i + 3) % 6).split(" ")[1]);
+
+                } else if (s.startsWith("3")) {
+                    y = Integer.parseInt(s.split(" ")[1]);
+                }
+            }
+        }
+
+        int width = (x * y) - (smallX * smallY);
+
+        System.out.println(N * width);
+
+    }
+
+    private static void p4153() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        while (true) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+            Arrays.sort(array);
+
+            if (array[0] == 0) break;
+
+            if (Math.pow(array[0], 2) + Math.pow(array[1], 2) == Math.pow(array[2], 2)) {
+                System.out.println("right");
+            } else {
+                System.out.println("wrong");
+            }
+        }
+    }
+
+    private static void p3009() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        Map<String, Integer> map1 = new HashMap<>();
+        Map<String, Integer> map2 = new HashMap<>();
+
+        for (int i = 0; i < 3; i++) {
+            String[] s = bufferedReader.readLine().split(" ");
+
+            map1.put(s[0], map1.getOrDefault(s[0], 0) + 1);
+            map2.put(s[1], map2.getOrDefault(s[1], 0) + 1);
+        }
+
+        for (Map.Entry entry: map1.entrySet()) {
+            if (entry.getValue().equals(1)) {
+                System.out.print(entry.getKey() + " ");
+                break;
+            }
+        }
+
+        for (Map.Entry entry: map2.entrySet()) {
+            if (entry.getValue().equals(1)) {
+                System.out.print(entry.getKey() + " ");
+                break;
+            }
+        }
+
+    }
+
 
     private static void p1085() {
         Scanner scanner = new Scanner(System.in);
