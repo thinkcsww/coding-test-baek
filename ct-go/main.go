@@ -12,7 +12,90 @@ import (
 )
 
 func main() {
-	p10816()
+	p2477()
+}
+
+func p2477() {
+	var reader = bufio.NewReader(os.Stdin)
+
+	var N int
+
+	readString, _ := reader.ReadString('\n')
+	N, _ = strconv.Atoi(strings.TrimSuffix(readString, "\n"))
+
+	var list = make([]string, 0)
+	var countArr = make([]int, 5)
+
+	for i := 0; i < 6; i++ {
+		var s string
+		readString, _ := reader.ReadString('\n')
+		s = strings.TrimSuffix(readString, "\n")
+		list = append(list, s)
+
+		sp := strings.Split(s, " ")
+		index, _ := strconv.Atoi(sp[0])
+		countArr[index]++
+	}
+
+	var x, y int
+	var smallX, smallY int
+
+	if countArr[1] == 2 && countArr[3] == 2 {
+		for i := 0; i < 6; i++ {
+			var s = list[i]
+
+			if strings.HasPrefix(s, "2") {
+				x, _ = strconv.Atoi(strings.Split(s, " ")[1])
+
+				smallX, _ = strconv.Atoi(strings.Split(list[(i+2)%6], " ")[1])
+				smallY, _ = strconv.Atoi(strings.Split(list[(i+3)%6], " ")[1])
+			} else if strings.HasPrefix(s, "4") {
+				y, _ = strconv.Atoi(strings.Split(s, " ")[1])
+			}
+		}
+	} else if countArr[1] == 2 && countArr[4] == 2 {
+		for i := 0; i < 6; i++ {
+			var s = list[i]
+
+			if strings.HasPrefix(s, "2") {
+				x, _ = strconv.Atoi(strings.Split(s, " ")[1])
+
+				smallX, _ = strconv.Atoi(strings.Split(list[(i+4)%6], " ")[1])
+				smallY, _ = strconv.Atoi(strings.Split(list[(i+3)%6], " ")[1])
+			} else if strings.HasPrefix(s, "3") {
+				y, _ = strconv.Atoi(strings.Split(s, " ")[1])
+			}
+		}
+	} else if countArr[2] == 2 && countArr[3] == 2 {
+		for i := 0; i < 6; i++ {
+			var s = list[i]
+
+			if strings.HasPrefix(s, "1") {
+				x, _ = strconv.Atoi(strings.Split(s, " ")[1])
+
+				smallX, _ = strconv.Atoi(strings.Split(list[(i+3)%6], " ")[1])
+				smallY, _ = strconv.Atoi(strings.Split(list[(i+4)%6], " ")[1])
+			} else if strings.HasPrefix(s, "4") {
+				y, _ = strconv.Atoi(strings.Split(s, " ")[1])
+			}
+		}
+	} else if countArr[2] == 2 && countArr[4] == 2 {
+		for i := 0; i < 6; i++ {
+			var s = list[i]
+
+			if strings.HasPrefix(s, "1") {
+				x, _ = strconv.Atoi(strings.Split(s, " ")[1])
+
+				smallX, _ = strconv.Atoi(strings.Split(list[(i+2)%6], " ")[1])
+				smallY, _ = strconv.Atoi(strings.Split(list[(i+3)%6], " ")[1])
+			} else if strings.HasPrefix(s, "3") {
+				y, _ = strconv.Atoi(strings.Split(s, " ")[1])
+			}
+		}
+	}
+
+	fmt.Println(N * ((x * y) - (smallX * smallY)))
+
 }
 
 func p10816() {
