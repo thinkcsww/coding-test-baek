@@ -8,7 +8,66 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p10816();
+        p1085();
+    }
+
+    private static void p1085() {
+        Scanner scanner = new Scanner(System.in);
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+        int w = scanner.nextInt();
+        int h = scanner.nextInt();
+
+        int min = Math.min(x, w - x);
+        min = Math.min(min, y);
+        min = Math.min(min, h - y);
+
+        System.out.println(min);
+    }
+
+    private static void p25305() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int cutline = Integer.parseInt(bufferedReader.readLine().split(" ")[1]);
+
+        ArrayList<Integer> list = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+        list.sort(Collections.reverseOrder());
+
+        System.out.println(list.get(cutline - 1));
+    }
+
+    private static void p25304() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int sum = Integer.parseInt(bufferedReader.readLine());
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int mySum = 0;
+        for (int i = 0; i < N; i++) {
+            int[] split = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+            mySum += split[0] * split[1];
+
+        }
+
+        if (sum == mySum) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
+        }
+
+    }
+
+    private static void p3003() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        System.out.print(String.format("%d ", 1 - array[0]));
+        System.out.print(String.format("%d ", 1 - array[1]));
+        System.out.print(String.format("%d ", 2 - array[2]));
+        System.out.print(String.format("%d ", 2 - array[3]));
+        System.out.print(String.format("%d ", 2 - array[4]));
+        System.out.print(String.format("%d ", 8 - array[5]));
     }
 
     private static void p10816() throws IOException {
