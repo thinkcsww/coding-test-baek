@@ -2,14 +2,28 @@ package com.company;
 
 import java.io.*;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p2477();
+        p3053();
     }
+
+    private static void p3053() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        double R = Double.parseDouble(bufferedReader.readLine());
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.######");
+        System.out.println(decimalFormat.format(Math.PI * R * R));
+        System.out.println(decimalFormat.format(2 * R * R));
+
+
+    }
+
     private static void p2477() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
