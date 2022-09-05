@@ -9,7 +9,55 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p3053();
+        p1358();
+    }
+
+    private static void p1358() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int[] inputs = Arrays
+                .stream(bufferedReader.readLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
+        int W = inputs[0];
+        int H = inputs[1];
+        int X = inputs[2];
+        int Y = inputs[3];
+        int P = inputs[4];
+        int R = H / 2;
+        int X2 = X + W;
+        int Y2 = Y + H;
+
+        int count = 0;
+
+        for (int i = 0; i < P; i++) {
+            int[] point = Arrays.stream(bufferedReader.readLine().split(" "))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+
+            int x = point[0];
+            int y = point[1];
+
+            if ((x >= X && x <= X2) && (y >= Y && y <= Y2)) {
+                count++;
+            } else if (x < X) {
+                if (Math.sqrt(Math.pow(Math.abs(X - x), 2) + Math.pow(Math.abs(Y + R - y), 2)) <= R) {
+                    count++;
+                }
+            } else if (x > X2) {
+                if (Math.sqrt(Math.pow(Math.abs(X2 - x), 2) + Math.pow(Math.abs(Y + R - y), 2)) <= R) {
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count);
+    }
+
+    private static void p1004() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
     }
 
     private static void p3053() throws IOException {
@@ -140,14 +188,14 @@ public class Main {
             map2.put(s[1], map2.getOrDefault(s[1], 0) + 1);
         }
 
-        for (Map.Entry entry: map1.entrySet()) {
+        for (Map.Entry entry : map1.entrySet()) {
             if (entry.getValue().equals(1)) {
                 System.out.print(entry.getKey() + " ");
                 break;
             }
         }
 
-        for (Map.Entry entry: map2.entrySet()) {
+        for (Map.Entry entry : map2.entrySet()) {
             if (entry.getValue().equals(1)) {
                 System.out.print(entry.getKey() + " ");
                 break;
@@ -225,7 +273,7 @@ public class Main {
 
         int[] split = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-        for (int n: split) {
+        for (int n : split) {
             map.put(n, map.getOrDefault(n, 0) + 1);
         }
 
@@ -234,7 +282,7 @@ public class Main {
         int[] split2 = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
         StringBuilder stringBuilder = new StringBuilder();
-        for (int n: split2) {
+        for (int n : split2) {
             stringBuilder.append(map.getOrDefault(n, 0)).append(" ");
         }
 
@@ -340,7 +388,6 @@ public class Main {
         System.out.println(set1.length + set2.length - (gap * 2));
 
 
-
     }
 
     private static void p1764() throws IOException {
@@ -359,7 +406,7 @@ public class Main {
 
         int count = 0;
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, Integer> entry: new TreeMap<>(map).entrySet()) {
+        for (Map.Entry<String, Integer> entry : new TreeMap<>(map).entrySet()) {
             if (entry.getValue() == 2) {
                 count++;
                 stringBuilder.append(entry.getKey());
@@ -409,7 +456,7 @@ public class Main {
             countList[i] = countList[i - 1] + countList[i];
         }
 
-        for (int i = list.length - 1; i >= 0 ; i--) {
+        for (int i = list.length - 1; i >= 0; i--) {
             int value = list[i];
             countList[value]--;
             resultList[countList[value]] = value;
@@ -440,11 +487,11 @@ public class Main {
         int n1 = 0;
 
         int sum = 0;
-        for (int num: list) {
+        for (int num : list) {
             sum += num;
         }
 
-        n1 = (int)Math.round(sum / (N * 1.0));
+        n1 = (int) Math.round(sum / (N * 1.0));
 
         int n2 = list.get(list.size() / 2);
 
@@ -455,7 +502,7 @@ public class Main {
         }
 
         List<Map<String, Integer>> mapList = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             Map<String, Integer> map1 = new HashMap<>();
             map1.put("key", entry.getKey());
             map1.put("value", entry.getValue());
@@ -472,7 +519,7 @@ public class Main {
                     return 1;
                 } else if (o1.get("key") < o2.get("key")) {
                     return -1;
-                }  else {
+                } else {
                     return 0;
                 }
             }
@@ -512,7 +559,7 @@ public class Main {
 
         Set<Integer> set = new HashSet<>();
 
-        for (String s1: s) {
+        for (String s1 : s) {
             set.add(Integer.parseInt(s1));
         }
 
@@ -543,7 +590,7 @@ public class Main {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (String s1: s) {
+        for (String s1 : s) {
             stringBuilder.append(map.get(Integer.parseInt(s1)));
             stringBuilder.append(" ");
         }
@@ -562,7 +609,7 @@ public class Main {
         for (int i = 0; i < N; i++) {
             String[] s = bufferedReader.readLine().split(" ");
 
-            Map<String, String> map  = new HashMap<>();
+            Map<String, String> map = new HashMap<>();
             map.put("age", s[0]);
             map.put("name", s[1]);
 
@@ -584,7 +631,7 @@ public class Main {
         });
 
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map<String, String> m: list) {
+        for (Map<String, String> m : list) {
             stringBuilder.append(m.get("age"));
             stringBuilder.append(" ");
             stringBuilder.append(m.get("name"));
@@ -619,7 +666,7 @@ public class Main {
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
 
         Set<String> set = new LinkedHashSet<>(arr);
-        for (String s: set) {
+        for (String s : set) {
             bufferedWriter.write(s);
             bufferedWriter.write("\n");
         }
@@ -666,7 +713,7 @@ public class Main {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(Map<String, String> map: arr) {
+        for (Map<String, String> map : arr) {
             stringBuilder.append(map.get("x"));
             stringBuilder.append(" ");
             stringBuilder.append(map.get("y"));
