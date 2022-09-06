@@ -9,7 +9,48 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1358();
+        p1004();
+    }
+
+    private static void p1004() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        for (int i = 0; i < N; i++) {
+            int[] inputArray = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+            int x1 = inputArray[0];
+            int y1 = inputArray[1];
+            int x2 = inputArray[2];
+            int y2 = inputArray[3];
+
+            int M = Integer.parseInt(bufferedReader.readLine());
+
+            int startCount = 0;
+            int destCount = 0;
+            int overlapCount = 0;
+
+            for (int j = 0; j < M; j++) {
+                int[] circleArray = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+                int xc = circleArray[0];
+                int yc = circleArray[1];
+                int rc = circleArray[2];
+
+                boolean isOverlapped = false;
+                if (Math.sqrt(Math.pow(Math.abs(xc - x1), 2) + Math.pow(Math.abs(yc - y1), 2)) <= rc) {
+                    isOverlapped = true;
+                    startCount++;
+                }
+
+                if (Math.sqrt(Math.pow(Math.abs(xc - x2), 2) + Math.pow(Math.abs(yc - y2), 2)) <= rc) {
+                    if (isOverlapped) overlapCount++;
+                    destCount++;
+                }
+            }
+
+            System.out.println(startCount + destCount - (overlapCount * 2));
+        }
     }
 
     private static void p1358() throws IOException {
@@ -53,11 +94,6 @@ public class Main {
         }
 
         System.out.println(count);
-    }
-
-    private static void p1004() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
     }
 
     private static void p3053() throws IOException {
