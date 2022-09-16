@@ -9,7 +9,53 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1004();
+        p1002();
+    }
+
+    private static void p1002() throws IOException {
+        // read
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        for (int i = 0; i < N; i++) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+            int x1 = array[0];
+            int y1 = array[1];
+            int r1 = array[2];
+            int x2 = array[3];
+            int y2 = array[4];
+            int r2 = array[5];
+
+            if (x1 == x2 && y1 == y2 && r1 == r2) {
+                System.out.println(-1);
+                continue;
+            }
+
+            double originDistance = Math.sqrt(Math.pow(Math.abs(x2 - x1), 2) + Math.pow(Math.abs(y2 - y1), 2));
+            int radiusSum = r1 + r2;
+
+            int bigR = Math.max(r1, r2);
+            int smallR = Math.min(r1, r2);
+
+            if (originDistance <= bigR) {
+                if (originDistance + smallR > bigR) {
+                    System.out.println(2);
+                } else if (originDistance + smallR == bigR) {
+                    System.out.println(1);
+                } else {
+                    System.out.println(0);
+                }
+            } else {
+                if (radiusSum > originDistance) {
+                    System.out.println(2);
+                } else if (radiusSum == originDistance) {
+                    System.out.println(1);
+                } else {
+                    System.out.println(0);
+                }
+            }
+        }
     }
 
     private static void p1004() throws IOException {
