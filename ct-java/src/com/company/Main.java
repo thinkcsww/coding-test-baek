@@ -9,8 +9,57 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1002();
+        p10775();
     }
+
+    private static void p10775() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int G = Integer.parseInt(bufferedReader.readLine());
+
+        int[] arr = new int[G + 1];
+
+        for (int i = 1; i <= G; i++) {
+            arr[i] = i;
+        }
+
+        int P = Integer.parseInt(bufferedReader.readLine());
+
+        int count = 0;
+        for (int i = 0; i < P; i++) {
+            int N = Integer.parseInt(bufferedReader.readLine());
+
+            int availableGate = find(N, arr);
+
+            if (availableGate == 0) {
+                break;
+            }
+
+            count++;
+
+            union(availableGate, availableGate - 1, arr);
+
+        }
+
+        System.out.println(count);
+    }
+
+    private static int find(int x, int[] arr) {
+        if (x == arr[x]) {
+            return x;
+        }
+
+        return arr[x] = find(arr[x], arr);
+    }
+
+    private static void union(int x, int xMinus1, int[] arr) {
+        int a = find(x, arr);
+        int b = find(xMinus1, arr);
+
+        if (a != b) {
+            arr[a] = b;
+        }
+    }
+
 
     private static void p1002() throws IOException {
         // read
