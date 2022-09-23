@@ -9,7 +9,70 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p10775();
+        p1976();
+    }
+
+    private static void p1976() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int M = Integer.parseInt(bufferedReader.readLine());
+
+        int[] parent = new int[N + 1];
+        for (int i = 0; i <= N; i++) {
+            parent[i] = i;
+        }
+
+        for (int i = 1; i <= N; i++) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+            for (int j = 1; j <= array.length; j++) {
+                if (array[j - 1] == 1) {
+                    if (parent[i] == parent[j]) {
+                        continue;
+                    }
+
+                    p1976Union(i, j, parent);
+
+                }
+            }
+        }
+
+        String result = null;
+        int value = -1;
+        int[] destination = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        for (int i = 0; i < M; i++) {
+            int root = p1976Find(destination[i], parent);
+            if (value == -1) {
+                value = root;
+            } else if (value != root) {
+                result = "NO";
+                break;
+            }
+        }
+        if (result == null) {
+            result = "YES";
+        }
+        System.out.println(result);
+
+    }
+
+    private static void p1976Union(int x, int y, int[] parent) {
+        int a = p1976Find(x, parent);
+        int b = p1976Find(y, parent);
+
+        if (a != b) {
+            parent[a] = b;
+        }
+    }
+
+    private static int p1976Find(int x, int[] parent) {
+        if (parent[x] == x) {
+            return x;
+        }
+
+        int result = p1976Find(parent[x], parent);
+        parent[x] = result;
+        return result;
     }
 
     private static void p10775() throws IOException {
