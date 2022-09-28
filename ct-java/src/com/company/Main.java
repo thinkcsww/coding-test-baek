@@ -6,12 +6,52 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1931();
+        p11047();
     }
+
+    private static void p11047() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String[] s = bufferedReader.readLine().split(" ");
+
+        int N = Integer.parseInt(s[0]);
+        int M = Integer.parseInt(s[1]);
+
+        int change = M;
+        int count = 0;
+
+        List<Integer> coins = Stream.iterate(0, i -> i + 1)
+                .limit(N)
+                .map(i -> {
+                    try {
+                        return Integer.parseInt(bufferedReader.readLine());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).collect(Collectors.toList());
+
+        for (int i = N - 1; i >= 0; i--) {
+            if (change == 0) {
+                break;
+            }
+            int coin = coins.get(i);
+            int divider = change / coin;
+
+            if (divider >= 1) {
+                change -= coin * divider;
+                count += divider;
+            }
+
+        }
+
+        System.out.println(count);
+    }
+
 
     private static void p1931() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
