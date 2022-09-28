@@ -4,12 +4,69 @@ import java.io.*;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        p1976();
+        p1931();
+    }
+
+    private static void p1931() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        List<Meeting1931> meetings = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+            meetings.add(new Meeting1931(array[0], array[1]));
+        }
+
+        meetings.sort(Comparator.comparing(Meeting1931::getEnd)
+                .thenComparing(Meeting1931::getStart));
+
+        int count = 0;
+        int last = 0;
+
+        for (Meeting1931 meeting : meetings) {
+            if (meeting.getStart() >= last) {
+                last = meeting.getEnd();
+                count++;
+            }
+        }
+
+        System.out.println(count);
+
+    }
+
+    static class Meeting1931 {
+        int start;
+        int end;
+
+        public Meeting1931(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public void setStart(int start) {
+            this.start = start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        public void setEnd(int end) {
+            this.end = end;
+        }
     }
 
     private static void p1976() throws IOException {
