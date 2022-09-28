@@ -1,12 +1,75 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
-import kotlin.collections.HashMap
+import java.util.stream.Collectors
+import java.util.stream.Stream
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p10816()
+    p11047()
 }
+
+fun p11047() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val split = bufferedReader.readLine().split(" ")
+
+    val N = split[0].toInt()
+    val M = split[1].toInt()
+
+    val coins = Stream.iterate(0, fun(it: Int?): Int? {
+        return it
+    }).limit(N.toLong())
+        .map(fun(it): Int {
+        return bufferedReader.readLine().toInt()
+    }).collect(Collectors.toList())
+
+    var change = M
+    var count = 0
+    for (i in N - 1 downTo 0) {
+        if (change == 0) break
+
+        val divider: Int = change / coins[i]
+
+        if (divider >= 1) {
+            count += divider
+            change -= divider * coins[i]
+        }
+
+    }
+
+    print(count)
+
+}
+
+fun p1931() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val N = bufferedReader.readLine().toInt()
+    val meetings = ArrayList<Meeting1931>()
+
+    for (i in 0 until N) {
+        val toList = bufferedReader.readLine().split(" ").stream().mapToInt(String::toInt).toArray()
+
+        meetings.add(Meeting1931(toList[0], toList[1]))
+
+    }
+
+    meetings.sortWith(Comparator.comparing(Meeting1931::endTime)
+        .thenComparing(Meeting1931::startTime))
+
+    var count = 0
+    var last = 0
+
+    for (meeting in meetings) {
+        if (meeting.startTime >= last) {
+            count++
+            last = meeting.endTime
+        }
+    }
+
+    print(count)
+}
+
+class Meeting1931(val startTime: Int, val endTime: Int) {}
 
 fun p10816() {
     val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
