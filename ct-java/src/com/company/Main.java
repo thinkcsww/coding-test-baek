@@ -24,6 +24,7 @@ public class Main {
         int R = Integer.parseInt(stringTokenizer.nextToken());
 
         boolean[] visited = new boolean[N + 1];
+        visited[R] = true;
         int[] sequence = new int[N + 1];
         int count = 1;
         sequence[R] = 1;
@@ -54,13 +55,11 @@ public class Main {
 
         while (!queue.isEmpty()) {
             Integer poll = queue.poll();
-            if (!visited[poll]) {
-                sequence[poll] = count++;
-                visited[poll] = true;
-            }
 
             for (int i: adj[poll]) {
                 if (!visited[i]) {
+                    visited[i] = true;
+                    sequence[i] = ++count;
                     queue.add(i);
                 }
             }

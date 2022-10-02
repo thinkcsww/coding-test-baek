@@ -6,7 +6,70 @@ import java.util.stream.Stream
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p13305()
+    p24445()
+}
+
+fun p24445() {
+    var stringTokenizer: StringTokenizer
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    stringTokenizer = StringTokenizer(bufferedReader.readLine())
+
+
+    val N = stringTokenizer.nextToken().toInt()
+    val M = stringTokenizer.nextToken().toInt()
+    val R = stringTokenizer.nextToken().toInt()
+
+    val visited = BooleanArray(N + 1)
+    visited[R] = true
+    val sequence = IntArray(N + 1)
+    var count = 1
+    sequence[R] = 1
+
+    val adj = ArrayList<ArrayList<Int>>()
+    for (i in 0 until N + 1) {
+        adj.add(ArrayList())
+    }
+
+    for (i in 0 until M) {
+        stringTokenizer = StringTokenizer(bufferedReader.readLine())
+        val u = stringTokenizer.nextToken().toInt()
+        val v = stringTokenizer.nextToken().toInt()
+
+        adj[u].add(v)
+        adj[v].add(u)
+    }
+
+    for (l in adj) {
+        Collections.sort(l, Comparator.reverseOrder())
+    }
+
+    val queue = LinkedList<Int>()
+    queue.add(R)
+
+
+    while (queue.isNotEmpty()) {
+        val poll = queue.poll()
+
+        for (i in adj[poll]) {
+            if (!visited[i]) {
+                visited[i] = true
+                sequence[i] = ++count
+                queue.add(i)
+            }
+        }
+    }
+
+    val stringBuilder = StringBuilder()
+    for (i in sequence) {
+        stringBuilder.append(i).append("\n")
+    }
+
+    for (i in 1 until N + 1) {
+        stringBuilder.append(sequence[i]).append("\n")
+    }
+
+    print(stringBuilder.toString())
+    bufferedReader.close()
 }
 
 fun p13305() {
