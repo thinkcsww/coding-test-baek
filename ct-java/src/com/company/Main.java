@@ -12,8 +12,69 @@ public class Main {
     private static int p2606Count = -1;
 
     public static void main(String[] args) throws IOException {
-        p2606DFS();
+        p24445();
     }
+
+    private static void p24445() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+        int R = Integer.parseInt(stringTokenizer.nextToken());
+
+        boolean[] visited = new boolean[N + 1];
+        int[] sequence = new int[N + 1];
+        int count = 1;
+        sequence[R] = 1;
+
+
+        List<Integer>[] adj = new ArrayList[N + 1];
+
+        for (int i = 0; i < N + 1; i++) {
+            adj[i] = new ArrayList<>();
+        }
+
+
+        for (int i = 0; i < M; i++) {
+            StringTokenizer st = new StringTokenizer(bufferedReader.readLine(), " ");
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            adj[u].add(v);
+            adj[v].add(u);
+        }
+
+        for (List<Integer> l: adj) {
+            l.sort(Comparator.comparingInt(Integer::intValue).reversed());
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        queue.add(R);
+
+        while (!queue.isEmpty()) {
+            Integer poll = queue.poll();
+            if (!visited[poll]) {
+                sequence[poll] = count++;
+                visited[poll] = true;
+            }
+
+            for (int i: adj[poll]) {
+                if (!visited[i]) {
+                    queue.add(i);
+                }
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 1; i < N + 1; i++) {
+            stringBuilder.append(sequence[i]).append("\n");
+        }
+
+        System.out.println(stringBuilder.toString());
+        bufferedReader.close();
+    }
+
 
     private static void p2606DFS() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
