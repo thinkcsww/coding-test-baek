@@ -6,7 +6,27 @@ import java.util.stream.Stream
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p11047()
+    p13305()
+}
+
+fun p13305() {
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    val N = bufferedReader.readLine().toInt()
+    val distances = bufferedReader.readLine().split(" ").stream().mapToLong(String::toLong).toArray()
+    val prices = bufferedReader.readLine().split(" ").stream().mapToLong(String::toLong).toArray()
+    var currentPrice = prices[0]
+    var cost = 0L
+
+    for (i in 0 until N - 1) {
+        if (currentPrice > prices[i + 1]) {
+            cost += currentPrice * distances[i]
+            currentPrice = prices[i + 1]
+        } else {
+            cost += currentPrice * distances[i]
+        }
+    }
+
+    print(cost)
 }
 
 fun p11047() {
