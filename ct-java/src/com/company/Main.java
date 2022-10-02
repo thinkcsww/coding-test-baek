@@ -4,14 +4,138 @@ import java.io.*;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
 
+    private static int p2606Count = -1;
+
     public static void main(String[] args) throws IOException {
-        p11047();
+        p2606DFS();
+    }
+
+    private static void p2606DFS() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int M = Integer.parseInt(bufferedReader.readLine());
+
+        boolean[] visited = new boolean[N + 1];
+
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < N + 1; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < M; i++) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            adj.get(array[0]).add(array[1]);
+            adj.get(array[1]).add(array[0]);
+        }
+
+        p2606DfsImpl(1, visited, adj);
+
+        System.out.println(p2606Count);
+    }
+
+    private static void p2606DfsImpl(int nodeNum, boolean[] visited, List<List<Integer>> adj) {
+        visited[nodeNum] = true;
+        p2606Count++;
+
+        List<Integer> integers = adj.get(nodeNum);
+
+        for (int i: integers) {
+            if (!visited[i]) {
+                p2606DfsImpl(i, visited, adj);
+            }
+        }
+    }
+
+    private static void p2606BFS() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int M = Integer.parseInt(bufferedReader.readLine());
+
+        boolean[] visited = new boolean[N + 1];
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < N + 1; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < M; i++) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            adj.get(array[0]).add(array[1]);
+        }
+
+        int count = 0;
+
+        Queue<Integer> stack = new LinkedList<>();
+
+        stack.add(1);
+
+        while (!stack.isEmpty()) {
+            Integer num = stack.poll();
+            visited[num] = true;
+
+            for (Integer n : adj.get(num)) {
+                if (!visited[n]) {
+                    visited[n] = true;
+                    stack.add(n);
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count);
+
+
+    }
+
+    private static int findp2606(int x, int[] arr) {
+        if (x == arr[x]) {
+            return x;
+        }
+
+        int result = findp2606(arr[x], arr);
+        arr[x] = result;
+        return result;
+    }
+
+    private static void unionp2606(int x, int y, int[] arr) {
+        int a = findp2606(x, arr);
+        int b = findp2606(y, arr);
+
+        if (a != b) {
+            arr[a] = b;
+        }
+    }
+
+    private static void p13305() throws IOException {
+
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int[] distances = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int[] prices = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        long cost = 0;
+        long currentPrice = prices[0];
+
+        for (int i = 0; i < N - 1; i++) {
+            if (currentPrice > prices[i + 1]) {
+                cost += currentPrice * distances[i];
+                currentPrice = prices[i + 1];
+            } else {
+                cost += currentPrice * distances[i];
+            }
+        }
+
+        System.out.println(cost);
+
     }
 
     private static void p11047() throws IOException {
