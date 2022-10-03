@@ -12,7 +12,67 @@ public class Main {
     private static int p2606Count = -1;
 
     public static void main(String[] args) throws IOException {
-        p24445();
+        p24444();
+    }
+
+    private static void p24444() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+        int R = Integer.parseInt(stringTokenizer.nextToken());
+        boolean[] visited = new boolean[N + 1];
+        int[] sequence = new int[N + 1];
+        int count = 1;
+
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < N + 1; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < M; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int u = Integer.parseInt(stringTokenizer.nextToken());
+            int v = Integer.parseInt(stringTokenizer.nextToken());
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        for (List<Integer> l: adj) {
+            l.sort(Comparator.comparingInt(Integer::intValue));
+        }
+
+
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(R);
+        visited[R] = true;
+        sequence[R] = count;
+
+        while (!queue.isEmpty()) {
+            Integer poll = queue.poll();
+
+            List<Integer> edges = adj.get(poll);
+
+            for (int edge: edges) {
+                if (!visited[edge]) {
+                    visited[edge] = true;
+                    queue.add(edge);
+                    sequence[edge] = ++count;
+                }
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 1; i < N + 1; i++) {
+            stringBuilder.append(sequence[i]).append("\n");
+        }
+
+        System.out.println(stringBuilder);
+        bufferedReader.close();
+
     }
 
     private static void p24445() throws IOException {
