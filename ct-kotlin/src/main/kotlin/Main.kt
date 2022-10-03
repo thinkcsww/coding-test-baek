@@ -3,10 +3,71 @@ import java.io.InputStreamReader
 import java.util.*
 import java.util.stream.Collectors
 import java.util.stream.Stream
+import kotlin.collections.ArrayList
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
-    p24445()
+    p24444()
+}
+
+fun p24444() {
+    var stringTokenizer: StringTokenizer
+    val bufferedReader = BufferedReader(InputStreamReader(System.`in`))
+    stringTokenizer = StringTokenizer(bufferedReader.readLine())
+
+    val N = stringTokenizer.nextToken().toInt()
+    val M = stringTokenizer.nextToken().toInt()
+    val R = stringTokenizer.nextToken().toInt()
+
+    val visited = BooleanArray(N + 1)
+    val sequence = IntArray(N + 1)
+    var count = 1
+    val adj = ArrayList<ArrayList<Int>>()
+
+    for (i in 0 until N + 1) {
+        adj.add(ArrayList())
+    }
+
+    for (i in 0 until M) {
+        stringTokenizer = StringTokenizer(bufferedReader.readLine())
+
+        val u = stringTokenizer.nextToken().toInt()
+        val v = stringTokenizer.nextToken().toInt()
+
+        adj[u].add(v)
+        adj[v].add(u)
+    }
+
+    for (l in adj) {
+        l.sort()
+    }
+
+    val queue = LinkedList<Int>()
+    queue.add(R)
+    sequence[R] = count
+    visited[R] = true
+
+    while (queue.isNotEmpty()) {
+        val vertex = queue.poll()
+
+        val edges = adj[vertex]
+        for (edge in edges) {
+            if (!visited[edge]) {
+                visited[edge] = true
+                sequence[edge] = ++count
+                queue.add(edge)
+            }
+        }
+    }
+
+    val stringBuilder = StringBuilder()
+
+    for (i in 1 until N + 1) {
+        stringBuilder.append(sequence[i]).append("\n")
+    }
+
+    print(stringBuilder)
+    bufferedReader.close()
 }
 
 fun p24445() {
