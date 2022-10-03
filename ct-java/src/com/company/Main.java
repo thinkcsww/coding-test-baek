@@ -1,9 +1,11 @@
 package com.company;
 
+import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,7 +16,153 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p24480();
+        p2667();
+    }
+
+    private static void p2667() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int groupCount = 0;
+        int count = 0;
+        List<Integer> countList = new ArrayList<>();
+
+        int[][] adj = new int[N][N];
+        boolean[][] visited = new boolean[N][N];
+
+        for (int i = 0; i < N; i++) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split("")).mapToInt(Integer::parseInt).toArray();
+            for (int j = 0; j < N; j++) {
+                adj[i][j] = array[j];
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (adj[i][j] == 1 && visited[i][j] == false) {
+                    groupCount++;
+                    Point p = new Point(i, j);
+                    countList.add(p2667BFS(p, adj, visited, N));
+                }
+            }
+        }
+
+        System.out.println(groupCount);
+
+        countList.stream()
+                .sorted()
+                .forEach(System.out::println);
+
+    }
+
+    private static int p2667BFS(Point p, int[][] adj, boolean[][] visited, int N) {
+        int count = 1;
+        Queue<Point> queue = new LinkedList<>();
+        queue.add(p);
+        visited[p.x][p.y] = true;
+
+
+        while (!queue.isEmpty()) {
+            Point currPoint = queue.poll();
+            // 좌
+            if (currPoint.x - 1 >= 0 && !visited[currPoint.x - 1][currPoint.y] && adj[currPoint.x - 1][currPoint.y] == 1) {
+                count++;
+                queue.add(new Point(currPoint.x - 1, currPoint.y));
+                visited[currPoint.x - 1][currPoint.y] = true;
+            }
+            // 우
+            if (currPoint.x + 1 < N && !visited[currPoint.x + 1][currPoint.y] && adj[currPoint.x + 1][currPoint.y] == 1) {
+                count++;
+                queue.add(new Point(currPoint.x + 1, currPoint.y));
+                visited[currPoint.x + 1][currPoint.y] = true;
+            }
+            // 상
+            if (currPoint.y - 1 >= 0 && !visited[currPoint.x][currPoint.y - 1] && adj[currPoint.x][currPoint.y - 1] == 1) {
+                count++;
+                queue.add(new Point(currPoint.x, currPoint.y - 1));
+                visited[currPoint.x][currPoint.y - 1] = true;
+            }
+            // 하
+            if (currPoint.y + 1 < N && !visited[currPoint.x][currPoint.y + 1] && adj[currPoint.x][currPoint.y + 1] == 1) {
+                count++;
+                queue.add(new Point(currPoint.x, currPoint.y + 1));
+                visited[currPoint.x][currPoint.y + 1] = true;
+            }
+        }
+
+        return count;
+    }
+
+    private static void p1260() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+        int R = Integer.parseInt(stringTokenizer.nextToken());
+
+        List<List<Integer>> adj = new ArrayList<>(N + 1);
+        boolean[] visitedDFS = new boolean[N + 1];
+        boolean[] visitedBFS = new boolean[N + 1];
+
+        for (int i = 0; i < N + 1; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < M; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int u = Integer.parseInt(stringTokenizer.nextToken());
+            int v = Integer.parseInt(stringTokenizer.nextToken());
+
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        for (List<Integer> l: adj) {
+            Collections.sort(l);
+        }
+
+        StringBuilder stringBuilderDFS = new StringBuilder();
+        StringBuilder stringBuilderBFS = new StringBuilder();
+
+        p1260DFSImpl(R, visitedDFS, adj, stringBuilderDFS);
+        System.out.println(stringBuilderDFS);
+
+        stringBuilderBFS.append(R).append(" ");
+        visitedBFS[R] = true;
+        p1260BFSImpl(R, visitedBFS, adj, stringBuilderBFS);
+        System.out.println(stringBuilderBFS);
+    }
+
+    private static void p1260DFSImpl(int vertex, boolean[] visited, List<List<Integer>> adj, StringBuilder stringBuilder) {
+        visited[vertex] = true;
+        stringBuilder.append(vertex).append(" ");
+
+        List<Integer> edges = adj.get(vertex);
+        for (int edge: edges) {
+            if (!visited[edge]) {
+                p1260DFSImpl(edge, visited, adj, stringBuilder);
+            }
+        }
+    }
+
+    private static void p1260BFSImpl(int vertex, boolean[] visited, List<List<Integer>> adj, StringBuilder stringBuilder) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(vertex);
+
+        while (!queue.isEmpty()) {
+            Integer v = queue.poll();
+
+            List<Integer> edges = adj.get(v);
+            for (Integer edge: edges) {
+                if (!visited[edge]) {
+                    visited[edge] = true;
+                    stringBuilder.append(edge).append(" ");
+                    queue.add(edge);
+                }
+            }
+        }
     }
 
     private static void p24480() throws IOException {
