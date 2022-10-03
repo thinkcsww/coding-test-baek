@@ -24,7 +24,6 @@ public class Main {
         int N = Integer.parseInt(bufferedReader.readLine());
 
         int groupCount = 0;
-        int count = 0;
         List<Integer> countList = new ArrayList<>();
 
         int[][] adj = new int[N][N];
