@@ -11,9 +11,64 @@ public class Main {
 
     private static int p2606Count = -1;
     private static int p24479Count = 1;
+    private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p24479();
+        p24480();
+    }
+
+    private static void p24480() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+        int R = Integer.parseInt(stringTokenizer.nextToken());
+
+        List<List<Integer>> adj = new ArrayList<>();
+        boolean[] visited = new boolean[N + 1];
+        int[] sequence = new int[N + 1];
+
+        for (int i = 0; i < N + 1; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < M; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int u = Integer.parseInt(stringTokenizer.nextToken());
+            int v = Integer.parseInt(stringTokenizer.nextToken());
+
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        for (List<Integer> l: adj) {
+            l.sort(Comparator.reverseOrder());
+        }
+
+        p24480DFSImpl(R, visited, sequence, adj);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 1; i < N + 1; i++) {
+            stringBuilder.append(sequence[i]).append("\n");
+        }
+
+        System.out.println(stringBuilder);
+
+    }
+
+    private static void p24480DFSImpl(int vertex, boolean[] visited, int[] sequence, List<List<Integer>> adj) {
+        visited[vertex] = true;
+        sequence[vertex] = p24480Count++;
+
+        List<Integer> edges = adj.get(vertex);
+
+        for (int edge: edges) {
+            if (!visited[edge]) {
+                p24480DFSImpl(edge, visited, sequence, adj);
+            }
+        }
     }
 
     private static void p24479() throws IOException {
