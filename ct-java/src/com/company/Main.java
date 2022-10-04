@@ -16,7 +16,82 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p2667();
+        p2178();
+    }
+
+    private static class p2178Value {
+        public int x;
+        public int y;
+        public int count;
+
+        public p2178Value(int x, int y, int count) {
+            this.x = x;
+            this.y = y;
+            this.count = count;
+        }
+    }
+
+    private static void p2178() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String[] s = bufferedReader.readLine().split(" ");
+        int N = Integer.parseInt(s[0]);
+        int M = Integer.parseInt(s[1]);
+
+        int[][] adj = new int[N][M];
+        int[][] count = new int[N][M];
+        boolean[][] visited = new boolean[N][M];
+        visited[0][0] = true;
+
+        for (int i = 0; i < N; i++) {
+            int[] array = Arrays.stream(bufferedReader.readLine().split("")).mapToInt(Integer::parseInt).toArray();
+            for (int j = 0; j < M; j++) {
+                adj[i][j] = array[j];
+            }
+        }
+
+        Queue<p2178Value> queue = new LinkedList<>();
+        queue.add(new p2178Value(0, 0, 1));
+
+        while (!queue.isEmpty()) {
+            p2178Value vertex = queue.poll();
+
+            int i = vertex.x;
+            int j = vertex.y;
+
+            if (i - 1 >= 0
+                    && adj[i - 1][j] == 1
+                    && !visited[i - 1][j]) {
+                queue.add(new p2178Value(i - 1, j, vertex.count + 1));
+                count[i - 1][j] = vertex.count + 1;
+                visited[i - 1][j] = true;
+            }
+
+            if (i + 1 < N
+                    && adj[i + 1][j] == 1
+                    && (!visited[i + 1][j])) {
+                queue.add(new p2178Value(i + 1, j, vertex.count + 1));
+                count[i + 1][j] = vertex.count + 1;
+                visited[i + 1][j] = true;
+            }
+
+            if (j + 1 < M
+                    && adj[i][j + 1] == 1
+                    && (!visited[i][j + 1])) {
+                queue.add(new p2178Value(i, j + 1, vertex.count + 1));
+                count[i][j + 1] = vertex.count + 1;
+                visited[i][j + 1] = true;
+            }
+
+            if (j - 1 >= 0
+                    && adj[i][j - 1] == 1
+                    && (!visited[i][j - 1])) {
+                queue.add(new p2178Value(i, j - 1, vertex.count + 1));
+                count[i][j - 1] = vertex.count + 1;
+                visited[i][j - 1] = true;
+            }
+        }
+
+        System.out.println(count[N - 1][M - 1]);
     }
 
     private static void p2667() throws IOException {
@@ -118,7 +193,7 @@ public class Main {
             adj.get(v).add(u);
         }
 
-        for (List<Integer> l: adj) {
+        for (List<Integer> l : adj) {
             Collections.sort(l);
         }
 
@@ -139,7 +214,7 @@ public class Main {
         stringBuilder.append(vertex).append(" ");
 
         List<Integer> edges = adj.get(vertex);
-        for (int edge: edges) {
+        for (int edge : edges) {
             if (!visited[edge]) {
                 p1260DFSImpl(edge, visited, adj, stringBuilder);
             }
@@ -154,7 +229,7 @@ public class Main {
             Integer v = queue.poll();
 
             List<Integer> edges = adj.get(v);
-            for (Integer edge: edges) {
+            for (Integer edge : edges) {
                 if (!visited[edge]) {
                     visited[edge] = true;
                     stringBuilder.append(edge).append(" ");
@@ -190,7 +265,7 @@ public class Main {
             adj.get(v).add(u);
         }
 
-        for (List<Integer> l: adj) {
+        for (List<Integer> l : adj) {
             l.sort(Comparator.reverseOrder());
         }
 
@@ -211,7 +286,7 @@ public class Main {
 
         List<Integer> edges = adj.get(vertex);
 
-        for (int edge: edges) {
+        for (int edge : edges) {
             if (!visited[edge]) {
                 p24480DFSImpl(edge, visited, sequence, adj);
             }
@@ -245,7 +320,7 @@ public class Main {
         }
 
         // adj 오름차순 정렬
-        for (List<Integer> l: adj) {
+        for (List<Integer> l : adj) {
             Collections.sort(l);
         }
 
@@ -266,7 +341,7 @@ public class Main {
 
         List<Integer> edges = adj.get(vertex);
 
-        for (int edge: edges) {
+        for (int edge : edges) {
             if (!visited[edge]) {
                 p24479DFSImpl(edge, visited, sequence, adj);
             }
@@ -298,7 +373,7 @@ public class Main {
             adj.get(v).add(u);
         }
 
-        for (List<Integer> l: adj) {
+        for (List<Integer> l : adj) {
             l.sort(Comparator.comparingInt(Integer::intValue));
         }
 
@@ -313,7 +388,7 @@ public class Main {
 
             List<Integer> edges = adj.get(poll);
 
-            for (int edge: edges) {
+            for (int edge : edges) {
                 if (!visited[edge]) {
                     visited[edge] = true;
                     queue.add(edge);
@@ -363,7 +438,7 @@ public class Main {
             adj[v].add(u);
         }
 
-        for (List<Integer> l: adj) {
+        for (List<Integer> l : adj) {
             l.sort(Comparator.comparingInt(Integer::intValue).reversed());
         }
 
@@ -374,7 +449,7 @@ public class Main {
         while (!queue.isEmpty()) {
             Integer poll = queue.poll();
 
-            for (int i: adj[poll]) {
+            for (int i : adj[poll]) {
                 if (!visited[i]) {
                     visited[i] = true;
                     sequence[i] = ++count;
@@ -424,7 +499,7 @@ public class Main {
 
         List<Integer> integers = adj.get(nodeNum);
 
-        for (int i: integers) {
+        for (int i : integers) {
             if (!visited[i]) {
                 p2606DfsImpl(i, visited, adj);
             }
