@@ -16,7 +16,50 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p2178();
+        p7562();
+    }
+
+    private static void p7562() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int[] dx = new int[]{2, 2, -2, -2, 1, -1, 1, -1};
+        int[] dy = new int[]{1, -1, 1, -1, 2, 2, -2, -2};
+
+        for (int i = 0; i < N; i++) {
+            int I = Integer.parseInt(bufferedReader.readLine());
+            StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int[][] visited = new int[I][I];
+
+            Point start = new Point(Integer.parseInt(stringTokenizer.nextToken()), Integer.parseInt(stringTokenizer.nextToken()));
+
+            visited[start.x][start.y] = 1;
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            Point end = new Point(Integer.parseInt(stringTokenizer.nextToken()), Integer.parseInt(stringTokenizer.nextToken()));
+
+            Queue<Point> queue = new LinkedList<>();
+            queue.add(start);
+
+            while (!queue.isEmpty()) {
+                Point startPoint = queue.poll();
+
+                for (int j = 0; j < 8; j++) {
+                    int currX = startPoint.x + dx[j];
+                    int currY = startPoint.y + dy[j];
+
+                    if (currX >= I || currX < 0 || currY >= I || currY < 0) {
+                        continue;
+                    }
+
+                    if (visited[currX][currY] == 0) {
+                        visited[currX][currY] = visited[startPoint.x][startPoint.y] + 1;
+                        queue.add(new Point(currX, currY));
+                    }
+                }
+            }
+
+            System.out.println(visited[end.x][end.y] - 1);
+        }
     }
 
     private static class p2178Value {
