@@ -16,7 +16,68 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p7562();
+        p1012();
+    }
+
+    private static void p1012() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer;
+        int T = Integer.parseInt(bufferedReader.readLine());
+        int[] dx = new int[]{0, 0, -1, 1};
+        int[] dy = new int[]{1, -1, 0, 0};
+
+        for (int i = 0; i < T; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int N = Integer.parseInt(stringTokenizer.nextToken());
+            int M = Integer.parseInt(stringTokenizer.nextToken());
+            int K = Integer.parseInt(stringTokenizer.nextToken());
+
+            int[][] adj = new int[N][M];
+            boolean[][] visited = new boolean[N][M];
+
+            for (int j = 0; j < K; j++) {
+                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+                int x = Integer.parseInt(stringTokenizer.nextToken());
+                int y = Integer.parseInt(stringTokenizer.nextToken());
+
+                adj[x][y] = 1;
+            }
+
+            int count = 0;
+            Queue<Point> queue = new LinkedList<>();
+
+            for (int j = 0; j < N; j++) {
+                for (int k = 0; k < M; k++) {
+                    if (adj[j][k] == 1 && !visited[j][k]) {
+                        queue.add(new Point(j, k));
+
+                        while (!queue.isEmpty()) {
+                            Point poll = queue.poll();
+
+                            for (int l = 0; l < 4; l++) {
+                                int currX = poll.x + dx[l];
+                                int currY = poll.y + dy[l];
+
+                                if (currX < 0 || currY < 0 || currX >= N || currY >= M) {
+                                    continue;
+                                }
+
+                                if (adj[currX][currY] == 1 && !visited[currX][currY]) {
+                                    visited[currX][currY] = true;
+                                    queue.add(new Point(currX, currY));
+                                }
+
+                            }
+                        }
+                        count++;
+                    }
+                }
+            }
+
+            System.out.println(count);
+        }
     }
 
     private static void p7562() throws IOException {
