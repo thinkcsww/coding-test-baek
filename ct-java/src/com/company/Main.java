@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
@@ -16,7 +17,55 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p7576();
+        p20040();
+    }
+
+    private static void p20040() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+
+        int[] parent = IntStream.iterate(0, i -> i + 1).limit(N).toArray();
+        int count = 0;
+        for (int i = 1; i <= M; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int u = Integer.parseInt(stringTokenizer.nextToken());
+            int v = Integer.parseInt(stringTokenizer.nextToken());
+
+            int result = p20040Union(u, v, parent);
+
+            if (result == -1) {
+                count = i;
+                break;
+            }
+
+        }
+
+        System.out.println(count);
+
+    }
+
+    private static int p20040Find(int x, int[] parent) {
+        if (x == parent[x]) {
+            return x;
+        }
+
+        int result = p20040Find(parent[x], parent);
+        parent[x] = result;
+        return result;
+    }
+
+    private static int p20040Union(int a, int b, int[] parent) {
+        int x = p20040Find(a, parent);
+        int y = p20040Find(b, parent);
+
+        if (x != y) {
+            return parent[x] = y;
+        } else {
+            return -1;
+        }
     }
 
     private static class p7576Value {
