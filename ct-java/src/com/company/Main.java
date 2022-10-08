@@ -17,7 +17,24 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p20040();
+        p10773();
+    }
+
+    private static void p10773() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < N; i++) {
+            int k = Integer.parseInt(bufferedReader.readLine());
+            if (k == 0) {
+                stack.pop();
+            } else {
+                stack.add(k);
+            }
+        }
+
+        System.out.println(stack.stream().mapToInt(Integer::intValue).sum());
     }
 
     private static void p20040() throws IOException {
