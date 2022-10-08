@@ -17,7 +17,42 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p10773();
+        p10828();
+    }
+
+    private static void p10828() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        Stack<Integer> stack = new Stack<>();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+            String s = bufferedReader.readLine();
+
+            if (s.startsWith("push")) {
+                stack.add(Integer.parseInt(s.split(" ")[1]));
+            } else if (s.equals("pop")) {
+                try {
+                    stringBuilder.append(stack.pop()).append("\n");
+                } catch (EmptyStackException e) {
+                    stringBuilder.append("-1").append("\n");
+                }
+            } else if (s.equals("size")) {
+                stringBuilder.append(stack.size()).append("\n");
+            } else if (s.equals("empty")) {
+                stringBuilder.append(stack.isEmpty() ? "1" : "0").append("\n");
+            } else if (s.equals("top")) {
+                try {
+                    stringBuilder.append(stack.peek()).append("\n");
+                } catch (EmptyStackException e) {
+                    stringBuilder.append("-1").append("\n");
+                }
+
+            }
+        }
+
+        System.out.println(stringBuilder);
     }
 
     private static void p10773() throws IOException {
