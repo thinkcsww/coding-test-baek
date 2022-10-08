@@ -16,7 +16,92 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1012();
+        p7576();
+    }
+
+    private static class p7576Value {
+        int x;
+        int y;
+        int count;
+
+        public p7576Value(int x, int y, int count) {
+            this.x = x;
+            this.y = y;
+            this.count = count;
+        }
+    }
+
+    private static void p7576() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        int[] dx = new int[]{0, 0, -1, 1};
+        int[] dy = new int[]{1, -1, 0, 0};
+
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int[][] adj = new int[N][M];
+        boolean[][] visited = new boolean[N][M];
+
+        for (int i = 0; i < N; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            for (int j = 0; j < M; j++) {
+                adj[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+            }
+        }
+
+        int count = 0;
+
+        Queue<p7576Value> queue = new LinkedList<>();
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (adj[i][j] == 1) {
+                    queue.add(new p7576Value(i, j, 0));
+                    visited[i][j] = true;
+                }
+            }
+        }
+
+        boolean validCount = false;
+        boolean c = true;
+
+        while (!queue.isEmpty()) {
+            p7576Value point = queue.poll();
+
+            for (int k = 0; k < 4; k++) {
+                int currX = point.x + dx[k];
+                int currY = point.y + dy[k];
+
+                if (currX >= N || currX < 0 || currY >= M || currY < 0 || adj[currX][currY] != 0) {
+                    continue;
+                }
+
+                if (!visited[currX][currY]) {
+                    validCount = true;
+                    visited[currX][currY] = true;
+                    adj[currX][currY] = 1;
+                    queue.add(new p7576Value(currX, currY, point.count + 1));
+                    count = point.count + 1;
+                }
+            }
+        }
+
+        if (!validCount) {
+            count = 0;
+        }
+
+        boolean allChecked = true;
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (adj[i][j] == 0) {
+                    allChecked = false;
+                }
+            }
+        }
+
+        System.out.println(allChecked ? count : -1);
+
     }
 
     private static void p1012() throws IOException {
