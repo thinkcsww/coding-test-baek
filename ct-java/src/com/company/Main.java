@@ -17,7 +17,94 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p10828();
+        p7569();
+    }
+
+    private static class p7569Value {
+        int x;
+        int y;
+        int z;
+        int count;
+
+        public p7569Value(int x, int y, int z, int count) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.count = count;
+        }
+    }
+
+    private static void p7569() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int H = Integer.parseInt(stringTokenizer.nextToken());
+        int[] dx = new int[]{0, 0, 1 , -1, 0, 0};
+        int[] dy = new int[]{-1, 1, 0 , 0, 0, 0};
+        int[] dz = new int[]{0, 0, 0, 0, -1, 1};
+        int count = 0;
+
+        int[][][] adj = new int[H][N][M];
+        boolean[][][] visited = new boolean[H][N][M];
+
+        for (int k = 0; k < H; k++) {
+            for (int i = 0; i < N; i++) {
+                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+                for (int j = 0; j < M; j++) {
+                    adj[k][i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                }
+            }
+        }
+
+        Queue<p7569Value> queue = new LinkedList<>();
+        for (int k = 0; k < H; k++) {
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < M; j++) {
+                    if (adj[k][i][j] == 1) {
+                        queue.add(new p7569Value(i, j, k, 0));
+                        visited[k][i][j] = true;
+                    }
+                }
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            p7569Value point = queue.poll();
+
+            for (int i = 0; i < 6; i++) {
+                int currX = point.x + dx[i];
+                int currY = point.y + dy[i];
+                int currZ = point.z + dz[i];
+
+                if (currX >= N || currY >= M || currZ >= H || currX < 0 || currY < 0 || currZ < 0) {
+                    continue;
+                }
+
+                if (!visited[currZ][currX][currY] && adj[currZ][currX][currY] == 0) {
+                    visited[currZ][currX][currY] = true;
+                    adj[currZ][currX][currY] = 1;
+                    queue.add(new p7569Value(currX, currY, currZ, point.count + 1));
+                    count = point.count + 1;
+                }
+            }
+        }
+
+        for (int k = 0; k < H; k++) {
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < M; j++) {
+                    if (adj[k][i][j] == 0) {
+                        count = -1;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        System.out.println(count);
     }
 
     private static void p10828() throws IOException {
