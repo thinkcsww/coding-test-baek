@@ -17,7 +17,53 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1874();
+        p4949();
+    }
+
+    private static void p4949() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        Stack<Character> stack = new Stack<>();
+        StringBuilder stringBuilder = new StringBuilder();
+        boolean checked;
+        while (true) {
+            String s = bufferedReader.readLine();
+            checked = false;
+
+            if (s.equals(".")) {
+                break;
+            }
+
+            for (char c: s.toCharArray()) {
+                if (c == '(' || c == '[') {
+                    stack.add(c);
+                } else if (c == ')') {
+                    if (stack.isEmpty() || stack.pop() != '(') {
+                        stringBuilder.append("no").append("\n");
+                        checked = true;
+                        break;
+                    }
+                } else if (c == ']') {
+                    if (stack.isEmpty() || stack.pop() != '[') {
+                        stringBuilder.append("no").append("\n");
+                        checked = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!checked && !stack.isEmpty()) {
+                stringBuilder.append("no").append("\n");
+                checked = true;
+            }
+
+            if (!checked) {
+                stringBuilder.append("yes").append("\n");
+            }
+            stack.clear();
+        }
+
+        System.out.println(stringBuilder);
     }
 
     private static void p1874() throws IOException {
