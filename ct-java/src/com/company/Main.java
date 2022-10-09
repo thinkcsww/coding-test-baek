@@ -17,7 +17,42 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p7569();
+        p1874();
+    }
+
+    private static void p1874() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+        int number = 1;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < N; i++) {
+            int n = Integer.parseInt(bufferedReader.readLine());
+
+            if (stack.isEmpty()) {
+                stack.add(number++);
+                stringBuilder.append("+").append("\n");
+            }
+
+            if (stack.peek() > n) {
+                stringBuilder.delete(0, stringBuilder.length());
+                stringBuilder.append("NO").append("\n");;
+                break;
+            }
+
+            while (stack.peek() < n) {
+                stringBuilder.append("+").append("\n");;
+                stack.add(number++);
+            }
+
+            if (stack.peek() == n) {
+                stringBuilder.append("-").append("\n");;
+                stack.pop();
+            }
+        }
+
+        System.out.println(stringBuilder);
     }
 
     private static class p7569Value {
