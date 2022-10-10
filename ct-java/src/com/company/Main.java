@@ -17,7 +17,77 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p4949();
+        p16928();
+    }
+
+    private static class p16928Val {
+        public int x;
+        public int count;
+
+        public p16928Val(int x, int count) {
+            this.x = x;
+            this.count = count;
+        }
+    }
+
+    private static void p16928() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+
+        int[] ladders = new int[101];
+        int[] crocs = new int[101];
+        boolean[] visited = new boolean[101];
+
+        for (int i = 0; i < N; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int x = Integer.parseInt(stringTokenizer.nextToken());
+            int y = Integer.parseInt(stringTokenizer.nextToken());
+
+            ladders[x] = y;
+        }
+
+        for (int i = 0; i < M; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int x = Integer.parseInt(stringTokenizer.nextToken());
+            int y = Integer.parseInt(stringTokenizer.nextToken());
+
+            crocs[x] = y;
+        }
+
+        Queue<p16928Val> queue = new LinkedList<>();
+        queue.add(new p16928Val(1, 0));
+        int count = 0;
+        while (!queue.isEmpty() && count == 0) {
+            p16928Val poll = queue.poll();
+
+            for (int i = 1; i <= 6 ; i++) {
+                if (poll.x >= 94) {
+                    count = poll.count + 1;
+                    break;
+                }
+
+                int currX = poll.x + i;
+
+                if (ladders[currX] != 0) {
+                    currX = ladders[currX];
+                }
+
+                if (crocs[currX] != 0) {
+                    currX = crocs[currX];
+                }
+
+                if (!visited[currX]) {
+                    visited[currX] = true;
+                    queue.add(new p16928Val(currX, poll.count + 1));
+                }
+            }
+        }
+
+        System.out.println(count);
+
     }
 
     private static void p4949() throws IOException {
