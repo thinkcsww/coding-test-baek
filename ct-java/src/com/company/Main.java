@@ -17,7 +17,94 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p16928();
+        p2206();
+    }
+
+    private static class p2206Val {
+        int x;
+        int y;
+        int count;
+        boolean breaked;
+
+        public p2206Val(int x, int y, int count, boolean breaked) {
+            this.x = x;
+            this.y = y;
+            this.count = count;
+            this.breaked = breaked;
+        }
+    }
+
+    private static void p2206() throws IOException {
+        // x, count, break
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        int N = array[0];
+        int M = array[1];
+        int[] dx = new int[]{0, 0, -1, 1};
+        int[] dy = new int[]{1, -1, 0, 0};
+        int[][] visited = new int[N][M];
+        int[][] breakVisited = new int[N][M];
+        int count = 0;
+
+        // adj
+        int[][] adj = new int[N][M];
+
+        for (int i = 0; i < N; i++) {
+            String s = bufferedReader.readLine();
+
+            for (int j = 0; j < s.length(); j++) {
+                adj[i][j] = s.charAt(j) - 48;
+            }
+        }
+
+        // queue
+        Queue<p2206Val> queue = new LinkedList<>();
+        queue.add(new p2206Val(0, 0, 1, false));
+        visited[0][0] = 1;
+
+        while (!queue.isEmpty()) {
+            p2206Val prevPoint = queue.poll();
+
+            for (int i = 0; i < 4; i++) {
+                int currX = prevPoint.x + dx[i];
+                int currY = prevPoint.y + dy[i];
+
+                if (currX >= N || currY >= M || currX < 0 || currY < 0) {
+                    continue;
+                }
+
+                if (adj[currX][currY] == 1 && prevPoint.breaked) {
+                    continue;
+                }
+
+                if (prevPoint.breaked) {
+                    if (breakVisited[currX][currY] == 0) {
+                        breakVisited[currX][currY] = prevPoint.count + 1;
+                        queue.add(new p2206Val(currX, currY, prevPoint.count + 1, true));
+                    }
+                } else {
+                    if (visited[currX][currY] == 0) {
+                        visited[currX][currY] = prevPoint.count + 1;
+                        queue.add(new p2206Val(currX, currY, prevPoint.count + 1, adj[currX][currY] == 1));
+                    }
+                }
+            }
+        }
+
+
+        if (breakVisited[N - 1][M - 1] > 0 && visited[N - 1][M - 1] > 0) {
+            count = Math.min(breakVisited[N - 1][M - 1], visited[N - 1][M - 1]);
+        } else {
+            count = Math.max(breakVisited[N - 1][M - 1], visited[N - 1][M - 1]);
+
+        }
+
+        if (count == 0) {
+            count = -1;
+        }
+
+        System.out.println(count);
     }
 
     private static class p16928Val {
