@@ -17,8 +17,33 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p9012();
+        p28528();
     }
+
+    private static void p28528() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String s = bufferedReader.readLine();
+        String[] operators = s.split("[0-9]{1,5}");
+        String[] numbers = s.split("[//+//-]");
+
+        int index = Arrays.asList(operators).indexOf("-");
+
+        int result;
+
+        if (index > -1) {
+            int plusSum = Arrays.stream(numbers).limit(index).mapToInt(Integer::parseInt).sum();
+            int minusSum = Arrays.stream(numbers).skip(index).mapToInt(Integer::parseInt).sum();
+
+            result = plusSum - minusSum;
+        } else {
+            result = Arrays.stream(numbers).mapToInt(Integer::parseInt).sum();
+        }
+
+
+        System.out.println(result);
+    }
+
 
     private static void p9012() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
