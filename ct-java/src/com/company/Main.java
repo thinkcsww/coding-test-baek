@@ -17,8 +17,45 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p2206();
+        p9012();
     }
+
+    private static void p9012() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        StringBuilder stringBuilder = new StringBuilder();
+        Stack<Character> stack;
+        for (int i = 0; i < N; i++) {
+            boolean vps = true;
+            stack = new Stack<>();
+            String s = bufferedReader.readLine();
+            for (char c: s.toCharArray()) {
+                if (c == '(') {
+                    stack.add(c);
+                } else {
+                    try {
+                        stack.pop();
+                    } catch (Exception e) {
+                        vps = false;
+                        break;
+                    }
+                }
+            }
+
+            if (vps && stack.isEmpty()) {
+                stringBuilder.append("YES").append("\n");
+            } else {
+                stringBuilder.append("NO").append("\n");
+            }
+
+
+        }
+
+        System.out.println(stringBuilder);
+    }
+
 
     private static class p2206Val {
         int x;
