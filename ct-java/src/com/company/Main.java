@@ -17,7 +17,46 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p28528();
+        p18258();
+    }
+
+    private static void p18258() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        Deque<String> queue = new LinkedList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < N; i++) {
+            String s = bufferedReader.readLine();
+
+            if (s.startsWith("push")) {
+                queue.add(s.split(" ")[1]);
+            } else if (s.equals("pop")) {
+                String poll = queue.poll();
+                if (poll == null) {
+                    stringBuilder.append("-1").append("\n");
+                } else {
+                    stringBuilder.append(poll).append("\n");
+                }
+            } else if (s.equals("size")) {
+                stringBuilder.append(queue.size()).append("\n");
+            } else if (s.equals("empty")) {
+                stringBuilder.append(queue.isEmpty() ? 1 : 0).append("\n");
+            } else if (s.equals("front")) {
+                stringBuilder.append(queue.peek() != null ? queue.peek() : -1).append("\n");
+            } else if (s.equals("back")) {
+                try {
+                    stringBuilder.append(queue.getLast()).append("\n");
+                } catch (NoSuchElementException e) {
+                    stringBuilder.append(-1).append("\n");
+                }
+
+            }
+        }
+
+        System.out.println(stringBuilder);
     }
 
     private static void p28528() throws IOException {
