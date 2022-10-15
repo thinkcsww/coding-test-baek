@@ -17,7 +17,61 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p18258();
+        p1966();
+    }
+
+    private static void p1966() throws IOException {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+            // T 입력
+            int T = Integer.parseInt(bufferedReader.readLine());
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int t = 0; t < T; t++) {
+                // 개수 / 몇번째에 있는지
+                int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+                int N = array[0];
+                int M = array[1];
+
+                // Queue에 순서대로 넣기 -> 중요도를 그대로 넣자
+                Queue<p1966Task> queue = new LinkedList<>();
+                StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+                for (int i = 0; i < N; i++) {
+                    queue.add(new p1966Task(Integer.parseInt(stringTokenizer.nextToken()), i == M));
+                }
+
+                int count = 0;
+
+                // max를 사용해서 본인이면 출력 아니면 맨 뒤로 넣기
+                while (!queue.isEmpty()) {
+                    p1966Task max = queue.stream()
+                            .max(Comparator.comparingInt(o -> o.weight))
+                            .get();
+                    p1966Task poll = queue.poll();
+
+                    if (max.weight != poll.weight) {
+                        queue.add(poll);
+                    } else {
+                        count++;
+                        if (poll.isTarget) {
+                            stringBuilder.append(count).append("\n");
+                            break;
+                        }
+                    }
+                }
+            }
+
+            System.out.println(stringBuilder);
+    }
+
+    private static class p1966Task {
+        int weight;
+        boolean isTarget;
+
+        public p1966Task(int weight, boolean isTarget) {
+            this.weight = weight;
+            this.isTarget = isTarget;
+        }
     }
 
     private static void p18258() throws IOException {
