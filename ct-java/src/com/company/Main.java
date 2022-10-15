@@ -17,7 +17,66 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1021();
+        p1697();
+    }
+
+    private static void p1697() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        int MAX = 100001;
+        int N = array[0];
+        int K = array[1];
+        int[] dx = new int[]{1, -1};
+        int count = 0;
+        boolean[] visited = new boolean[MAX];
+
+        Queue<p1697Point> queue = new LinkedList<>();
+        queue.add(new p1697Point(N, 0));
+        visited[N] = true;
+        boolean loopFlag = true;
+
+        while (!queue.isEmpty() && loopFlag) {
+            p1697Point prevPoint = queue.poll();
+
+            for (int i = 0; i < 3; i++) {
+                int currX;
+
+                if (i == 2) {
+                    currX = prevPoint.x * 2;
+                } else {
+                    currX = prevPoint.x + dx[i];
+                }
+
+                if (currX < 0 || currX >= MAX) {
+                    continue;
+                }
+
+                if (!visited[currX]) {
+                    if (currX == K) {
+                        count = prevPoint.count + 1;
+                        loopFlag = false;
+                        break;
+                    }
+
+                    visited[currX] = true;
+                    queue.add(new p1697Point(currX, prevPoint.count + 1));
+                }
+            }
+
+        }
+
+        System.out.println(count);
+    }
+
+    private static class p1697Point {
+        int x;
+        int count;
+
+        public p1697Point(int x, int count) {
+            this.x = x;
+            this.count = count;
+        }
     }
 
     private static void p1021() throws IOException {
