@@ -17,7 +17,53 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1966();
+        p1021();
+    }
+
+    private static void p1021() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+
+        int count = 0;
+
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        for (int i = 1; i <= N; i++) {
+            linkedList.add(i);
+        }
+
+        for (int i = 0; i < M; i++) {
+            int target = Integer.parseInt(stringTokenizer.nextToken());
+
+            Integer currentNum = linkedList.peek();
+            if (currentNum == target) {
+                linkedList.pollFirst();
+            } else {
+                int targetIndex = linkedList.indexOf(target);
+
+                int mid = linkedList.size() / 2;
+                if (mid < targetIndex) {
+                    while (linkedList.peek() != target) {
+                        count++;
+                        Integer pop = linkedList.pollLast();
+                        linkedList.addFirst(pop);
+                    }
+                } else {
+                    while (linkedList.peek() != target) {
+                        count++;
+                        linkedList.addLast(linkedList.pollFirst());
+                    }
+                }
+
+                linkedList.pollFirst();
+            }
+        }
+
+        System.out.println(count);
     }
 
     private static void p1966() throws IOException {
