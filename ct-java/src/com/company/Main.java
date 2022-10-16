@@ -17,7 +17,71 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1697();
+        p1707();
+    }
+
+    private static void p1707() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int K = Integer.parseInt(bufferedReader.readLine());
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < K; i++) {
+            StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int V = Integer.parseInt(stringTokenizer.nextToken());
+            int E = Integer.parseInt(stringTokenizer.nextToken());
+            int[] status = new int[V + 1]; // 0 = not visited, 1 = odd, 2 = even
+
+            List<List<Integer>> adj = new ArrayList<>();
+
+            for (int j = 0; j <= V; j++) {
+                adj.add(new ArrayList<>());
+            }
+
+            for (int j = 0; j < E; j++) {
+                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+                int u = Integer.parseInt(stringTokenizer.nextToken());
+                int v = Integer.parseInt(stringTokenizer.nextToken());
+
+                adj.get(u).add(v);
+                adj.get(v).add(u);
+
+            }
+
+            Queue<Integer> queue = new LinkedList<>();
+            boolean loopFlag = true;
+            for (int j = 1; j < V + 1; j++) {
+                if (!loopFlag) break;
+                if (status[j] == 0) {
+                    queue.add(j);
+                    status[j] = 1;
+                }
+
+                while (!queue.isEmpty() && loopFlag) {
+                    Integer prevPoint = queue.poll();
+
+                    List<Integer> edges = adj.get(prevPoint);
+
+                    for (Integer edge: edges) {
+                        if (status[edge] == 0) {
+                            status[edge] = status[prevPoint] == 1 ? 2 : 1;
+                            queue.add(edge);
+                        } else if (status[edge] != 0 && status[edge] == status[prevPoint]) {
+                            stringBuilder.append("NO").append("\n");
+                            loopFlag = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (loopFlag) {
+                stringBuilder.append("YES").append("\n");
+            }
+
+        }
+
+        System.out.println(stringBuilder);
     }
 
     private static void p1697() throws IOException {
