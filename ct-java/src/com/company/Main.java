@@ -17,7 +17,61 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1707();
+        p4195();
+    }
+
+    private static void p4195() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(bufferedReader.readLine());
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < T; i++) {
+
+            Map<String, Integer> stringToInteger = new HashMap<>();
+            int F = Integer.parseInt(bufferedReader.readLine());
+            int[] parent = new int[F * 2];
+            int[] nodeSum = new int[F * 2];
+
+            for (int j = 0; j < F * 2; j++) {
+                parent[j] = j;
+                nodeSum[j] = 1;
+            }
+
+            for (int j = 0; j < F; j++) {
+                String[] names = bufferedReader.readLine().split(" ");
+
+                stringToInteger.computeIfAbsent(names[0], (name) -> stringToInteger.size());
+                stringToInteger.computeIfAbsent(names[1], (name) -> stringToInteger.size());
+
+                stringBuilder.append(p4195union(stringToInteger.get(names[0]), stringToInteger.get(names[1]), parent, nodeSum)).append("\n");
+            }
+        }
+
+        System.out.println(stringBuilder);
+    }
+
+    private static Integer p4195union(Integer n1, Integer n2, int[] parent, int[] nodeSum) {
+        Integer a = p4195find(n1, parent);
+        Integer b = p4195find(n2, parent);
+
+        if (!a.equals(b)) {
+            parent[a] = b;
+            nodeSum[b] = nodeSum[b] + nodeSum[a];
+        }
+
+        return nodeSum[b];
+    }
+
+    private static Integer p4195find(Integer name, int[] parent) {
+        if (name == parent[name]) {
+            return name;
+        }
+
+        Integer result = p4195find(parent[name], parent);
+        parent[name] = result;
+        return result;
     }
 
     private static void p1707() throws IOException {
