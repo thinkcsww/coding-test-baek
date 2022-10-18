@@ -17,7 +17,44 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p4195();
+        p2164();
+    }
+
+    private static void p2164() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int N = array[0];
+        int K = array[1];
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        for (int i = 1; i <= N; i++) {
+            queue.add(i);
+        }
+
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<");
+
+        int count = 0;
+
+        while (!queue.isEmpty()) {
+            int num = queue.poll();
+            count++;
+
+            if (count == K) {
+                count = 0;
+                stringBuilder.append(num).append(", ");
+            } else {
+                queue.add(num);
+            }
+        }
+
+        String s = stringBuilder.append(">").toString();
+        s = s.replace(", >", ">");
+
+        System.out.println(s);
     }
 
     private static void p4195() throws IOException {
