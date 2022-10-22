@@ -17,7 +17,56 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p11399();
+        p1026();
+    }
+
+    private static void p1026() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+        List<Integer> aList = new ArrayList<>();
+        List<p1026Value> bList = new ArrayList<>();
+
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        for (int i = 0; i < N; i++) {
+            aList.add(Integer.parseInt(stringTokenizer.nextToken()));
+        }
+
+        Collections.sort(aList);
+
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        for (int i = 0; i < N; i++) {
+            bList.add(new p1026Value(Integer.parseInt(stringTokenizer.nextToken()), i));
+        }
+
+        bList.sort(Comparator.comparingInt(p1026Value::getNum).reversed());
+
+
+        int sum = 0;
+        for (int i = 0; i < N; i++) {
+            sum += aList.get(i) * bList.get(i).num;
+        }
+        System.out.println(sum);
+    }
+
+    private static class p1026Value {
+        int num;
+        int index;
+
+        public p1026Value(int num, int index) {
+            this.num = num;
+            this.index = index;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public int getIndex() {
+            return index;
+        }
     }
 
     private static void p11399() throws IOException {
