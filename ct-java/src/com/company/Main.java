@@ -17,7 +17,74 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1026();
+        p14503();
+    }
+
+    private static void p14503() throws IOException {
+        int count = 1;
+        int[] dx = new int[]{-1, 0, 1, 0};
+        int[] dy = new int[]{0, 1, 0, -1};
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int X = Integer.parseInt(stringTokenizer.nextToken());
+        int Y = Integer.parseInt(stringTokenizer.nextToken());
+
+        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int r = Integer.parseInt(stringTokenizer.nextToken());
+        int c = Integer.parseInt(stringTokenizer.nextToken());
+        int d = Integer.parseInt(stringTokenizer.nextToken());
+
+        int[][] adj = new int[X][Y];
+
+        for (int i = 0; i < X; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            for (int j = 0; j < Y; j++) {
+                int num = Integer.parseInt(stringTokenizer.nextToken());
+                adj[i][j] = num;
+            }
+        }
+
+        boolean done;
+        while (true) {
+            done = false;
+            adj[r][c] = 2;
+
+            for (int i = 0; i < 4; i++) {
+                d = (d + 3) % 4;
+
+                int currX = r + dx[d];
+                int currY = c + dy[d];
+
+                if (currY >= 0 && currY < Y && currX >= 0 && currX < X && adj[currX][currY] == 0) {
+                    count++;
+                    done = true;
+                    r = r + dx[d];
+                    c = c + dy[d];
+                    break;
+                }
+            }
+
+            if (!done) {
+                int back = (d + 2) % 4;
+                int backX = r + dx[back];
+                int backY = c + dy[back];
+
+                if (backY < 0 || backX < 0 || backX >= X || backY >= Y || adj[backX][backY] == 1) {
+                    break;
+                }
+
+                if (adj[backX][backY] != 1) {
+                    r = backX;
+                    c = backY;
+                }
+            }
+        }
+
+        System.out.println(count);
     }
 
     private static void p1026() throws IOException {
