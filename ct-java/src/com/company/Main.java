@@ -17,7 +17,99 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p11724();
+        p14502();
+    }
+
+    private static void p14502() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+        List<p14502Point> virusPoints = new ArrayList<>();
+        int[][] adj = new int[N][M];
+        int[] dx = new int[]{0, 0, 1, -1};
+        int[] dy = new int[]{1, -1, 0, 0};
+        int minCount = 100;
+        int zeroCount = 0;
+
+        for (int i = 0; i < N; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            for (int j = 0; j < M; j++) {
+                int val = Integer.parseInt(stringTokenizer.nextToken());
+                adj[i][j] = val;
+                if (val == 0) {
+                    zeroCount++;
+                } else if (val == 2) {
+                    virusPoints.add(new p14502Point(i, j));
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (adj[i][j] == 0) {
+                    boolean[][] visited = new boolean[N][M];
+                    visited[i][j] = true;
+                    for (int k = 0; k < N; k++) {
+                        for (int l = 0; l < M; l++) {
+                            if (!visited[k][l] && adj[k][l] == 0) {
+                                boolean[][] visited2 = new boolean[N][M];
+                                visited2[k][l] = true;
+
+                                for (int m = 0; m < N; m++) {
+                                    for (int n = 0; n < M; n++) {
+                                        if (!visited[m][n] && !visited2[m][n] && adj[m][n] == 0) {
+                                            int count = 0;
+                                            boolean[][] visited3 = new boolean[N][M];
+                                            visited3[m][n] = true;
+
+                                            Queue<p14502Point> queue = new LinkedList<>();
+                                            for (p14502Point v : virusPoints) {
+                                                visited3[v.x][v.y] = true;
+                                                queue.add(new p14502Point(v.x, v.y));
+                                            }
+
+                                            while (!queue.isEmpty()) {
+                                                p14502Point prevPoint = queue.poll();
+
+                                                for (int o = 0; o < 4; o++) {
+                                                    int currX = prevPoint.x + dx[o];
+                                                    int currY = prevPoint.y + dy[o];
+
+                                                    if (currX >= 0 && currX < N && currY >= 0 && currY < M &&
+                                                            !visited[currX][currY] && !visited2[currX][currY]
+                                                            && !visited3[currX][currY] && adj[currX][currY] == 0) {
+                                                        visited3[currX][currY] = true;
+                                                        count++;
+                                                        if (count > minCount) break;
+                                                        queue.add(new p14502Point(currX, currY));
+                                                    }
+                                                }
+                                            }
+
+                                            minCount = Math.min(minCount, count);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println(zeroCount - minCount - 3);
+    }
+
+    private static class p14502Point {
+        int x;
+        int y;
+
+        public p14502Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     private static void p11724() throws IOException {
