@@ -17,7 +17,77 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p14502();
+        p4963();
+    }
+
+    private static void p4963() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int dx[] = new int[]{0, 0, 1, -1, 1, 1, -1, -1};
+        int dy[] = new int[]{-1, 1, 0, 0, -1, 1, -1, 1};
+
+        while (true) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int h = Integer.parseInt(stringTokenizer.nextToken());
+            int w = Integer.parseInt(stringTokenizer.nextToken());
+
+            if (w == 0 && h == 0) {
+                break;
+            }
+
+            int adj[][] = new int[w][h];
+
+            for (int i = 0; i < w; i++) {
+                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+                for (int j = 0; j < h; j++) {
+                    adj[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                }
+            }
+
+            int count = 0;
+
+            Queue<p4963Point> queue = new LinkedList<>();
+
+            for (int i = 0; i < w; i++) {
+                for (int j = 0; j < h; j++) {
+                    if (adj[i][j] == 1) {
+                        queue.add(new p4963Point(i, j));
+                        adj[i][j] = -1;
+                        count++;
+
+                        while (!queue.isEmpty()) {
+                            p4963Point prevPoint = queue.poll();
+
+                            for (int k = 0; k < 8; k++) {
+                                int currX = prevPoint.x + dx[k];
+                                int currY = prevPoint.y + dy[k];
+
+                                if (currX >= 0 && currX < w && currY >= 0 && currY < h && adj[currX][currY] == 1) {
+                                    queue.add(new p4963Point(currX, currY));
+                                    adj[currX][currY] = -1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            stringBuilder.append(count).append("\n");
+        }
+
+        System.out.println(stringBuilder);
+    }
+
+    private static class p4963Point {
+        int x;
+        int y;
+
+        public p4963Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     private static void p14502() throws IOException {
