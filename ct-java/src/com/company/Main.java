@@ -17,7 +17,63 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p14503();
+        p11724();
+    }
+
+    private static void p11724() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int M = Integer.parseInt(stringTokenizer.nextToken());
+
+        boolean[] visited = new boolean[N + 1];
+
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < N + 1; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < M; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int u = Integer.parseInt(stringTokenizer.nextToken());
+            int v = Integer.parseInt(stringTokenizer.nextToken());
+
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+
+        }
+
+
+
+        int count = 0;
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 1; i <= N; i++) {
+
+            if (!visited[i]) {
+                queue.add(i);
+                visited[i] = true;
+                count++;
+            }
+
+            while (!queue.isEmpty()) {
+                Integer poll = queue.poll();
+
+                List<Integer> edges = adj.get(poll);
+
+                for (Integer edge: edges) {
+                    if (!visited[edge]) {
+                        visited[edge] = true;
+                        queue.add(edge);
+                    }
+                }
+            }
+        }
+
+        System.out.println(count);
     }
 
     private static void p14503() throws IOException {
