@@ -17,7 +17,79 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p4963();
+        p9205();
+    }
+
+    private static void p9205() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(bufferedReader.readLine());
+        StringTokenizer stringTokenizer;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while (T-- > 0) {
+            int N = Integer.parseInt(bufferedReader.readLine());
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            int hx = Integer.parseInt(stringTokenizer.nextToken());
+            int hy = Integer.parseInt(stringTokenizer.nextToken());
+
+            Queue<p9205Point> queue = new LinkedList<>();
+            queue.add(new p9205Point(hx, hy, true));
+
+            List<p9205Point> cList = new ArrayList<>();
+
+            for (int i = 0; i < N; i++) {
+                stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+                int cx = Integer.parseInt(stringTokenizer.nextToken());
+                int cy = Integer.parseInt(stringTokenizer.nextToken());
+
+                cList.add(new p9205Point(cx, cy, false));
+            }
+
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int dx = Integer.parseInt(stringTokenizer.nextToken());
+            int dy = Integer.parseInt(stringTokenizer.nextToken());
+
+            boolean happy = false;
+            while (!queue.isEmpty()) {
+                p9205Point prevPoint = queue.poll();
+                int dis = Math.abs(dx - prevPoint.x) + Math.abs(dy - prevPoint.y);
+                if (dis <= 1000) {
+                    happy = true;
+                    break;
+                }
+                for (int i = 0; i < N; i++) {
+                    p9205Point nextPoint = cList.get(i);
+                    int dis2 = Math.abs(nextPoint.x - prevPoint.x) + Math.abs(nextPoint.y - prevPoint.y) ;
+                    if (!nextPoint.visited && dis2 <= 1000) {
+                        nextPoint.visited = true;
+                        queue.add(new p9205Point(nextPoint.x, nextPoint.y, false));
+                    }
+                }
+            }
+
+            if (happy) {
+                stringBuilder.append("happy").append("\n");
+            } else {
+                stringBuilder.append("sad").append("\n");
+            }
+        }
+
+        System.out.println(stringBuilder);
+
+    }
+
+    private static class p9205Point {
+        int x;
+        int y;
+        boolean visited;
+
+        public p9205Point(int x, int y, boolean visited) {
+            this.x = x;
+            this.y = y;
+            this.visited = visited;
+        }
     }
 
     private static void p4963() throws IOException {
