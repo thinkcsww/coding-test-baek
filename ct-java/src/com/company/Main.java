@@ -17,7 +17,75 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p9205();
+        p2468();
+    }
+
+    private static void p2468() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer;
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+
+        int[][] adj = new int[N][N];
+        int minHeight = 101;
+        int maxHeight = -1;
+        int[] dx = new int[]{0, 0, -1, 1};
+        int[] dy = new int[]{1, -1, 0, 0};
+        int result = 1;
+
+        for (int i = 0; i < N; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            for (int j = 0; j < N; j++) {
+                adj[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                maxHeight = Math.max(maxHeight, adj[i][j]);
+                minHeight = Math.min(minHeight, adj[i][j]);
+            }
+        }
+
+        for (int level = minHeight; level < maxHeight; level++) {
+            boolean[][] visited = new boolean[N][N];
+            Queue<p2468Point> queue = new LinkedList<>();
+            int count = 0;
+
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    if (!visited[i][j] && adj[i][j] > level) {
+                        count++;
+                        visited[i][j] = true;
+                        queue.add(new p2468Point(i, j));
+
+                        while (!queue.isEmpty()) {
+                            p2468Point prev = queue.poll();
+
+                            for (int k = 0; k < 4; k++) {
+                                int x = prev.x + dx[k];
+                                int y = prev.y + dy[k];
+
+                                if (x >= 0 && x < N && y >= 0 && y < N && !visited[x][y] && adj[x][y] > level) {
+                                    queue.add(new p2468Point(x, y));
+                                    visited[x][y] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            result = Math.max(result, count);
+        }
+
+        System.out.println(result);
+    }
+
+    private static class p2468Point {
+        int x;
+        int y;
+
+        public p2468Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     private static void p9205() throws IOException {
