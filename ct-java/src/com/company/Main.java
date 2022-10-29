@@ -17,8 +17,69 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p2468();
+        p5014();
     }
+
+    private static void p5014() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        int F = Integer.parseInt(stringTokenizer.nextToken());
+        int S = Integer.parseInt(stringTokenizer.nextToken());
+        int G = Integer.parseInt(stringTokenizer.nextToken());
+        int U = Integer.parseInt(stringTokenizer.nextToken());
+        int D = Integer.parseInt(stringTokenizer.nextToken());
+        boolean[] visited = new boolean[F + 1];
+
+        int result = p5014BFS(S, G, F, U, D, visited);
+
+        if (result == -1) {
+            System.out.println("use the stairs");
+        } else {
+            System.out.println(result);
+        }
+    }
+
+    private static int p5014BFS(int S, int G, int F, int U, int D, boolean[] visited) {
+        if (S == G) {
+            return 0;
+        }
+
+        Queue<p5014Point> queue = new LinkedList<>();
+        queue.add(new p5014Point(S, 0));
+        visited[S] = true;
+        int[] dx = new int[]{U, D * -1};
+
+        while (!queue.isEmpty()) {
+            p5014Point prev = queue.poll();
+
+            for (int i = 0; i < 2; i++) {
+                int x = prev.x + dx[i];
+
+                if (x == G) {
+                    return prev.count + 1;
+                }
+
+                if (x >= 1 && x <= F && !visited[x]) {
+                    queue.add(new p5014Point(x, prev.count + 1));
+                    visited[x] = true;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    private static class p5014Point {
+        int x;
+        int count;
+
+        public p5014Point(int x, int count) {
+            this.x = x;
+            this.count = count;
+        }
+    }
+
 
     private static void p2468() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
