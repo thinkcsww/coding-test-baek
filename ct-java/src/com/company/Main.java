@@ -17,7 +17,36 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p5014();
+        p9461();
+    }
+
+    private static void p9461() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(bufferedReader.readLine());
+
+        long[] memo = new long[101];
+        memo[1] = 1;
+        memo[2] = 1;
+        memo[3] = 1;
+        memo[4] = 2;
+        memo[5] = 2;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        while (T --> 0) {
+            int N = Integer.parseInt(bufferedReader.readLine());
+
+            stringBuilder.append(p9461Padovan(N, memo)).append("\n");
+        }
+
+        System.out.println(stringBuilder);
+    }
+
+    private static long p9461Padovan(int N, long[] memo) {
+        if (memo[N] > 0) {
+            return memo[N];
+        }
+
+        return memo[N] = p9461Padovan(N - 1, memo) + p9461Padovan(N - 5, memo);
     }
 
     private static void p5014() throws IOException {
