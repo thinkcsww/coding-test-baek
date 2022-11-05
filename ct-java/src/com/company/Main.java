@@ -17,7 +17,31 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p9461();
+        p1912();
+    }
+
+    private static void p1912() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+        // 입력값 담을 1차원 배열
+        int[] inputs = new int[N];
+        // 2차원 배열 [N][N]
+        int[] results = new int[N];
+
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        for (int i = 0; i < N; i++) {
+            inputs[i] = Integer.parseInt(stringTokenizer.nextToken());
+        }
+
+        results[0] = inputs[0];
+        int max = inputs[0];
+
+        for (int i = 1; i < N; i++) {
+            results[i] = Math.max(results[i - 1] + inputs[i], inputs[i]);
+            max = Math.max(results[i], max);
+        }
+
+        System.out.println(max);
     }
 
     private static void p9461() throws IOException {
