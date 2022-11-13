@@ -17,7 +17,50 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1912();
+        p1463();
+    }
+
+    private static void p1463() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int[] memo;
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        if (N == 1) {
+            System.out.println(0);
+            return;
+        } else if (N <= 3) {
+            System.out.println(1);
+            return;
+        }
+
+        memo = new int[N + 1];
+
+        memo[1] = 0;
+        memo[2] = 1;
+        memo[3] = 1;
+
+        for (int i = 4; i <= N; i++) {
+            int div3 = (int) Math.pow(10, 6);
+            int div2 = (int) Math.pow(10, 6);
+
+            if (i % 3 == 0) {
+                div3 = memo[i / 3] + 1;
+            }
+
+            if (i % 2 == 0) {
+                div2 = memo[i / 2] + 1;
+            }
+
+            int temp = Math.min(div3, div2);
+
+            int minusOne = memo[i - 1] + 1;
+            memo[i] = Math.min(minusOne, temp);
+
+        }
+
+
+        System.out.println(memo[N]);
     }
 
     private static void p1912() throws IOException {
