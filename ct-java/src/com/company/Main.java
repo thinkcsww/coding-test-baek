@@ -17,7 +17,46 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p1463();
+        p10844();
+    }
+
+    private static void p10844() throws IOException {
+        long mod = 1000000000L;
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+        long[][] memo = new long[N + 1][10];
+
+        memo[1][1] = 1;
+        memo[1][2] = 1;
+        memo[1][3] = 1;
+        memo[1][4] = 1;
+        memo[1][5] = 1;
+        memo[1][6] = 1;
+        memo[1][7] = 1;
+        memo[1][8] = 1;
+        memo[1][9] = 1;
+
+        for (int i = 2; i <= N; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (j == 0) {
+                    memo[i][j] = memo[i - 1][1] % mod;
+                } else if (j == 9) {
+                    memo[i][j] = memo[i - 1][8] % mod;
+                } else {
+                    memo[i][j] = (memo[i - 1][j - 1] + memo[i - 1][j + 1]) % mod;
+                }
+
+            }
+        }
+
+        long result = 0;
+
+        for (int i = 0; i < 10; i++) {
+            result += memo[N][i];
+        }
+        System.out.println(result % mod);
     }
 
     private static void p1463() throws IOException {
