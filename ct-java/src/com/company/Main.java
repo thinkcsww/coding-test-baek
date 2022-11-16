@@ -17,7 +17,31 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p10844();
+        p2156();
+    }
+
+    private static void p2156() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int[] memo = new int[N + 1];
+        int[] wines = new int[N + 1];
+
+        for (int i = 1; i <= N; i++) {
+            wines[i] = Integer.parseInt(bufferedReader.readLine());
+        }
+
+        memo[1] = wines[1];
+        if (N > 1) {
+            memo[2] = wines[1] + wines[2];
+        }
+
+        for (int i = 3; i <= N; i++) {
+            memo[i] = Math.max(memo[i - 1], Math.max(memo[i - 2] + wines[i], memo[i - 3] + wines[i - 1] + wines[i]));
+        }
+
+
+        System.out.println(memo[N]);
     }
 
     private static void p10844() throws IOException {
