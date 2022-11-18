@@ -17,7 +17,50 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p11053();
+        p11054();
+    }
+
+    private static void p11054() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int[] arr = new int[N];
+        int[] memoUp = new int[N];
+        int[] memoDown = new int[N];
+
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        for (int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(stringTokenizer.nextToken());
+        }
+
+        for (int i = 0; i < N; i++) {
+            memoUp[i] = 1;
+            memoDown[i] = 1;
+
+            for (int j = 0; j < i; j++) {
+                if (arr[i] > arr[j] && memoUp[j] == memoUp[i]) {
+                    memoUp[i] = memoUp[j] + 1;
+                }
+            }
+
+            for (int j = 0; j < i; j++) {
+                if (arr[i] < arr[j]) {
+                    if (memoDown[i] < memoUp[j] + 1) {
+                        memoDown[i] = memoUp[j] + 1;
+                    } else if (memoDown[i] < memoDown[j] + 1) {
+                        memoDown[i] = memoDown[j] + 1;
+                    }
+                }
+            }
+        }
+
+        Arrays.sort(memoDown);
+        Arrays.sort(memoUp);
+
+        System.out.println(Math.max(memoDown[N - 1], memoUp[N - 1]));
+
+
     }
 
     private static void p11053() throws IOException {
