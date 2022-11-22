@@ -17,7 +17,40 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p11054();
+        p2565();
+    }
+
+    private static void p2565() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(bufferedReader.readLine());
+
+        int[][] wires = new int[N][2];
+        int[] memo = new int[N];
+
+        StringTokenizer stringTokenizer;
+        for (int i = 0; i < N; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+            wires[i][0] = Integer.parseInt(stringTokenizer.nextToken());
+            wires[i][1] = Integer.parseInt(stringTokenizer.nextToken());
+        }
+
+        Arrays.sort(wires, Comparator.comparingInt((value -> value[0])));
+
+        for (int i = 0; i < N; i++) {
+            memo[i] = 1;
+
+            for (int j = 0; j < i; j++) {
+                if (wires[i][1] > wires[j][1] && memo[i] == memo[j]) {
+                    memo[i] = memo[j] + 1;
+                }
+            }
+        }
+
+        int max = Arrays.stream(memo).max().getAsInt();
+
+        System.out.println(N - max);
     }
 
     private static void p11054() throws IOException {
