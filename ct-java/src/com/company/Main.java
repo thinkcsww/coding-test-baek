@@ -17,7 +17,32 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p2565();
+        p9251();
+    }
+
+    private static void p9251() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        char[] str1 = bufferedReader.readLine().toCharArray();
+        char[] str2 = bufferedReader.readLine().toCharArray();
+
+        int length1 = str1.length;
+        int length2 = str2.length;
+
+        int[][] memo = new int[length1 + 1][length2 + 1];
+
+        for (int i = 1; i <= length1; i++) {
+            for (int j = 1; j <= length2; j++) {
+
+                if (str1[i - 1] == str2[j - 1]) {
+                    memo[i][j] = memo[i - 1][j - 1] + 1;
+                } else {
+                    memo[i][j] = Math.max(memo[i - 1][j], memo[i][j - 1]);
+                }
+            }
+        }
+
+        System.out.println(memo[length1][length2]);
     }
 
     private static void p2565() throws IOException {
