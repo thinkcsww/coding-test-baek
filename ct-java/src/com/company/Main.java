@@ -17,7 +17,47 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p9251();
+        p12865();
+    }
+
+    private static void p12865() throws IOException {
+        Integer[][] memo;
+        int[] weight;
+        int[] value;
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        int N = Integer.parseInt(stringTokenizer.nextToken());
+        int K = Integer.parseInt(stringTokenizer.nextToken());
+
+        weight = new int[N];
+        value = new int[N];
+
+        memo = new Integer[N][K + 1];
+
+        for (int i = 0; i < N; i++) {
+            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            weight[i] =  Integer.parseInt(stringTokenizer.nextToken());
+            value[i] =  Integer.parseInt(stringTokenizer.nextToken());
+        }
+
+        System.out.println(p12865Recur(N - 1, K, memo, weight, value));
+    }
+
+    private static int p12865Recur(int i, int k, Integer[][] memo, int[] weight, int[] value) {
+        if (i < 0) {
+            return 0;
+        }
+
+        if (memo[i][k] == null) {
+            if (weight[i] > k) {
+                memo[i][k] = p12865Recur(i - 1, k, memo, weight, value);
+            } else {
+                memo[i][k] = Math.max(p12865Recur(i - 1, k, memo, weight, value), p12865Recur(i - 1, k - weight[i], memo, weight, value) + value[i]);
+            }
+        }
+
+        return memo[i][k];
     }
 
     private static void p9251() throws IOException {
