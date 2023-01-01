@@ -1,5 +1,3 @@
-package com.company;
-
 import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
