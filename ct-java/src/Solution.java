@@ -2,22 +2,44 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 class Solution {
-    public int solution(int[][] routes) {
+    public int solution(int n, int[][] costs) {
         int answer = 0;
-        int currCameraIndex = Integer.MIN_VALUE;
+        int[] parent = new int[n];
+        for (int i = 0; i < parent.length; i++) {
+            parent[i] = i;
+        }
 
-        // 진입 지점을 기준으로 오름차순 정렬
-        Arrays.sort(routes, Comparator.comparingInt(a -> a[1]));
+        // costs를 오름차순 정렬
+        Arrays.sort(costs, Comparator.comparingInt(cost -> cost[2]));
 
-        // 나갈때 찍혔는지 여부 판단해서 안찍혔으면 그 나간 구간을 추가한다.
-        for (int[] route : routes) {
-
-            // 진입 지점이 마지막 카메라 index 보다 뒤에 있으면
-            if (route[0] > currCameraIndex) {
-                answer++;
-                currCameraIndex = route[1];
+        for (int[] cost : costs) {
+            if (union(cost[0], cost[1], parent)) {
+                answer += cost[2];
             }
         }
+
         return answer;
+    }
+
+    private boolean union(int x, int y, int[] parent) {
+        int a = find(x, parent);
+        int b = find(y, parent);
+
+        if (a != b) {
+            parent[a] = b;
+            return true;
+        }
+
+        return false;
+    }
+
+    private int find(int x, int[] parent) {
+        if (parent[x] == x) {
+            return x;
+        }
+
+        int result = find(parent[x], parent);
+        parent[x] = result;
+        return result;
     }
 }

@@ -5,9 +5,8 @@ public class ProgrammerMain {
         int[] array1 = new int[]{1,2};
         int[] array2 = new int[]{3,4};
 
-//        int[][] a = new int[][]{{-20,-15}, {-14,-5}, {-18,-13}, {-5,-3}};
-        int[][] a = new int[][]{ {2,2},{0,1},{-10,9} };
-        int solution1 = solution.solution(a);
+        int[][] a = new int[][]{{0,1,1},{0,2,2},{1,2,5},{1,3,1},{2,3,8}};
+        int solution1 = solution.solution(4, a);
 
         System.out.println("solution1 = " + solution1);
     }
