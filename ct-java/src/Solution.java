@@ -1,20 +1,23 @@
 class Solution {
-    public String solution(String number, int k) {
-        StringBuilder answer = new StringBuilder();
-        int max = 0;
-        int index = 0;
+    public int solution(String name) {
+        int LENGTH = name.length();
 
-        for (int i = 0; i < number.length() - k; i++) {
-            max = 0;
-            for (int j = index; j <= i + k ; j++) {
-                if (max < number.charAt(j) - '0') {
-                    max = number.charAt(j) - '0';
-                    index = j + 1;
-                }
+        int upDownCount = 0;
+        int leftRightCount = LENGTH - 1;
+        for (int i = 0; i < LENGTH; i++) {
+            int forward = name.charAt(i) - 'A';
+            int backward = 'Z' - name.charAt(i) + 1;
+            upDownCount += Math.min(forward, backward);
+
+            int cursor = i + 1;
+            while (cursor < LENGTH && name.charAt(cursor) == 'A') {
+                cursor++;
             }
-            answer.append(max);
+
+            leftRightCount = Math.min(leftRightCount, i * 2 + LENGTH - cursor);
+
         }
 
-        return answer.toString();
+        return upDownCount + leftRightCount;
     }
 }
