@@ -1,20 +1,29 @@
-import java.util.Arrays;
+import java.util.EmptyStackException;
+import java.util.Stack;
 
-class Solution
-{
-    public int solution(int []A, int []B)
-    {
-        int answer = 0;
+class Solution {
+    boolean solution(String s) {
+        boolean answer = true;
 
-        Arrays.sort(A);
-        Arrays.sort(B);
+        Stack<Character> stack = new Stack<>();
 
-        for (int i = 0; i < A.length; i++) {
-            answer += A[i] * B[A.length - 1 - i];
+        for (char c: s.toCharArray()) {
+            if (c == '(') {
+                stack.add(c);
+            } else {
+                try {
+                    stack.pop();
+                } catch (EmptyStackException e) {
+                    answer = false;
+                    break;
+                }
+            }
         }
 
-        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-        System.out.println("Hello Java");
+        if (answer && !stack.isEmpty()) {
+            answer = false;
+        }
+
 
         return answer;
     }
