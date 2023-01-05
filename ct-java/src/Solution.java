@@ -1,23 +1,22 @@
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 class Solution {
-    public int solution(String name) {
-        int LENGTH = name.length();
+    public String solution(String s) {
+        String answer = Arrays.stream(s.split(" "))
+                .map(str -> {
+                    if (str.isEmpty()) {
+                        return "";
+                    }
 
-        int upDownCount = 0;
-        int leftRightCount = LENGTH - 1;
-        for (int i = 0; i < LENGTH; i++) {
-            int forward = name.charAt(i) - 'A';
-            int backward = 'Z' - name.charAt(i) + 1;
-            upDownCount += Math.min(forward, backward);
+                    return String.valueOf(str.charAt(0)).toUpperCase() + str.toLowerCase().substring(1);
+                })
+                .collect(Collectors.joining(" "));
 
-            int cursor = i + 1;
-            while (cursor < LENGTH && name.charAt(cursor) == 'A') {
-                cursor++;
-            }
-
-            leftRightCount = Math.min(leftRightCount, i * 2 + LENGTH - cursor);
-
+        if (s.charAt(s.length() - 1) == ' ') {
+            answer += " ";
         }
 
-        return upDownCount + leftRightCount;
+        return answer;
     }
 }
