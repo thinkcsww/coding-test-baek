@@ -1,21 +1,20 @@
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
-class Solution {
-    public String solution(String s) {
-        String answer = Arrays.stream(s.split(" "))
-                .map(str -> {
-                    if (str.isEmpty()) {
-                        return "";
-                    }
+class Solution
+{
+    public int solution(int []A, int []B)
+    {
+        int answer = 0;
 
-                    return String.valueOf(str.charAt(0)).toUpperCase() + str.toLowerCase().substring(1);
-                })
-                .collect(Collectors.joining(" "));
+        Arrays.sort(A);
+        Arrays.sort(B);
 
-        if (s.charAt(s.length() - 1) == ' ') {
-            answer += " ";
+        for (int i = 0; i < A.length; i++) {
+            answer += A[i] * B[A.length - 1 - i];
         }
+
+        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+        System.out.println("Hello Java");
 
         return answer;
     }
