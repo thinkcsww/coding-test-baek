@@ -1,29 +1,22 @@
-import java.util.EmptyStackException;
-import java.util.Stack;
-
 class Solution {
-    boolean solution(String s) {
-        boolean answer = true;
+    public int[] solution(String s) {
+        int[] answer = new int[2];
+        int removedZeroCount = 0;
+        int conversionCount = 0;
 
-        Stack<Character> stack = new Stack<>();
+        while (!"1".equals(s)) {
+            conversionCount++;
+            removedZeroCount += s.length();
 
-        for (char c: s.toCharArray()) {
-            if (c == '(') {
-                stack.add(c);
-            } else {
-                try {
-                    stack.pop();
-                } catch (EmptyStackException e) {
-                    answer = false;
-                    break;
-                }
-            }
+            s = s.replaceAll("0", "");
+
+            removedZeroCount -= s.length();
+
+            s = Integer.toBinaryString(s.length());
         }
 
-        if (answer && !stack.isEmpty()) {
-            answer = false;
-        }
-
+        answer[0] = conversionCount;
+        answer[1] = removedZeroCount;
 
         return answer;
     }
