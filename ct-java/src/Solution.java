@@ -1,23 +1,22 @@
 class Solution {
-    public int[] solution(String s) {
-        int[] answer = new int[2];
-        int removedZeroCount = 0;
-        int conversionCount = 0;
+    public int solution(int n) {
+        int answer = 0;
 
-        while (!"1".equals(s)) {
-            conversionCount++;
-            removedZeroCount += s.length();
+        for (int i = 1; i <= n / 2; i++) {
+            int sum = 0;
+            for (int j = i; j <= (n / 2) + 1 ; j++) {
+                sum += j;
 
-            s = s.replaceAll("0", "");
+                if (sum == n) {
+                    answer++;
+                }
 
-            removedZeroCount -= s.length();
-
-            s = Integer.toBinaryString(s.length());
+                if (sum > n) {
+                    break;
+                }
+            }
         }
 
-        answer[0] = conversionCount;
-        answer[1] = removedZeroCount;
-
-        return answer;
+        return answer + 1;
     }
 }
