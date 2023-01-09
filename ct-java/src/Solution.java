@@ -1,17 +1,30 @@
 class Solution {
-    private final int DIVIDER = 1234567;
-
     public int solution(int n) {
-        int[] memory = new int[n + 1];
-        memory[0] = 0;
-        memory[1] = 1;
-        memory[2] = 1;
+        int newN = n;
 
-        for (int i = 3; i <= n; i++) {
-            memory[i] = memory[i - 2] % DIVIDER + memory[i - 1] % DIVIDER;
+        String prevBin = Integer.toBinaryString(n);
+        int prevBinZeroCnt = 0;
+        for (char c : prevBin.toCharArray()) {
+            if (c == '1') {
+                prevBinZeroCnt++;
+            }
         }
 
-        int answer = memory[n];
-        return answer % DIVIDER;
+        while (true) {
+            newN++;
+            String nextBin = Integer.toBinaryString(newN);
+            int nextBinZeroCnt = 0;
+            for (char c : nextBin.toCharArray()) {
+                if (c == '1') {
+                    nextBinZeroCnt++;
+                }
+            }
+
+            if (prevBinZeroCnt == nextBinZeroCnt) {
+                break;
+            }
+        }
+
+        return newN;
     }
 }
