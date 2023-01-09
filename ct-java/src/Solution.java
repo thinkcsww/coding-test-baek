@@ -1,30 +1,30 @@
-class Solution {
-    public int solution(int n) {
-        int newN = n;
+import java.util.Stack;
 
-        String prevBin = Integer.toBinaryString(n);
-        int prevBinZeroCnt = 0;
-        for (char c : prevBin.toCharArray()) {
-            if (c == '1') {
-                prevBinZeroCnt++;
-            }
-        }
+class Solution
+{
+    public int solution(String s)
+    {
+        int answer = 0;
 
-        while (true) {
-            newN++;
-            String nextBin = Integer.toBinaryString(newN);
-            int nextBinZeroCnt = 0;
-            for (char c : nextBin.toCharArray()) {
-                if (c == '1') {
-                    nextBinZeroCnt++;
+        Stack<Character> stack = new Stack<>();
+
+        for (char c: s.toCharArray()) {
+            if (stack.isEmpty()) {
+                stack.add(c);
+            } else {
+                if (stack.peek() == c) {
+                    stack.pop();
+                } else {
+                    stack.add(c);
                 }
             }
 
-            if (prevBinZeroCnt == nextBinZeroCnt) {
-                break;
-            }
         }
 
-        return newN;
+        if (stack.isEmpty()) {
+            answer = 1;
+        }
+
+        return answer;
     }
 }
