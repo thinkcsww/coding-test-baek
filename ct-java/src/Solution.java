@@ -1,22 +1,17 @@
 class Solution {
+    private final int DIVIDER = 1234567;
+
     public int solution(int n) {
-        int answer = 0;
+        int[] memory = new int[n + 1];
+        memory[0] = 0;
+        memory[1] = 1;
+        memory[2] = 1;
 
-        for (int i = 1; i <= n / 2; i++) {
-            int sum = 0;
-            for (int j = i; j <= (n / 2) + 1 ; j++) {
-                sum += j;
-
-                if (sum == n) {
-                    answer++;
-                }
-
-                if (sum > n) {
-                    break;
-                }
-            }
+        for (int i = 3; i <= n; i++) {
+            memory[i] = memory[i - 2] % DIVIDER + memory[i - 1] % DIVIDER;
         }
 
-        return answer + 1;
+        int answer = memory[n];
+        return answer % DIVIDER;
     }
 }
