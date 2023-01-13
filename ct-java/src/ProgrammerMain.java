@@ -6,7 +6,8 @@ public class ProgrammerMain {
         int[] array2 = new int[]{3, 4};
 
         int[][] a = new int[][]{{0,1,1},{0,2,2},{1,2,5},{1,3,1},{2,3,8}};
-        int[] solution1 = solution.solution(25, 23);
+
+        int[] solution1 = solution.solution(5, new String[]{"hello", "observe", "effect", "take", "either", "recognize", "encourage", "ensure", "establish", "hang", "gather", "refer", "reference", "estimate", "executive"});
 
         System.out.println("solution1 = " + solution1);
     }

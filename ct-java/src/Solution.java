@@ -1,32 +1,42 @@
+import java.util.HashSet;
+import java.util.Set;
+
 class Solution {
-    public int[] solution(int brown, int yellow) {
-        int[] answer = new int[2];
+    public int[] solution(int n, String[] words) {
+        int[] answer = new int[]{0, 0};
 
-        double divider = 0;
+        Set<String> historySet = new HashSet<>();
 
-        while (true) {
-            divider++;
-            double yellowCntFor1Row = Math.ceil(yellow / divider);
+        char lastChar = ' ';
 
-            //
-            double left = 0;
-            if (yellow % divider != 0) {
-                left = divider - (yellow % divider);
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            boolean flag = true;
+
+            if (lastChar != ' ' && word.charAt(0) != lastChar) {
+                flag = false;
             }
 
-            double brownCnt = 0;
-            // 맨 위, 아래, 모서리
-            brownCnt += yellowCntFor1Row * 2 + 4;
-            // 노란색이 있는 줄의 테두리
-            brownCnt += divider * 2;
+            if (word.length() == 1) {
+                flag = false;
+            }
 
-            if (brown == brownCnt + left) {
+            if (historySet.contains(word)) {
+                flag = false;
+            }
+
+            if (!flag) {
+                int personNum = (i + 1) % n;
+                int turnNum = (int)Math.ceil((i + 1) / (double)n);
+                answer[0] = personNum == 0 ? n : personNum;
+                answer[1] = turnNum;
                 break;
             }
-        }
 
-        answer[0] = (int) ((brown + yellow) / (divider + 2));
-        answer[1] = (int) (divider + 2);
+
+            lastChar = word.charAt(word.length() - 1);
+            historySet.add(word);
+        }
 
         return answer;
     }
