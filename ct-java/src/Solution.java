@@ -1,41 +1,18 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 class Solution {
-    public int[] solution(int n, String[] words) {
-        int[] answer = new int[]{0, 0};
+    public int solution(int[] people, int limit) {
+        int answer = 0;
+        int end = people.length - 1;
 
-        Set<String> historySet = new HashSet<>();
+        Arrays.sort(people);
 
-        char lastChar = ' ';
-
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            boolean flag = true;
-
-            if (lastChar != ' ' && word.charAt(0) != lastChar) {
-                flag = false;
+        for (int i = 0; i <= end; ) {
+            if (people[end] + people[i] <= limit) {
+                i++;
             }
-
-            if (word.length() == 1) {
-                flag = false;
-            }
-
-            if (historySet.contains(word)) {
-                flag = false;
-            }
-
-            if (!flag) {
-                int personNum = (i + 1) % n;
-                int turnNum = (int)Math.ceil((i + 1) / (double)n);
-                answer[0] = personNum == 0 ? n : personNum;
-                answer[1] = turnNum;
-                break;
-            }
-
-
-            lastChar = word.charAt(word.length() - 1);
-            historySet.add(word);
+            end--;
+            answer++;
         }
 
         return answer;
