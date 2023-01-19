@@ -5,10 +5,12 @@ public class ProgrammerMain {
         int[] array1 = new int[]{1, 2};
         int[] array2 = new int[]{3, 4};
 
-        int[][] a = new int[][]{{0,1,1},{0,2,2},{1,2,5},{1,3,1},{2,3,8}};
+        int[][] a = new int[][]{{60, 50}, {30, 70}, {60, 30}, {80, 40}};
 
-        int solution1 = solution.solution("AAAAE");
+        int solution1 = solution.solution(new int[][]{{3, 5}, {6, 2}});
 
         System.out.println("solution1 = " + solution1);
     }
 }
+
+

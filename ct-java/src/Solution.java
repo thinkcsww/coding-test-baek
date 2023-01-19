@@ -1,31 +1,17 @@
 class Solution {
-    boolean[] visited = new boolean[5];
-    String[] vowels = new String[]{"A", "E", "I", "O", "U"};
+    public int solution(int[][] sizes) {
 
-    int answer = 0;
-    public int solution(String word) {
+        int maxW = 0;
+        int maxH = 0;
+        for (int i = 0; i < sizes.length; i++) {
+            int w = Math.max(sizes[i][0], sizes[i][1]);
+            int h = Math.min(sizes[i][0], sizes[i][1]);
 
-
-        dfs(0, new String[]{"", "", "", "", ""}, word);
-
-        return answer;
-    }
-
-    private void dfs(int depth, String[] currWord, String target) {
-        for (int i = 0; i < vowels.length; i++) {
-//            if (!visited[depth]) {
-                answer++;
-
-                currWord[depth] = vowels[i];
-                String join = String.join("", currWord);
-                if (join.equals(target)) {
-                    return;
-                }
-//                visited[depth] = true;
-                dfs(depth + 1, currWord, target);
-//                visited[depth] = false;
-//            }
+            maxW = Math.max(maxW, w);
+            maxH = Math.max(maxH, h);
 
         }
+
+        return maxW * maxH;
     }
 }
