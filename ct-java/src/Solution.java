@@ -1,17 +1,26 @@
 class Solution {
-    public int solution(int[][] sizes) {
+    String[] vowels = new String[]{"A", "E", "I", "O", "U"};
 
-        int maxW = 0;
-        int maxH = 0;
-        for (int i = 0; i < sizes.length; i++) {
-            int w = Math.max(sizes[i][0], sizes[i][1]);
-            int h = Math.min(sizes[i][0], sizes[i][1]);
+    int count = 0;
+    int answer = 0;
+    public int solution(String word) {
+        dfs("", word);
+        return answer;
+    }
 
-            maxW = Math.max(maxW, w);
-            maxH = Math.max(maxH, h);
-
+    private void dfs(String currWord, String target) {
+        count++;
+        if (currWord.equals(target)) {
+            answer = count;
+            return;
         }
 
-        return maxW * maxH;
+        if (currWord.length() == 5) {
+            return;
+        }
+
+        for (int i = 0; i < vowels.length; i++) {
+            dfs(currWord + vowels[i], target);
+        }
     }
 }
