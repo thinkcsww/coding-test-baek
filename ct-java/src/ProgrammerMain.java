@@ -7,7 +7,7 @@ public class ProgrammerMain {
 
         int[][] a = new int[][]{{60, 50}, {30, 70}, {60, 30}, {80, 40}};
 
-        int solution1 = solution.solution("AAE");
+        int solution1 = solution.solution(new int[][]{{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,1},{0,0,0,0,1}});
 
         System.out.println("solution1 = " + solution1);
     }
