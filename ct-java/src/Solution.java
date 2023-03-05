@@ -1,21 +1,22 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 class Solution {
-    public int solution(int[] citations) {
-        int answer = 0;
+    public int[] smallerNumbersThanCurrent(int[] nums) {
+        int[] copy = nums.clone();
+        Map<Integer, Integer> map = new HashMap<>();
 
-        List<Integer> collect = Arrays.stream(citations)
-                .mapToObj(Integer::valueOf)
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
+        Arrays.sort(copy);
 
-        for (int i = 1; i <= collect.size(); i++) {
-                if (collect.get(i - 1) >= i) {
-                    answer = i;
-                }
+        for (int i = 0; i < copy.length; i++) {
+            map.putIfAbsent(copy[i], i);
         }
 
-        return answer;
+        for (int i = 0; i < nums.length; i++) {
+            copy[i] = map.get(nums[i]);
+        }
+
+        return copy;
     }
 }

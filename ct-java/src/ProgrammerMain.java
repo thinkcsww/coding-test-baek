@@ -7,7 +7,7 @@ public class ProgrammerMain {
 
         int[][] a = new int[][]{{60, 50}, {30, 70}, {60, 30}, {80, 40}};
 
-        int solution1 = solution.solution(new int[]{4, 0, 6, 1, 5});
+        int[] solution1 = solution.smallerNumbersThanCurrent(new int[]{8,1,2,2,3});
 
         System.out.println("solution1 = " + solution1);
     }

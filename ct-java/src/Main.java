@@ -15,7 +15,84 @@ public class Main {
     private static int p24480Count = 1;
 
     public static void main(String[] args) throws IOException {
-        p12865();
+        p14442();
+    }
+
+    private static void p14442() throws IOException {
+        // x, count, break
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        int N = array[0];
+        int M = array[1];
+        int K = array[2];
+        int[] dx = new int[]{0, 0, -1, 1};
+        int[] dy = new int[]{1, -1, 0, 0};
+        int[][] visited = new int[N][M];
+        int[][] broke = new int[N][M];
+
+        for (int[] b: broke) {
+            Arrays.fill(b, Integer.MAX_VALUE);
+        }
+
+        int count = -1;
+
+        // adj
+        int[][] adj = new int[N][M];
+
+        for (int i = 0; i < N; i++) {
+            String s = bufferedReader.readLine();
+
+            for (int j = 0; j < s.length(); j++) {
+                adj[i][j] = s.charAt(j) - 48;
+            }
+        }
+
+        // queue
+        Queue<p14442Val> queue = new LinkedList<>();
+        queue.add(new p14442Val(0, 0, 1));
+        visited[0][0] = 1;
+        broke[0][0] = 0;
+
+        while (!queue.isEmpty()) {
+            p14442Val curr = queue.poll();
+
+            if (curr.x == N - 1 && curr.y == M - 1) {
+                count = curr.count;
+                break;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int nextX = curr.x + dx[i];
+                int nextY = curr.y + dy[i];
+                if (nextX >= N || nextY >= M || nextX < 0 || nextY < 0) {
+                    continue;
+                }
+
+                int nextBroke = broke[curr.x][curr.y] + adj[nextX][nextY];
+                if (nextBroke > K || broke[nextX][nextY] <= nextBroke) {
+                    continue;
+                }
+
+                visited[nextX][nextY] = 1;
+                broke[nextX][nextY] = nextBroke;
+                queue.add(new p14442Val(nextX, nextY, curr.count + 1));
+            }
+        }
+
+        System.out.println(count);
+    }
+
+    private static class p14442Val {
+        int x;
+        int y;
+        int count;
+
+        public p14442Val(int x, int y, int count) {
+            this.x = x;
+            this.y = y;
+            this.count = count;
+        }
     }
 
     private static void p12865() throws IOException {
@@ -1319,87 +1396,67 @@ public class Main {
         int x;
         int y;
         int count;
-        boolean breaked;
 
-        public p2206Val(int x, int y, int count, boolean breaked) {
+        public p2206Val(int x, int y, int count) {
             this.x = x;
             this.y = y;
             this.count = count;
-            this.breaked = breaked;
         }
     }
 
     private static void p2206() throws IOException {
-        // x, count, break
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        int[] array = Arrays.stream(bufferedReader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-
-        int N = array[0];
-        int M = array[1];
         int[] dx = new int[]{0, 0, -1, 1};
         int[] dy = new int[]{1, -1, 0, 0};
-        int[][] visited = new int[N][M];
-        int[][] breakVisited = new int[N][M];
-        int count = 0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        // adj
-        int[][] adj = new int[N][M];
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int k = 1;
 
-        for (int i = 0; i < N; i++) {
-            String s = bufferedReader.readLine();
-
-            for (int j = 0; j < s.length(); j++) {
-                adj[i][j] = s.charAt(j) - 48;
+        int[][] world = new int[n][m];
+        for (int x = 0; x < n; x++) {
+            String line = br.readLine();
+            for (int y = 0; y < m; y++) {
+                world[x][y] = line.charAt(y) - '0';
             }
         }
 
-        // queue
+        int[][] broke = new int[n][m];
+
+        for (int[] b : broke){
+            Arrays.fill(b, Integer.MAX_VALUE);
+        }
+
         Queue<p2206Val> queue = new LinkedList<>();
-        queue.add(new p2206Val(0, 0, 1, false));
-        visited[0][0] = 1;
-
+        broke[0][0] = 0;
+        queue.add(new p2206Val(0, 0, 1));
+        int answer = -1;
         while (!queue.isEmpty()) {
-            p2206Val prevPoint = queue.poll();
+            p2206Val curr = queue.poll();
 
-            for (int i = 0; i < 4; i++) {
-                int currX = prevPoint.x + dx[i];
-                int currY = prevPoint.y + dy[i];
+            int cx = curr.x;
+            int cy = curr.y;
+            int count = curr.count + 1;
 
-                if (currX >= N || currY >= M || currX < 0 || currY < 0) {
-                    continue;
-                }
+            if (cx == n - 1 && cy == m - 1) {
+                answer = curr.count;
+                break;
+            }
 
-                if (adj[currX][currY] == 1 && prevPoint.breaked) {
-                    continue;
-                }
+            for (int dir = 0; dir < 4; dir++) {
+                int nx = cx + dx[dir];
+                int ny = cy + dy[dir];
 
-                if (prevPoint.breaked) {
-                    if (breakVisited[currX][currY] == 0) {
-                        breakVisited[currX][currY] = prevPoint.count + 1;
-                        queue.add(new p2206Val(currX, currY, prevPoint.count + 1, true));
-                    }
-                } else {
-                    if (visited[currX][currY] == 0) {
-                        visited[currX][currY] = prevPoint.count + 1;
-                        queue.add(new p2206Val(currX, currY, prevPoint.count + 1, adj[currX][currY] == 1));
-                    }
-                }
+                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+                int nextBrake = broke[cx][cy] + world[nx][ny];
+                if (nextBrake > k || broke[nx][ny] <= nextBrake) continue;
+                broke[nx][ny] = nextBrake;
+                queue.add(new p2206Val(nx, ny, count));
             }
         }
 
-
-        if (breakVisited[N - 1][M - 1] > 0 && visited[N - 1][M - 1] > 0) {
-            count = Math.min(breakVisited[N - 1][M - 1], visited[N - 1][M - 1]);
-        } else {
-            count = Math.max(breakVisited[N - 1][M - 1], visited[N - 1][M - 1]);
-
-        }
-
-        if (count == 0) {
-            count = -1;
-        }
-
-        System.out.println(count);
+        System.out.print(answer);
     }
 
     private static class p16928Val {
